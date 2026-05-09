@@ -122,39 +122,41 @@ const Hero = () => {
     });
 
     // ── Scroll-driven: Three.js progress + text parallax ─────────
-    // onUpdate writes scroll progress to Three.js ref (D3 decision)
-    gsap.to(firstNameRef.current, {
-      y: -70, ease: "none",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: 1.2,
-        onUpdate: (self) => { scrollProgressRef.current = self.progress; },
-      },
-    });
-    gsap.to([lastNameRef.current, role1Ref.current, role2Ref.current], {
-      y: -50, ease: "none",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: 1.5,
-      },
-    });
-    gsap.to(subtitleRef.current, {
-      y: -30, ease: "none",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: 2,
-      },
-    });
-  }, { scope: sectionRef });
+    // Parallax only on desktop — mobile has no extra scroll height
+    if (!isMobile) {
+      gsap.to(firstNameRef.current, {
+        y: -70, ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1.2,
+          onUpdate: (self) => { scrollProgressRef.current = self.progress; },
+        },
+      });
+      gsap.to([lastNameRef.current, role1Ref.current, role2Ref.current], {
+        y: -50, ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1.5,
+        },
+      });
+      gsap.to(subtitleRef.current, {
+        y: -30, ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 2,
+        },
+      });
+    }
+  }, { scope: sectionRef, dependencies: [isMobile] });
 
   return (
-    <section ref={sectionRef} className="relative min-h-[150vh]" id="hero">
+    <section ref={sectionRef} className="relative min-h-screen lg:min-h-[150vh]" id="hero">
       {/* ── Sticky viewport panel ─────────────────────────── */}
       <div className="sticky top-0 h-screen overflow-hidden">
         {/* Background */}
@@ -195,7 +197,7 @@ const Hero = () => {
                 >
                   <SplitText
                     text={FIRST_NAME}
-                    className="block text-[clamp(3.5rem,10vw,7rem)] font-bold leading-[0.9] tracking-tight text-[var(--warm-white)]"
+                    className="block text-[clamp(2.6rem,10vw,7rem)] font-bold leading-[0.9] tracking-tight text-[var(--warm-white)]"
                   />
                 </div>
 
@@ -207,7 +209,7 @@ const Hero = () => {
                 >
                   <SplitText
                     text={LAST_NAME}
-                    className="block text-[clamp(3.5rem,10vw,7rem)] font-bold leading-[0.9] tracking-tight text-[var(--warm-white)]"
+                    className="block text-[clamp(2.6rem,10vw,7rem)] font-bold leading-[0.9] tracking-tight text-[var(--warm-white)]"
                   />
                 </div>
 
@@ -228,7 +230,7 @@ const Hero = () => {
                 </div>
 
                 {/* Subtitle */}
-                <p ref={subtitleRef} className="text-base text-muted-foreground max-w-md mb-7 leading-relaxed">
+                <p ref={subtitleRef} className="text-sm sm:text-base text-muted-foreground max-w-md mb-7 leading-relaxed">
                   Informatics teacher & builder. Crafting{" "}
                   <span className="text-[var(--warm-white)] font-medium">IoT systems</span>,{" "}
                   <span className="text-[var(--warm-white)] font-medium">AI tools</span>, and{" "}
@@ -237,10 +239,10 @@ const Hero = () => {
                 </p>
 
                 {/* CTAs */}
-                <div ref={ctaRef} className="flex flex-wrap gap-3 mb-7">
+                <div ref={ctaRef} className="flex flex-col sm:flex-row gap-3 mb-7">
                   <Button
                     asChild size="lg"
-                    className="rounded-full h-11 px-7 text-sm font-medium bg-[var(--electric)] hover:bg-[var(--electric)]/90 text-white border-0 shadow-[0_0_28px_hsl(246_70%_68%/0.4)] hover:shadow-[0_0_40px_hsl(246_70%_68%/0.6)] transition-all duration-300 group"
+                    className="rounded-full h-11 px-7 text-sm font-medium bg-[var(--electric)] hover:bg-[var(--electric)]/90 text-white border-0 shadow-[0_0_28px_hsl(246_70%_68%/0.4)] hover:shadow-[0_0_40px_hsl(246_70%_68%/0.6)] transition-all duration-300 group w-full sm:w-auto justify-center"
                   >
                     <a href="#projects">
                       See My Work
@@ -249,7 +251,7 @@ const Hero = () => {
                   </Button>
                   <Button
                     asChild size="lg" variant="outline"
-                    className="rounded-full h-11 px-7 text-sm font-medium border-white/10 bg-white/5 hover:bg-white/10 text-[var(--warm-white)] transition-all duration-300 backdrop-blur-sm"
+                    className="rounded-full h-11 px-7 text-sm font-medium border-white/10 bg-white/5 hover:bg-white/10 text-[var(--warm-white)] transition-all duration-300 backdrop-blur-sm w-full sm:w-auto justify-center"
                   >
                     <a href="#contact">Contact Me</a>
                   </Button>

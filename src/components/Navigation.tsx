@@ -199,7 +199,7 @@ const Navigation = () => {
                 exit={{ opacity: 0, height: 0 }}
                 className="md:hidden overflow-hidden"
               >
-                <div className="glass-card mt-3 rounded-2xl p-3 flex flex-col gap-1">
+                <div className="glass-card mt-3 rounded-2xl p-3 flex flex-col gap-1 max-h-[80vh] overflow-y-auto">
                   {navLinks.map((link) => {
                     const isActive = activeSection === link.href;
                     return (

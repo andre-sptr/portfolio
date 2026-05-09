@@ -271,10 +271,10 @@ const ProjectCardMobile = ({ project }: { project: (typeof featured)[0] }) => (
             href={project.viewUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium"
+            className="flex items-center gap-2 px-5 py-3 rounded-full text-xs font-medium min-h-[44px]"
             style={{ background: project.accent, color: "#0a0a0f" }}
           >
-            Live <ExternalLink className="w-3 h-3" />
+            Live <ExternalLink className="w-3.5 h-3.5" />
           </a>
         )}
         {project.codeUrl && (
@@ -282,9 +282,9 @@ const ProjectCardMobile = ({ project }: { project: (typeof featured)[0] }) => (
             href={project.codeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium border border-white/20 text-muted-foreground"
+            className="flex items-center gap-2 px-5 py-3 rounded-full text-xs font-medium border border-white/20 text-muted-foreground min-h-[44px]"
           >
-            <Github className="w-3 h-3" /> Code
+            <Github className="w-3.5 h-3.5" /> Code
           </a>
         )}
       </div>

@@ -295,12 +295,12 @@ function PanelStack() {
 
 function AboutMobile() {
   return (
-    <section id="about" className="py-20 px-6 bg-[var(--surface-0)]">
-      <div className="max-w-xl mx-auto space-y-16">
+    <section id="about" className="py-16 px-5 bg-[var(--surface-0)]">
+      <div className="max-w-xl mx-auto space-y-14">
         {/* Who */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <p className="section-label mb-3">01 / About</p>
-          <h2 className="text-4xl font-bold text-[var(--warm-white)] mb-4 leading-tight" style={{ fontFamily: "Clash Display, sans-serif" }}>
+          <h2 className="text-3xl sm:text-4xl font-bold text-[var(--warm-white)] mb-4 leading-tight" style={{ fontFamily: "Clash Display, sans-serif" }}>
             The person<br /><span className="text-gradient">behind the code</span>
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-6">
