@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Send, X, Minimize2, Loader2, Bot, User, Trash2 } from "lucide-react";
+import { Send, X, Minimize2, Bot, User, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,6 +12,8 @@ const API_KEY = import.meta.env.VITE_SUMOPOD_API_KEY;
 const MODEL = "gpt-5";
 const MAX_TOKENS = 500;
 const TEMPERATURE = 0.3;
+const HISTORY_WINDOW = 10;
+const STORAGE_KEY = "andre-chat-history";
 
 const SYSTEM_PROMPT = `
 You are the AI Assistant for Andre Saputra's portfolio website.
@@ -47,6 +49,8 @@ Guidelines:
 - Format your responses using Markdown for better readability.
 `;
 
+const WELCOME_MESSAGE = "Halo! 👋 Saya asisten virtual Andre. Saya bisa ceritakan tentang project, skill, atau cara kontak Andre. Ada yang ingin kamu tahu?";
+
 interface Message {
   role: "user" | "assistant" | "system";
   content: string;
@@ -54,9 +58,11 @@ interface Message {
 
 const SUGGESTIONS = [
   "Bagaimana cara kontak Andre?",
+  "Apa saja projects Andre?",
+  "Skill apa yang Andre kuasai?",
+  "Ceritakan tentang Andre",
 ];
 
-// Typing dots animation
 const TypingDots = () => (
   <div className="flex items-center gap-1 px-1">
     {[0, 1, 2].map((i) => (
@@ -70,20 +76,49 @@ const TypingDots = () => (
   </div>
 );
 
+function loadHistory(): Message[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveHistory(messages: Message[]) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-20)));
+  } catch {
+    // localStorage unavailable — silently ignore
+  }
+}
+
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>(() => loadHistory());
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [streamingContent, setStreamingContent] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
   const requestTimestamps = useRef<number[]>([]);
+
+  // Show welcome message on first open if no history
+  useEffect(() => {
+    if (isOpen && messages.length === 0) {
+      const welcome: Message = { role: "assistant", content: WELCOME_MESSAGE };
+      setMessages([welcome]);
+      saveHistory([welcome]);
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages, isLoading]);
+  }, [messages, isLoading, streamingContent]);
 
   const checkRateLimit = () => {
     const now = Date.now();
@@ -105,9 +140,15 @@ export function ChatWidget() {
     }
 
     const newMessage: Message = { role: "user", content };
-    setMessages((prev) => [...prev, newMessage]);
+    const updatedMessages = [...messages, newMessage];
+    setMessages(updatedMessages);
+    saveHistory(updatedMessages);
     setInput("");
     setIsLoading(true);
+    setStreamingContent("");
+
+    // Send only the last HISTORY_WINDOW messages to avoid token overflow
+    const historyForAPI = updatedMessages.slice(-HISTORY_WINDOW);
 
     try {
       const response = await fetch(API_ENDPOINT, {
@@ -115,30 +156,61 @@ export function ChatWidget() {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${API_KEY}` },
         body: JSON.stringify({
           model: MODEL,
-          messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages, newMessage],
+          messages: [{ role: "system", content: SYSTEM_PROMPT }, ...historyForAPI],
           max_tokens: MAX_TOKENS,
           temperature: TEMPERATURE,
+          stream: true,
         }),
       });
+
       if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
-      const data = await response.json();
-      const aiContent = data.choices[0]?.message?.content || "Maaf, saya tidak dapat memproses permintaan Anda.";
-      setMessages((prev) => [...prev, { role: "assistant", content: aiContent }]);
+      if (!response.body) throw new Error("No response body");
+
+      setIsLoading(false);
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let accumulated = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split("\n").filter((l) => l.startsWith("data: "));
+
+        for (const line of lines) {
+          const data = line.slice(6).trim();
+          if (data === "[DONE]") break;
+          try {
+            const parsed = JSON.parse(data);
+            const token = parsed.choices?.[0]?.delta?.content || "";
+            accumulated += token;
+            setStreamingContent(accumulated);
+          } catch {
+            // malformed chunk — skip
+          }
+        }
+      }
+
+      const finalMessages: Message[] = [...updatedMessages, { role: "assistant", content: accumulated || "Maaf, saya tidak dapat memproses permintaan Anda." }];
+      setMessages(finalMessages);
+      saveHistory(finalMessages);
+      setStreamingContent("");
     } catch (error) {
       console.error("Chat Error:", error);
-      if (error instanceof TypeError && error.message === "Failed to fetch") {
-        toast.error("Gagal terhubung ke server AI.");
-      } else {
-        toast.error("Gagal terhubung ke AI. Silakan coba lagi.");
-      }
-      setMessages((prev) => [...prev, { role: "assistant", content: "Maaf, terjadi kesalahan. Silakan coba lagi nanti." }]);
-    } finally {
+      const errorMsg = "Maaf, terjadi kesalahan. Silakan coba lagi nanti.";
+      const finalMessages: Message[] = [...updatedMessages, { role: "assistant", content: errorMsg }];
+      setMessages(finalMessages);
+      saveHistory(finalMessages);
+      setStreamingContent("");
       setIsLoading(false);
     }
   };
 
   const handleClearChat = () => {
     setMessages([]);
+    setStreamingContent("");
+    localStorage.removeItem(STORAGE_KEY);
     toast.info("Percakapan telah dibersihkan.");
   };
 
@@ -148,6 +220,8 @@ export function ChatWidget() {
       handleSendMessage(input);
     }
   };
+
+  const showEmptyState = messages.length === 0 && !isLoading;
 
   return (
     <>
@@ -213,7 +287,7 @@ export function ChatWidget() {
 
             {/* Messages */}
             <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth">
-              {messages.length === 0 && (
+              {showEmptyState && (
                 <div className="text-center py-8 space-y-5">
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
                     <Bot className="w-8 h-8 text-primary" />
@@ -253,7 +327,23 @@ export function ChatWidget() {
                 </div>
               ))}
 
-              {isLoading && (
+              {/* Streaming assistant message */}
+              {streamingContent && (
+                <div className="flex items-start gap-2.5">
+                  <div className="w-7 h-7 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
+                    <Bot className="w-3.5 h-3.5 text-primary" />
+                  </div>
+                  <div className="bg-muted/60 border border-border rounded-2xl rounded-tl-sm p-3 max-w-[80%] text-sm leading-relaxed">
+                    <div className="prose prose-sm dark:prose-invert max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0.5 prose-headings:my-2 prose-headings:text-foreground prose-strong:text-foreground prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {streamingContent}
+                      </ReactMarkdown>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {isLoading && !streamingContent && (
                 <div className="flex items-start gap-2.5">
                   <div className="w-7 h-7 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
                     <Bot className="w-3.5 h-3.5 text-primary" />
@@ -269,13 +359,13 @@ export function ChatWidget() {
             {/* Input */}
             <div className="p-4 border-t border-border bg-background/50 backdrop-blur-md">
               <div className="flex gap-2">
-                <Input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown} placeholder="Tulis pesan..." className="bg-muted/50 border-border focus:border-primary/50" disabled={isLoading} />
-                <Button onClick={() => handleSendMessage(input)} disabled={isLoading || !input.trim()} size="icon" className="bg-primary hover:bg-primary/90 shrink-0 rounded-xl">
+                <Input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown} placeholder="Tulis pesan..." className="bg-muted/50 border-border focus:border-primary/50" disabled={isLoading || !!streamingContent} />
+                <Button onClick={() => handleSendMessage(input)} disabled={isLoading || !!streamingContent || !input.trim()} size="icon" className="bg-primary hover:bg-primary/90 shrink-0 rounded-xl">
                   <Send className="w-4 h-4" />
                 </Button>
               </div>
               <div className="text-center mt-2">
-                <span className="text-[10px] text-muted-foreground/50">Powered by OpenAI • GPT-5</span>
+                <span className="text-[10px] text-muted-foreground/50">Andre's AI Assistant</span>
               </div>
             </div>
           </motion.div>
