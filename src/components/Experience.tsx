@@ -11,63 +11,51 @@ gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
 
 const timeline = [
   {
-    year: "2024 – Now",
-    role: "Informatics Teacher",
-    org: "MAN IC Siak",
+    year: "Jan 2026 – Now",
+    role: "Admin Operation",
+    org: "PT Telkom Infrastruktur Indonesia (Outsource)",
     type: "work",
     accent: "#818cf8",
     bullets: [
-      "Mengajar mata pelajaran Informatika kurikulum Merdeka",
-      "Membimbing siswa dalam proyek pemrograman dan IoT",
-      "Mengembangkan materi ajar berbasis project-based learning",
+      "Mengelola resolusi tiket gangguan Note-B end-to-end",
+      "Memastikan kepatuhan teknisi terhadap SLA",
+      "Instalasi & pemeliharaan kabel Fiber Optic di data center",
     ],
   },
   {
-    year: "2024",
-    role: "Full Stack Developer",
-    org: "PT Telkom Infrastruktur Indonesia",
+    year: "Jan – Dec 2025",
+    role: "Informatics Teacher & Robotics Coach",
+    org: "MAN Insan Cendekia Siak",
     type: "work",
     accent: "#22d3ee",
     bullets: [
-      "Membangun SiTiket — sistem manajemen tiket gangguan jaringan",
-      "Integrasi real-time dashboard dengan WebSocket",
-      "Stack: React, Node.js, PostgreSQL",
+      "Mengajar Informatika & mengembangkan materi ajar",
+      "Membimbing ekstrakurikuler Coding & Robotics",
+      "Melatih tim robotik siswa untuk kompetisi teknologi",
     ],
   },
   {
-    year: "2023 – 2024",
-    role: "S1 Informatika",
-    org: "Politeknik Caltex Riau",
-    type: "edu",
+    year: "Mar – Jul 2024",
+    role: "Intern – Network Support",
+    org: "PT PLN Icon Plus, Batam",
+    type: "work",
     accent: "#34d399",
     bullets: [
-      "Spesialisasi pengembangan web dan kecerdasan buatan",
-      "Tugas akhir: Platform AI multi-agent untuk debat akademik",
-      "Aktif di Himpunan Mahasiswa AET sebagai divisi IT",
+      "Instalasi, konfigurasi & troubleshooting infrastruktur jaringan",
+      "Deploy & maintain solusi jaringan untuk klien",
+      "Mengelola rekap data operasional & dokumentasi lapangan",
     ],
   },
   {
-    year: "2022 – 2023",
-    role: "Frontend Developer",
-    org: "Freelance",
-    type: "work",
-    accent: "#f59e0b",
-    bullets: [
-      "Mengembangkan 10+ website klien dengan React & Next.js",
-      "Spesialisasi landing page berperforma tinggi dan e-commerce",
-      "Rata-rata PageSpeed score 90+",
-    ],
-  },
-  {
-    year: "2019 – 2022",
-    role: "D3 Teknik Informatika",
+    year: "Oct 2021 – Oct 2025",
+    role: "Teknik Elektronika & Telekomunikasi",
     org: "Politeknik Caltex Riau",
     type: "edu",
-    accent: "#ec4899",
+    accent: "#f59e0b",
     bullets: [
-      "Lulus dengan predikat cumlaude",
-      "Fokus pada pengembangan sistem dan basis data",
-      "Magang di perusahaan telekomunikasi regional",
+      "IPK 3.67/4.00 — Predikat Cum Laude",
+      "Fokus: Networking, IoT, Embedded Systems",
+      "Sertifikasi: Cisco CCNA & BNSP Jaringan Komputer",
     ],
   },
 ];
@@ -119,9 +107,8 @@ const TimelineCard = ({
 
   return (
     <div
-      className={`timeline-card relative flex items-start gap-8 ${
-        isLeft ? "flex-row" : "flex-row-reverse"
-      }`}
+      className={`timeline-card relative flex items-start gap-8 ${isLeft ? "flex-row" : "flex-row-reverse"
+        }`}
       style={{ marginBottom: "4rem" }}
     >
       {/* Content box */}
@@ -134,9 +121,8 @@ const TimelineCard = ({
         >
           {/* Year + type badge */}
           <div
-            className={`flex items-center gap-2 mb-3 ${
-              isLeft ? "justify-end" : "justify-start"
-            }`}
+            className={`flex items-center gap-2 mb-3 ${isLeft ? "justify-end" : "justify-start"
+              }`}
           >
             <span
               className="text-xs font-medium tracking-widest uppercase px-2.5 py-0.5 rounded-full border"
@@ -167,9 +153,8 @@ const TimelineCard = ({
           </p>
 
           <ul
-            className={`flex flex-col gap-1.5 ${
-              isLeft ? "items-end" : "items-start"
-            }`}
+            className={`flex flex-col gap-1.5 ${isLeft ? "items-end" : "items-start"
+              }`}
           >
             {entry.bullets.map((b, i) => (
               <li

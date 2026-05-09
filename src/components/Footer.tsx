@@ -28,7 +28,7 @@ const Footer = () => {
               </span>
             </a>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-              Building smart digital solutions with networking, IoT, and modern web technologies.
+              Building smart digital solutions with networking, IoT, AI, and modern web technologies.
             </p>
           </div>
 

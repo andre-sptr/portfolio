@@ -167,7 +167,7 @@ function PanelWhoIAm() {
         </h2>
         <p className="text-base text-muted-foreground leading-relaxed mb-8 max-w-md">
           Electronics & Telecommunication Engineering graduate from Politeknik
-          Caltex Riau. I work by day and build IoT systems, AI
+          Caltex Riau. I work by day and build networking solutions, IoT systems, AI
           tools, and web platforms by night — always shipping from Riau,
           Indonesia.
         </p>
@@ -304,7 +304,7 @@ function AboutMobile() {
             The person<br /><span className="text-gradient">behind the code</span>
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-6">
-            Electronics & Telecommunication Engineering graduate. Informatics teacher,
+            Electronics & Telecommunication Engineering graduate. Network engineer,
             IoT builder, and full stack developer from Riau, Indonesia.
           </p>
           <div className="flex gap-3 flex-wrap">

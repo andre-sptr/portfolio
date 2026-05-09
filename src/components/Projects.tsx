@@ -52,15 +52,15 @@ const featured = [
   },
   {
     num: "04",
-    title: "AetherNet",
-    subtitle: "Real-time Network Monitor",
+    title: "SiTiket",
+    subtitle: "Network Fault Ticket Management",
     description:
-      "Dashboard monitoring jaringan real-time dengan visualisasi topologi interaktif dan alerting berbasis threshold.",
-    tech: ["React", "WebSocket", "D3.js"],
+      "Sistem manajemen tiket gangguan jaringan berbasis web untuk tracking, pengelolaan, dan resolusi gangguan secara efisien di PT Telkom Infrastruktur Indonesia.",
+    tech: ["Next.js", "Node.js", "PostgreSQL"],
     category: "Infrastructure",
-    image: "/pages/aethernetPage.png",
+    image: "/pages/sitiketPage.png",
     viewUrl: "",
-    codeUrl: "",
+    codeUrl: "https://github.com/andre-sptr/sitiket",
     accent: "#f59e0b",
   },
 ];
@@ -93,9 +93,8 @@ const ProjectPanel = ({
       />
 
       <div
-        className={`relative z-10 w-full max-w-7xl mx-auto px-8 grid grid-cols-2 gap-16 items-center ${
-          isEven ? "" : "direction-rtl"
-        }`}
+        className={`relative z-10 w-full max-w-7xl mx-auto px-8 grid grid-cols-2 gap-16 items-center ${isEven ? "" : "direction-rtl"
+          }`}
       >
         {/* Text side */}
         <div className={`flex flex-col gap-6 ${isEven ? "order-1" : "order-2"}`}>

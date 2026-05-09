@@ -39,16 +39,16 @@ const Index = () => {
         ],
         "worksFor": {
           "@type": "Organization",
-          "name": "MAN IC Siak"
+          "name": "PT Telkom Infrastruktur Indonesia"
         },
-        "knowsAbout": ["React", "TypeScript", "Node.js", "AI Integration", "IoT", "Web Development"]
+        "knowsAbout": ["React", "TypeScript", "Node.js", "AI Integration", "IoT", "Networking", "Web Development"]
       },
       {
         "@type": "WebSite",
         "@id": "https://andresptr.site/#website",
         "url": "https://andresptr.site",
         "name": "Andre Saputra Portfolio",
-        "description": "Portofolio Andre Saputra: Proyek inovatif dalam pengembangan web, AI, dan IoT.",
+        "description": "Portofolio Andre Saputra: Proyek inovatif dalam pengembangan web, AI, networking, dan IoT.",
         "publisher": {
           "@id": "https://andresptr.site/#person"
         }
@@ -86,8 +86,8 @@ const Index = () => {
     <div className="min-h-screen bg-background grain">
       <SEO
         title="Andre Saputra | Full Stack Developer & AI Enthusiast"
-        description="Jelajahi portofolio Andre Saputra: Proyek inovatif dalam pengembangan web, AI, dan IoT. Solusi digital profesional untuk kebutuhan modern."
-        keywords={["Andre Saputra", "Portofolio", "Web Developer Indonesia", "React Developer", "AI Engineer", "IoT Specialist", "Guru Informatika"]}
+        description="Jelajahi portofolio Andre Saputra: Proyek inovatif dalam pengembangan web, AI, networking, dan IoT. Solusi digital profesional untuk kebutuhan modern."
+        keywords={["Andre Saputra", "Portofolio", "Web Developer Indonesia", "React Developer", "AI Engineer", "IoT Specialist", "Network Engineer", "Guru Informatika"]}
         schema={schema}
       />
 
