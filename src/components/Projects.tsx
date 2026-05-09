@@ -350,8 +350,11 @@ const Projects = () => {
       if (isMobile || prefersReduced || !trackRef.current || !sectionRef.current) return;
 
       const panels = gsap.utils.toArray<HTMLElement>(".project-panel");
-      const totalWidth = panels.length * window.innerWidth;
-      const scrollDist = totalWidth - window.innerWidth;
+      // Visual travel distance (how far the track slides)
+      const trackTravel = (panels.length - 1) * window.innerWidth;
+      // Scroll distance the pin holds — 1× viewport HEIGHT per panel transition
+      // (much shorter than 1× viewport WIDTH, cuts ~44% of scroll on typical screens)
+      const scrollDist = (panels.length - 1) * window.innerHeight;
 
       // Master horizontal scroll timeline
       const tl = gsap.timeline({
@@ -367,7 +370,7 @@ const Projects = () => {
       });
 
       tl.to(trackRef.current, {
-        x: () => -scrollDist,
+        x: () => -trackTravel,
         ease: "none",
         duration: 1,
       });
