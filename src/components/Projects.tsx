@@ -20,8 +20,18 @@ import projectAqiqah from "/pages/aqiqahPage.png";
 import projectFiscal from "/pages/fiscalPage.png";
 import projectReka from "/pages/rekaPage.png";
 import projectTutorin from "/pages/tutorinPage.png";
+import projectDebate from "/pages/debatePage.png";
 
 const projects = [
+  {
+    title: "Arena Debate",
+    description: "Lima AI agent dalam Debat Tim 2v2 mendiskusikan topik apa pun, memberikan analisis mendalam dan kesimpulan berdasarkan konsensus.",
+    image: projectDebate,
+    tech: ["Next", "GeminiAI", "Node.js"],
+    category: "AI & Tools",
+    viewUrl: "https://debat.andresptr.site/",
+    codeUrl: "",
+  },
   {
     title: "Reka AI",
     description: "Website AI-assisted coding untuk membantu developer menulis, debugging, dan optimasi kode.",
