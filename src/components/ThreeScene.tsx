@@ -4,6 +4,8 @@ import { Sphere, MeshDistortMaterial, Float } from '@react-three/drei';
 import * as THREE from 'three';
 import { useTheme } from '@/components/ui/theme-provider';
 
+export const scrollProgressRef = { current: 0 };
+
 const Particles = ({ count = 120 }: { count?: number }) => {
   const points = useRef<THREE.Points>(null);
 
@@ -48,24 +50,27 @@ const Particles = ({ count = 120 }: { count?: number }) => {
   );
 };
 
-const AnimatedSphere = () => {
+const AnimatedSphere = ({ scrollEnabled }: { scrollEnabled: boolean }) => {
   const sphereRef = useRef<THREE.Mesh>(null);
   const { theme } = useTheme();
 
   const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
   const primaryColor = isDark ? "#818cf8" : "#6366f1";
   const secondaryColor = isDark ? "#22d3ee" : "#0891b2";
+  void secondaryColor;
 
   useFrame(({ clock }) => {
-    if (sphereRef.current) {
-      sphereRef.current.rotation.x = clock.getElapsedTime() * 0.15;
-      sphereRef.current.rotation.y = clock.getElapsedTime() * 0.2;
-    }
+    if (!sphereRef.current) return;
+    const t = clock.getElapsedTime();
+    const scroll = scrollEnabled ? scrollProgressRef.current : 0;
+    sphereRef.current.rotation.x = t * 0.15 + scroll * Math.PI * 2;
+    sphereRef.current.rotation.y = t * 0.2 + scroll * Math.PI * 2;
+    sphereRef.current.position.z = scroll * -50;
   });
 
   return (
     <Float speed={1.5} rotationIntensity={0.4} floatIntensity={0.4}>
-      <Sphere ref={sphereRef} args={[1, 100, 200]} scale={2.2}>
+      <Sphere ref={sphereRef} args={[1, 50, 100]} scale={2.2}>
         <MeshDistortMaterial
           color={primaryColor}
           attach="material"
@@ -81,15 +86,22 @@ const AnimatedSphere = () => {
   );
 };
 
-const ThreeScene = () => {
+interface ThreeSceneProps {
+  scrollEnabled?: boolean;
+  isMobile?: boolean;
+}
+
+const ThreeScene = ({ scrollEnabled = true, isMobile = false }: ThreeSceneProps) => {
+  const particleCount = isMobile ? 60 : 150;
+
   return (
     <div className="absolute inset-0 -z-10 h-full w-full overflow-hidden">
       <Canvas camera={{ position: [0, 0, 5] }}>
         <ambientLight intensity={0.6} />
         <pointLight position={[10, 10, 10]} intensity={0.8} />
         <pointLight position={[-10, -10, -10]} intensity={0.4} color="#0891b2" />
-        <AnimatedSphere />
-        <Particles count={150} />
+        <AnimatedSphere scrollEnabled={scrollEnabled} />
+        <Particles count={particleCount} />
       </Canvas>
     </div>
   );
