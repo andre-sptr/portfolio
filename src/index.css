@@ -1,58 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  /* ─── Dark-only design tokens ─── */
   :root {
-    /* ─── Light Theme ─── */
-    --background: 0 0% 99%;
-    --foreground: 220 30% 8%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 220 30% 8%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 30% 8%;
-
-    --primary: 246 62% 54%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 192 72% 44%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 220 8% 94%;
-    --muted-foreground: 220 15% 36%;
-
-    --accent: 220 8% 93%;
-    --accent-foreground: 220 30% 8%;
-
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 220 12% 88%;
-    --input: 220 12% 88%;
-    --ring: 246 62% 54%;
-
-    --radius: 0.75rem;
-
-    /* Custom Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(246 62% 54%), hsl(192 72% 44%));
-    --gradient-surface: linear-gradient(180deg, hsl(0 0% 99%), hsl(220 8% 97%));
-
-    /* Glows */
-    --glow-primary: 0 0 24px hsl(246 62% 54% / 0.18);
-    --glow-secondary: 0 0 24px hsl(192 72% 44% / 0.18);
-
-    /* Shadows */
-    --shadow-card: 0 1px 3px hsl(220 30% 8% / 0.04), 0 4px 12px hsl(220 30% 8% / 0.03);
-    --shadow-card-hover: 0 4px 16px hsl(220 30% 8% / 0.08), 0 8px 32px hsl(246 62% 54% / 0.06);
-    --shadow-elevated: 0 8px 30px hsl(220 30% 8% / 0.1);
-  }
-
-  .dark {
-    /* ─── Dark Theme ─── */
     --background: 228 22% 6%;
     --foreground: 220 18% 94%;
 
@@ -80,33 +34,82 @@
     --border: 228 16% 20%;
     --input: 228 16% 20%;
     --ring: 246 70% 68%;
+    --radius: 0.75rem;
 
-    /* Custom Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(246 70% 68%), hsl(192 72% 55%));
-    --gradient-surface: linear-gradient(180deg, hsl(228 22% 6%), hsl(228 22% 4%));
-
-    /* Glows */
-    --glow-primary: 0 0 28px hsl(246 70% 68% / 0.3);
-    --glow-secondary: 0 0 28px hsl(192 72% 55% / 0.3);
-
-    /* Shadows */
+    --glow-primary: 0 0 40px hsl(246 70% 68% / 0.25);
+    --glow-secondary: 0 0 40px hsl(192 72% 55% / 0.25);
     --shadow-card: 0 1px 3px hsl(0 0% 0% / 0.2), 0 4px 12px hsl(0 0% 0% / 0.15);
     --shadow-card-hover: 0 4px 16px hsl(0 0% 0% / 0.3), 0 8px 32px hsl(246 70% 68% / 0.1);
-    --shadow-elevated: 0 8px 30px hsl(0 0% 0% / 0.35);
+
+    /* Gravity Well scroll colors */
+    --surface-0: #0a0a0f;
+    --surface-1: #0d0d14;
+    --surface-2: #111118;
+    --electric: hsl(246 70% 68%);
+    --electric-dim: hsl(246 70% 68% / 0.15);
+    --warm-white: #f0f0f5;
+  }
+
+  /* Keep .dark alias for any shadcn components that read it */
+  .dark {
+    --background: 228 22% 6%;
+    --foreground: 220 18% 94%;
+    --card: 228 20% 9%;
+    --card-foreground: 220 18% 94%;
+    --popover: 228 20% 9%;
+    --popover-foreground: 220 18% 94%;
+    --primary: 246 70% 68%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 192 72% 55%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 228 18% 13%;
+    --muted-foreground: 220 12% 68%;
+    --accent: 228 18% 13%;
+    --accent-foreground: 220 18% 94%;
+    --destructive: 0 62% 40%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 228 16% 20%;
+    --input: 228 16% 20%;
+    --ring: 246 70% 68%;
   }
 
   * {
     @apply border-border;
   }
 
+  /* Lenis smooth scroll reset — Lenis owns scroll, not CSS */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  html {
+    /* Lenis handles smoothing — no CSS scroll-behavior */
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--surface-0);
+    font-family: 'Satoshi', system-ui, sans-serif;
     overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-family: 'Clash Display', 'Satoshi', system-ui, sans-serif;
+    letter-spacing: -0.02em;
   }
 }
 
@@ -134,7 +137,7 @@
     animation: gradient-shift 4s ease-in-out infinite;
   }
 
-  /* ─── Glassmorphism (theme-aware) ─── */
+  /* ─── Glassmorphism ─── */
   .glass {
     @apply bg-background/70 backdrop-blur-xl border border-border/50;
   }
@@ -157,9 +160,38 @@
     box-shadow: var(--glow-primary);
   }
 
-  /* ─── Section Background ─── */
-  .section-alt {
-    @apply bg-muted/40;
+  /* ─── Grain Overlay ─── */
+  /* Applied via ::before on sections that need texture */
+  .grain::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 128px;
+  }
+
+  /* ─── Mobile CSS gradient background (replaces Three.js on mobile) ─── */
+  .mobile-bg-gradient {
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 20%, hsl(246 70% 68% / 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 80%, hsl(192 72% 55% / 0.10) 0%, transparent 60%),
+      var(--surface-0);
+    animation: ambient-shift 12s ease-in-out infinite alternate;
+  }
+
+  /* ─── GSAP ScrollTrigger pinned section helpers ─── */
+  .pin-section {
+    will-change: transform;
+  }
+
+  .panel-track {
+    display: flex;
+    flex-wrap: nowrap;
+    will-change: transform;
   }
 
   /* ─── Shimmer Effect ─── */
@@ -205,53 +237,81 @@
   .gradient-border:hover::before {
     opacity: 1;
   }
+
+  /* ─── Section number label ─── */
+  .section-label {
+    font-family: 'Satoshi', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: hsl(var(--primary) / 0.6);
+  }
 }
 
-/* ─── Scrollbar (Theme-Aware) ─── */
+/* ─── Scrollbar ─── */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--background));
+  background: var(--surface-0);
 }
 
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--border));
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--primary));
 }
 
-/* ─── Smooth Scrolling ─── */
-html {
-  scroll-behavior: smooth;
-}
-
-/* ─── Selection Color ─── */
+/* ─── Selection ─── */
 ::selection {
-  background: hsl(var(--primary) / 0.15);
+  background: hsl(var(--primary) / 0.2);
   color: hsl(var(--primary));
 }
 
-/* ─── Keyframe: Gradient Shift ─── */
-@keyframes gradient-shift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+/* ─── Section separator — subtle gradient fade between sections ─── */
+.section-sep {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.12), transparent);
+  border: none;
 }
 
-/* ─── Keyframe: Shimmer ─── */
+/* ─── Scroll dot indicator used in Hero ─── */
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
+.scroll-dot {
+  animation: scroll-bounce 1.8s ease-in-out infinite;
+}
+
+/* ─── Keyframes ─── */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
 @keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes ambient-shift {
+  0% { background-position: 0% 0%, 100% 100%; }
+  100% { background-position: 20% 20%, 80% 80%; }
+}
+
+@keyframes char-in {
+  from {
+    opacity: 0;
+    transform: translateY(1em) rotateX(-90deg);
   }
-  100% {
-    transform: translateX(100%);
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
   }
 }

@@ -6,13 +6,17 @@ import Hero from "@/components/Hero";
 // Lazy load components for performance
 const About = React.lazy(() => import("@/components/About"));
 const Projects = React.lazy(() => import("@/components/Projects"));
+const Experience = React.lazy(() => import("@/components/Experience"));
 const FreeTools = React.lazy(() => import("@/components/FreeTools"));
 const Contact = React.lazy(() => import("@/components/Contact"));
 const Footer = React.lazy(() => import("@/components/Footer"));
 
 const LoadingFallback = () => (
-  <div className="w-full h-40 flex items-center justify-center">
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+  <div
+    className="w-full h-40 flex items-center justify-center"
+    style={{ background: "var(--surface-0)" }}
+  >
+    <div className="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary animate-spin" />
   </div>
 );
 
@@ -79,7 +83,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background grain">
       <SEO 
         title="Andre Saputra | Full Stack Developer & AI Enthusiast"
         description="Jelajahi portofolio Andre Saputra: Proyek inovatif dalam pengembangan web, AI, dan IoT. Solusi digital profesional untuk kebutuhan modern."
@@ -93,19 +97,31 @@ const Index = () => {
       <Suspense fallback={<LoadingFallback />}>
         <About />
       </Suspense>
-      
+
+      <hr className="section-sep" />
+
       <Suspense fallback={<LoadingFallback />}>
         <Projects />
       </Suspense>
-      
+
+      <hr className="section-sep" />
+
+      <Suspense fallback={<LoadingFallback />}>
+        <Experience />
+      </Suspense>
+
+      <hr className="section-sep" />
+
       <Suspense fallback={<LoadingFallback />}>
         <FreeTools />
       </Suspense>
-      
+
+      <hr className="section-sep" />
+
       <Suspense fallback={<LoadingFallback />}>
         <Contact />
       </Suspense>
-      
+
       <Suspense fallback={<LoadingFallback />}>
         <Footer />
       </Suspense>

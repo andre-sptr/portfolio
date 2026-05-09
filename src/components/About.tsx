@@ -1,288 +1,413 @@
-import { Cpu, Workflow, Globe, Server, Briefcase, School, Building2, CheckCircle2, GraduationCap, Bot, Network, BarChart } from "lucide-react";
-import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { motion } from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { GraduationCap, Building2, School, CheckCircle2 } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
-const features = [
-  {
-    icon: Network,
-    title: "Networking & Infrastructure",
-    description: "Experienced in network design, routing, configuration, troubleshooting, and fiber optic support, backed by CCNA and BNSP certification.",
-    accent: "from-primary/15 to-secondary/10",
-    span: "md:col-span-2",
-  },
-  {
-    icon: Cpu,
-    title: "IoT & Embedded Systems",
-    description: "Developing IoT solutions using Arduino, ESP32, Raspberry Pi, and MQTT for real-time monitoring and early warning systems.",
-    accent: "from-primary/10 to-secondary/15",
-    span: "",
-  },
-  {
-    icon: Workflow,
-    title: "Automation & AI Workflow",
-    description: "Building automation pipelines with n8n and bot integrations to accelerate reporting, recaps, and communication workflows.",
-    accent: "from-secondary/15 to-primary/10",
-    span: "",
-  },
+gsap.registerPlugin(ScrollTrigger);
+
+// ── Data ──────────────────────────────────────────────────────────
+
+const STATS = [
+  { value: "3.67", label: "GPA" },
+  { value: "18+", label: "Projects" },
+  { value: "5+", label: "Certs" },
 ];
 
-const skills = [
-  { name: "Network Infrastructure", level: 92, icon: Network, color: "from-primary to-secondary" },
-  { name: "IoT & Embedded", level: 88, icon: Cpu, color: "from-secondary to-primary" },
-  { name: "Automation (n8n & Bot)", level: 86, icon: Bot, color: "from-primary to-primary/70" },
-  { name: "Web Development", level: 84, icon: Globe, color: "from-secondary/90 to-primary" },
-  { name: "Backend Systems", level: 80, icon: Server, color: "from-primary/80 to-secondary" },
-  { name: "Data Analysis", level: 78, icon: BarChart, color: "from-secondary to-secondary/60" },
-];
-
-const experiences = [
+const EXPERIENCES = [
   {
-    period: "Jan 2026 - Present",
+    period: "Jan 2026 – Now",
     role: "Admin Operation",
-    company: "PT Telkom Infrastruktur Indonesia (Outsource)",
-    sub: "Pekanbaru",
+    company: "PT Telkom Infrastruktur Indonesia",
     icon: Building2,
-    description: "Menangani operasional tiket gangguan jaringan dan memastikan proses penyelesaian berjalan sesuai SLA.",
-    details: [
-      "Mengelola end-to-end penyelesaian tiket Note-B untuk meminimalkan downtime jaringan.",
-      "Memastikan teknisi memenuhi target Service Level Agreement (SLA).",
-      "Mendukung instalasi dan maintenance kabel Fiber Optic pada lingkungan data center.",
-    ],
+    details: ["Network ticket management", "SLA compliance monitoring", "Fiber optic support"],
   },
   {
-    period: "Jan 2025 - Dec 2025",
+    period: "Jan – Dec 2025",
     role: "Informatics Teacher & Robotics Coach",
     company: "MAN Insan Cendekia Siak",
-    sub: "Educational Sector",
     icon: School,
-    description: "Mengajar Informatika dan membina coding, multimedia, serta robotik untuk penguatan kompetensi digital siswa.",
-    details: [
-      "Menyusun materi pembelajaran Informatika yang komprehensif dan terstruktur.",
-      "Membina kegiatan ekstrakurikuler IT berfokus pada coding, robotik, dan multimedia.",
-      "Melatih tim robotik siswa untuk kompetisi dan event berbasis teknologi.",
-    ],
+    details: ["Taught informatics curriculum", "Led robotics extracurricular", "Coding competition mentor"],
   },
   {
-    period: "Mar 2024 - Jul 2024",
+    period: "Mar – Jul 2024",
     role: "Network Support Intern",
     company: "PT PLN Icon Plus, Batam",
-    sub: "Internship",
     icon: Building2,
-    description: "Berperan dalam instalasi dan troubleshooting infrastruktur jaringan pada proyek enterprise dan pemerintah.",
-    details: [
-      "Membantu instalasi, konfigurasi, dan troubleshooting jaringan on-site.",
-      "Mendukung deployment dan pemeliharaan solusi jaringan untuk klien enterprise dan pemerintah.",
-      "Mengelola rekap data operasional serta dokumentasi aktivitas lapangan.",
+    details: ["On-site installation & troubleshooting", "Enterprise network deployment", "Field documentation"],
+  },
+  {
+    period: "Oct 2021 – Oct 2025",
+    role: "Bachelor of Applied Engineering",
+    company: "Politeknik Caltex Riau",
+    icon: GraduationCap,
+    details: ["GPA 3.67 / Cum Laude", "Electronics & Telecommunication", "Focus: IoT, Networking, ML"],
+  },
+];
+
+// Three orbit rings worth of tech
+const ORBIT_RINGS = [
+  {
+    radius: 80,
+    durationSec: 18,
+    direction: 1 as const,
+    items: [
+      { abbr: "⚛", label: "React" },
+      { abbr: "TS", label: "TypeScript" },
+      { abbr: "Nd", label: "Node.js" },
+      { abbr: "Nx", label: "Next.js" },
     ],
   },
   {
-    period: "Oct 2021 - Oct 2025",
-    role: "Bachelor of Applied Engineering",
-    company: "Politeknik Caltex Riau",
-    sub: "Electronics & Telecommunication Engineering",
-    icon: GraduationCap,
-    description: "Lulusan cum laude dengan fokus pada networking, telekomunikasi, IoT, dan embedded systems.",
-    details: [
-      "GPA 3.67/4.00 (Cum Laude).",
-      "Relevant coursework: Networking, Telecommunications, Machine Learning, Electronics, dan Embedded Systems.",
+    radius: 150,
+    durationSec: 32,
+    direction: -1 as const,
+    items: [
+      { abbr: "PY", label: "Python" },
+      { abbr: "TW", label: "Tailwind" },
+      { abbr: "PG", label: "PostgreSQL" },
+      { abbr: "GS", label: "GSAP" },
+      { abbr: "3J", label: "Three.js" },
+    ],
+  },
+  {
+    radius: 220,
+    durationSec: 52,
+    direction: 1 as const,
+    items: [
+      { abbr: "AVR", label: "Arduino" },
+      { abbr: "ESP", label: "ESP32" },
+      { abbr: "n8n", label: "n8n" },
+      { abbr: "MQ", label: "MQTT" },
+      { abbr: "CSC", label: "Cisco" },
+      { abbr: "DOK", label: "Docker" },
     ],
   },
 ];
 
-const AnimatedCounter = ({ value, suffix = "%" }: { value: number; suffix?: string }) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
+// ── Orbit Ring Component ──────────────────────────────────────────
 
+function OrbitRing({
+  radius,
+  durationSec,
+  items,
+  direction,
+}: {
+  radius: number;
+  durationSec: number;
+  items: { abbr: string; label: string }[];
+  direction: 1 | -1;
+}) {
+  const size = radius * 2;
   return (
-    <motion.span
-      ref={ref}
-      className="text-muted-foreground tabular-nums text-sm font-medium"
-      initial={{ opacity: 0 }}
-      animate={isInView ? { opacity: 1 } : {}}
+    <motion.div
+      className="absolute rounded-full border border-white/[0.05]"
+      style={{ width: size, height: size, top: "50%", left: "50%", marginTop: -radius, marginLeft: -radius }}
+      animate={{ rotate: direction * 360 }}
+      transition={{ duration: durationSec, ease: "linear", repeat: Infinity }}
     >
-      {isInView ? (
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {value}{suffix}
-        </motion.span>
-      ) : (
-        `0${suffix}`
-      )}
-    </motion.span>
+      {items.map((item, idx) => {
+        const angle = (idx / items.length) * 2 * Math.PI;
+        const x = radius + Math.cos(angle) * radius - 22;
+        const y = radius + Math.sin(angle) * radius - 22;
+        return (
+          <motion.div
+            key={item.label}
+            title={item.label}
+            className="absolute w-11 h-11 flex items-center justify-center rounded-xl bg-[var(--surface-1)] border border-white/[0.07] text-[10px] font-bold text-muted-foreground hover:text-[var(--electric)] hover:border-[var(--electric)]/30 transition-colors cursor-default select-none"
+            style={{ left: x, top: y }}
+            animate={{ rotate: direction * -360 }}
+            transition={{ duration: durationSec, ease: "linear", repeat: Infinity }}
+          >
+            {item.abbr}
+          </motion.div>
+        );
+      })}
+    </motion.div>
   );
-};
+}
 
-const About = () => {
+// ── Panel A — WHO I AM ───────────────────────────────────────────
+
+function PanelWhoIAm() {
   return (
-    <section id="about" className="py-16 md:py-24 px-4 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute top-1/4 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl -z-10" />
-
-      <div className="container mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 md:mb-16"
+    <div className="w-screen h-screen flex-shrink-0 flex items-center justify-center relative overflow-hidden bg-[var(--surface-0)]">
+      {/* Giant watermark */}
+      <div
+        className="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
+        aria-hidden
+      >
+        <span
+          style={{
+            fontSize: "clamp(6rem,18vw,18rem)",
+            fontFamily: "Clash Display, sans-serif",
+            fontWeight: 700,
+            color: "transparent",
+            WebkitTextStroke: "1px rgba(99,102,241,0.06)",
+            letterSpacing: "-0.04em",
+            whiteSpace: "nowrap",
+          }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            About <span className="text-gradient">Me</span>
-          </h2>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Electronics and telecommunication engineering graduate with 1.5+
-            years of professional experience in networking operations, IoT
-            implementation, automation, and web solutions.
-          </p>
-        </motion.div>
+          WHO I AM
+        </span>
+      </div>
 
-        {/* Bento Grid Feature Cards */}
-        <div className="grid md:grid-cols-4 gap-4 md:gap-5 mb-14 md:mb-20">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.15, duration: 0.5 }}
-              whileHover={{ y: -4 }}
-              className={`glass-card p-6 sm:p-8 rounded-2xl group hover:border-primary/40 transition-all duration-300 relative overflow-hidden ${feature.span}`}
+      {/* Foreground */}
+      <div className="relative z-10 max-w-xl px-8 md:px-16">
+        <p className="section-label mb-5">01 / About</p>
+        <h2
+          className="text-5xl md:text-6xl font-bold text-[var(--warm-white)] mb-6 leading-[0.95]"
+          style={{ fontFamily: "Clash Display, sans-serif" }}
+        >
+          The person<br />
+          <span className="text-gradient">behind the code</span>
+        </h2>
+        <p className="text-base text-muted-foreground leading-relaxed mb-8 max-w-md">
+          Electronics & Telecommunication Engineering graduate from Politeknik
+          Caltex Riau. I teach informatics by day and build IoT systems, AI
+          tools, and web platforms by night — always shipping from Riau,
+          Indonesia.
+        </p>
+        <div className="flex flex-wrap gap-3">
+          {STATS.map((s) => (
+            <div
+              key={s.label}
+              className="px-5 py-3 rounded-xl bg-[var(--surface-1)] border border-white/[0.07] flex flex-col items-center min-w-[88px]"
             >
-              {/* Background Accent */}
-              <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${feature.accent} rounded-bl-full -mr-6 -mt-6 transition-all group-hover:scale-125 duration-500`} />
-
-              <div className="relative z-10">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-primary/15 to-secondary/10 flex items-center justify-center mb-5 group-hover:shadow-[var(--glow-primary)] transition-all duration-300">
-                  <feature.icon className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 group-hover:text-primary transition-colors">
-                  {feature.title}
-                </h3>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
-            </motion.div>
+              <span
+                className="text-2xl font-bold text-[var(--electric)]"
+                style={{ fontFamily: "Clash Display, sans-serif" }}
+              >
+                {s.value}
+              </span>
+              <span className="text-[10px] text-muted-foreground uppercase tracking-[0.15em] mt-0.5">
+                {s.label}
+              </span>
+            </div>
           ))}
         </div>
+      </div>
+    </div>
+  );
+}
 
-        {/* Skills + Journey */}
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-stretch">
-          {/* Professional Journey */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative"
+// ── Panel B — JOURNEY ────────────────────────────────────────────
+
+function PanelJourney({ cardsRef }: { cardsRef: React.RefObject<HTMLDivElement> }) {
+  return (
+    <div className="w-screen h-screen flex-shrink-0 flex items-center bg-[var(--surface-0)] relative overflow-hidden">
+      {/* Ambient glow right side */}
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[35vw] h-[55vh] bg-[var(--electric)]/5 blur-[80px] rounded-full pointer-events-none" />
+
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-8 md:px-16 grid md:grid-cols-[220px_1fr] gap-12 items-center">
+        <div>
+          <p className="section-label mb-3">02 / Journey</p>
+          <h2
+            className="text-4xl md:text-5xl font-bold text-[var(--warm-white)] leading-[0.95]"
+            style={{ fontFamily: "Clash Display, sans-serif" }}
           >
-            <h3 className="text-2xl sm:text-3xl font-bold mb-6 md:mb-8">
-              Professional <span className="text-gradient">Journey</span>
-            </h3>
-            <div className="space-y-0">
-              {experiences.map((exp, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -15 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.4 }}
-                  className="relative pl-7 sm:pl-8 border-l-2 border-border pb-8 last:pb-0 last:border-0 group"
-                >
-                  {/* Timeline Dot */}
-                  <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-primary ring-4 ring-background transition-shadow group-hover:shadow-[var(--glow-primary)]" />
-
-                  <div className="mb-2 flex flex-wrap items-center gap-2 text-sm text-primary font-medium">
-                    <span className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 flex items-center gap-1.5">
-                      <Briefcase className="w-3 h-3" />
-                      {exp.period}
-                    </span>
-                  </div>
-
-                  <h4 className="text-lg sm:text-xl font-bold text-foreground">
-                    {exp.role}
-                  </h4>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-muted-foreground mb-3 mt-1">
-                    <div className="flex items-center gap-1.5">
-                      <exp.icon className="w-4 h-4 text-secondary" />
-                      <span className="font-medium text-secondary text-sm">
-                        {exp.company}
-                      </span>
-                    </div>
-                  </div>
-
-                  <ul className="space-y-2.5 bg-muted/40 p-4 rounded-xl border border-border">
-                    {exp.details.map((detail, i) => (
-                      <li
-                        key={i}
-                        className="flex items-start gap-3 text-xs sm:text-sm text-muted-foreground"
-                      >
-                        <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                        <span>{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Technical Expertise */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="glass-card p-6 sm:p-8 rounded-2xl h-fit sticky top-24"
-          >
-            <h3 className="text-2xl sm:text-3xl font-bold mb-5 md:mb-6">
-              Technical <span className="text-gradient">Expertise</span>
-            </h3>
-            <p className="text-muted-foreground mb-6 md:mb-8 text-sm sm:text-base leading-relaxed">
-              Certified in Cisco CCNA and BNSP with practical experience across
-              network operations, IoT development, and automation workflows. I
-              focus on reliable implementation, measurable impact, and continuous
-              improvement.
-            </p>
-
-            <div className="space-y-5">
-              {skills.map((skill, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: 15 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.08, duration: 0.4 }}
-                >
-                  <div className="flex justify-between mb-2">
-                    <span className="font-medium text-sm sm:text-base flex items-center gap-2">
-                      <skill.icon className="w-4 h-4 text-primary" />
-                      {skill.name}
-                    </span>
-                    <AnimatedCounter value={skill.level} />
-                  </div>
-                  <div className="h-2 bg-muted rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.level}%` }}
-                      viewport={{ once: true }}
-                      transition={{
-                        duration: 1,
-                        delay: 0.2 + index * 0.1,
-                        ease: "easeOut",
-                      }}
-                      className={`h-full bg-gradient-to-r ${skill.color} rounded-full`}
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+            Where<br />I've<br />been
+          </h2>
         </div>
+
+        <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {EXPERIENCES.map((exp, i) => (
+            <div
+              key={i}
+              className="exp-card glass-card p-5 rounded-2xl border border-white/[0.06] hover:border-[var(--electric)]/25 transition-all duration-300 group"
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-7 h-7 rounded-lg bg-[var(--electric)]/10 flex items-center justify-center">
+                  <exp.icon className="w-3.5 h-3.5 text-[var(--electric)]" />
+                </div>
+                <span className="text-[10px] text-muted-foreground uppercase tracking-wider">
+                  {exp.period}
+                </span>
+              </div>
+              <h4 className="font-bold text-[var(--warm-white)] text-sm mb-1 leading-snug group-hover:text-[var(--electric)] transition-colors">
+                {exp.role}
+              </h4>
+              <p className="text-[11px] text-[var(--electric)]/60 mb-3 font-medium">
+                {exp.company}
+              </p>
+              <ul className="space-y-1.5">
+                {exp.details.map((d, j) => (
+                  <li key={j} className="flex items-start gap-2 text-[11px] text-muted-foreground leading-snug">
+                    <CheckCircle2 className="w-3 h-3 text-[var(--electric)]/40 shrink-0 mt-0.5" />
+                    {d}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Panel C — TECH STACK ORBIT ───────────────────────────────────
+
+function PanelStack() {
+  return (
+    <div className="w-screen h-screen flex-shrink-0 flex items-center bg-[var(--surface-0)] relative overflow-hidden">
+      {/* Center glow */}
+      <div className="absolute left-2/3 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[28vw] h-[28vw] bg-[var(--electric)]/8 blur-[70px] rounded-full pointer-events-none" />
+
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-8 md:px-16 grid md:grid-cols-[220px_1fr] gap-12 items-center">
+        <div>
+          <p className="section-label mb-3">03 / Stack</p>
+          <h2
+            className="text-4xl md:text-5xl font-bold text-[var(--warm-white)] leading-[0.95] mb-4"
+            style={{ fontFamily: "Clash Display, sans-serif" }}
+          >
+            Tools I<br />live with
+          </h2>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            React · TypeScript · Node.js<br />
+            Three.js · GSAP · Python<br />
+            Arduino · ESP32 · n8n · CCNA
+          </p>
+        </div>
+
+        {/* Orbit visualization */}
+        <div className="flex items-center justify-center">
+          <div className="relative" style={{ width: 480, height: 480 }}>
+            {/* Center core */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-[var(--electric)]/15 border border-[var(--electric)]/25 flex items-center justify-center z-10">
+              <div className="w-7 h-7 rounded-full bg-[var(--electric)]/50 border border-[var(--electric)]/60 animate-pulse" />
+            </div>
+
+            {ORBIT_RINGS.map((ring, i) => (
+              <OrbitRing key={i} {...ring} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Mobile fallback — simple vertical ───────────────────────────
+
+function AboutMobile() {
+  return (
+    <section id="about" className="py-20 px-6 bg-[var(--surface-0)]">
+      <div className="max-w-xl mx-auto space-y-16">
+        {/* Who */}
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <p className="section-label mb-3">01 / About</p>
+          <h2 className="text-4xl font-bold text-[var(--warm-white)] mb-4 leading-tight" style={{ fontFamily: "Clash Display, sans-serif" }}>
+            The person<br /><span className="text-gradient">behind the code</span>
+          </h2>
+          <p className="text-muted-foreground leading-relaxed mb-6">
+            Electronics & Telecommunication Engineering graduate. Informatics teacher,
+            IoT builder, and full stack developer from Riau, Indonesia.
+          </p>
+          <div className="flex gap-3 flex-wrap">
+            {STATS.map((s) => (
+              <div key={s.label} className="px-4 py-2.5 rounded-xl bg-[var(--surface-1)] border border-white/[0.07] flex flex-col items-center min-w-[80px]">
+                <span className="text-xl font-bold text-[var(--electric)]" style={{ fontFamily: "Clash Display, sans-serif" }}>{s.value}</span>
+                <span className="text-[10px] text-muted-foreground uppercase tracking-wider mt-0.5">{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Journey */}
+        <div>
+          <p className="section-label mb-3">02 / Journey</p>
+          <h3 className="text-3xl font-bold text-[var(--warm-white)] mb-6" style={{ fontFamily: "Clash Display, sans-serif" }}>Where I've been</h3>
+          <div className="space-y-3">
+            {EXPERIENCES.map((exp, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                className="glass-card p-4 rounded-xl border border-white/[0.06]">
+                <div className="flex items-center gap-2 mb-2">
+                  <exp.icon className="w-3.5 h-3.5 text-[var(--electric)]" />
+                  <span className="text-[10px] text-muted-foreground uppercase tracking-wider">{exp.period}</span>
+                </div>
+                <p className="font-bold text-[var(--warm-white)] text-sm">{exp.role}</p>
+                <p className="text-[11px] text-[var(--electric)]/60 mt-0.5">{exp.company}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Stack */}
+        <div>
+          <p className="section-label mb-3">03 / Stack</p>
+          <h3 className="text-3xl font-bold text-[var(--warm-white)] mb-4" style={{ fontFamily: "Clash Display, sans-serif" }}>Tools I live with</h3>
+          <div className="flex flex-wrap gap-2">
+            {ORBIT_RINGS.flatMap((r) => r.items).map((item) => (
+              <span key={item.label} className="px-3 py-1.5 rounded-lg bg-[var(--surface-1)] border border-white/[0.07] text-xs font-medium text-muted-foreground">
+                {item.label}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Main Component ────────────────────────────────────────────────
+
+const About = () => {
+  const isMobile = useIsMobile();
+  const prefersReduced = usePrefersReducedMotion();
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (isMobile || prefersReduced || !trackRef.current || !sectionRef.current) return;
+
+    const getTrackExtra = () =>
+      (trackRef.current?.scrollWidth ?? 0) - window.innerWidth;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        pin: true,
+        start: "top top",
+        end: () => `+=${getTrackExtra()}`,
+        scrub: 1,
+        invalidateOnRefresh: true,
+        anticipatePin: 1,
+      },
+    });
+
+    // Slide the track from 0 → -(track width - viewport width)
+    tl.to(trackRef.current, {
+      x: () => -getTrackExtra(),
+      ease: "none",
+      duration: 1,
+    });
+
+    // Panel B cards: stagger in as panel B comes into view (~35% into scroll)
+    const cards = cardsRef.current?.querySelectorAll<HTMLElement>(".exp-card");
+    if (cards?.length) {
+      tl.from(cards, { x: 48, opacity: 0, stagger: 0.06, duration: 0.16 }, 0.37);
+    }
+  }, { scope: sectionRef, dependencies: [isMobile, prefersReduced] });
+
+  if (isMobile) return <AboutMobile />;
+
+  return (
+    <section ref={sectionRef} id="about" className="relative">
+      {/* Horizontal track — 3 panels × 100vw */}
+      <div
+        ref={trackRef}
+        className="flex flex-nowrap"
+        style={{ width: "300vw", willChange: "transform" }}
+      >
+        <PanelWhoIAm />
+        <PanelJourney cardsRef={cardsRef} />
+        <PanelStack />
       </div>
     </section>
   );

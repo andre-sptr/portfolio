@@ -1,11 +1,13 @@
-import { Heart, ArrowUp, Github, Linkedin, Instagram } from "lucide-react";
+import { ArrowUp, Github, Linkedin, Instagram } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLenis } from "@/providers/LenisProvider";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const lenis = useLenis();
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    lenis?.scrollTo(0, { duration: 1.5 });
   };
 
   return (
@@ -39,6 +41,7 @@ const Footer = () => {
               {[
                 { name: "About", href: "#about" },
                 { name: "Projects", href: "#projects" },
+                { name: "Experience", href: "#experience" },
                 { name: "Free Tools", href: "#tools" },
                 { name: "Contact", href: "#contact" },
               ].map((link) => (

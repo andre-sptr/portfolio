@@ -1,519 +1,462 @@
-import { useState, useRef } from "react";
-import { ExternalLink, Github, Layers } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence, useMotionValue, useSpring, useInView } from "framer-motion";
+import { useRef } from "react";
+import { ExternalLink, Github, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-import projectFireSense from "/pages/iotPage.png";
-import projectChatBot from "/pages/n8nPage.png";
-import projectBinasiswa from "/pages/binasiswaPage.png";
-import projectHarLah from "/pages/harlahPage.png";
-import projectPDF from "/pages/pdfPage.png";
-import projectAI from "/pages/aiPage.png";
-import projectZI from "/pages/ziPage.png";
-import projectAetherNet from "/pages/aethernetPage.png";
-import projectFile from "/pages/filePage.png";
-import projectEduForum from "/pages/eduforumPage.png";
-import projectSNMB from "/pages/snmbPage.png";
-import projectPerpus from "/pages/perpusPage.png";
-import projectAET from "/pages/aetPage.png";
-import projectSiTiket from "/pages/sitiketPage.png";
-import projectAqiqah from "/pages/aqiqahPage.png";
-import projectFiscal from "/pages/fiscalPage.png";
-import projectReka from "/pages/rekaPage.png";
-import projectTutorin from "/pages/tutorinPage.png";
-import projectDebate from "/pages/debatePage.png";
 
-const projects = [
+gsap.registerPlugin(ScrollTrigger);
+
+// 4 featured projects only (D5 decision)
+const featured = [
   {
+    num: "01",
     title: "Arena Debate",
-    description: "Lima AI agent dalam Debat Tim 2v2 mendiskusikan topik apa pun, memberikan analisis mendalam dan kesimpulan berdasarkan konsensus.",
-    image: projectDebate,
-    tech: ["Next", "GeminiAI", "Node.js"],
+    subtitle: "Multi-Agent AI Debate System",
+    description:
+      "Lima AI agent berdebat dalam format Tim 2v2, menganalisis topik apa pun secara mendalam dan mencapai kesimpulan berbasis konsensus.",
+    tech: ["Next.js", "Gemini AI", "Node.js"],
     category: "AI & Tools",
+    image: "/pages/debatePage.png",
     viewUrl: "https://debat.andresptr.site/",
     codeUrl: "",
-    featured: true,
+    accent: "#818cf8",
   },
   {
+    num: "02",
     title: "Reka AI",
-    description: "Website AI-assisted coding untuk membantu developer menulis, debugging, dan optimasi kode.",
-    image: projectReka,
-    tech: ["React", "GeminiAI", "Node.js"],
+    subtitle: "AI-Assisted Coding Platform",
+    description:
+      "Platform AI untuk membantu developer menulis, debugging, dan optimasi kode secara real-time dengan konteks proyek penuh.",
+    tech: ["React", "Gemini AI", "Node.js"],
     category: "AI & Tools",
+    image: "/pages/rekaPage.png",
     viewUrl: "",
     codeUrl: "https://github.com/andre-sptr/ai",
-    featured: true,
+    accent: "#22d3ee",
   },
   {
+    num: "03",
     title: "Fiscal AI Finance",
-    description: "Web app manajemen keuangan personal berbasis AI untuk kategorisasi pengeluaran dan analisis finansial.",
-    image: projectFiscal,
+    subtitle: "Personal Finance Manager",
+    description:
+      "Web app manajemen keuangan personal berbasis AI untuk kategorisasi pengeluaran otomatis dan analisis finansial prediktif.",
     tech: ["React", "AI", "Node.js"],
     category: "AI & Tools",
+    image: "/pages/fiscalPage.png",
     viewUrl: "",
     codeUrl: "https://github.com/andre-sptr/fiscal",
-    featured: false,
+    accent: "#34d399",
   },
   {
-    title: "AET AI PCR",
-    description: "Platform informasi berbasis AI untuk Himpunan Mahasiswa AET Politeknik Caltex Riau.",
-    image: projectAET,
-    tech: ["React", "AI", "Node.js"],
-    category: "AI & Tools",
-    viewUrl: "https://aetpcr.site/",
-    codeUrl: "https://github.com/andre-sptr/aet-ai2",
-    featured: false,
-  },
-  {
-    title: "SiTiket Telkom Infra",
-    description: "Sistem manajemen tiket gangguan PT Telkom Infrastruktur Indonesia.",
-    image: projectSiTiket,
-    tech: ["React", "Node.js", "MySQL"],
-    category: "Web Development",
-    viewUrl: "",
-    codeUrl: "",
-    featured: false,
-  },
-  {
-    title: "FireSense: Sistem Peringatan Kebakaran",
-    description: "Aplikasi monitoring kebakaran real-time berbasis IoT untuk mendukung early warning system.",
-    image: projectFireSense,
-    tech: ["ESP32", "Figma", "Firebase"],
-    category: "IoT",
-    viewUrl: "",
-    codeUrl: "",
-    featured: false,
-  },
-  {
-    title: "AI Assistant MAN IC Siak",
-    description: "Asisten AI yang dirancang untuk mendukung layanan dan administrasi di MAN Insan Cendekia Siak.",
-    image: projectAI,
-    tech: ["React", "Bootstrap 5", "Node.js"],
-    category: "AI & Tools",
-    viewUrl: "",
-    codeUrl: "https://github.com/andre-sptr/ai-agent",
-    featured: false,
-  },
-  {
-    title: "n8n WhatsApp Bot",
-    description: "Bot WhatsApp berbasis n8n untuk otomatisasi respon pertanyaan orang tua siswa di MAN IC Siak.",
-    image: projectChatBot,
-    tech: ["n8n", "WhatsApp", "Automation"],
-    category: "AI & Tools",
-    viewUrl: "",
-    codeUrl: "",
-    featured: false,
-  },
-  {
-    title: "SNMB MAN IC Siak",
-    description: "Landing page Seleksi Nasional Murid Baru untuk MAN Insan Cendekia Siak.",
-    image: projectSNMB,
-    tech: ["React", "Bootstrap 5"],
-    category: "Web Development",
-    viewUrl: "https://snmb.icsiak.sch.id/",
-    codeUrl: "https://github.com/andre-sptr/snmb",
-    featured: false,
-  },
-  {
-    title: "Binasiswa MAN IC Siak",
-    description: "Sistem informasi untuk pencatatan poin pelanggaran dan data kesehatan siswa secara digital.",
-    image: projectBinasiswa,
-    tech: ["CI4", "Bootstrap 5", "MySQL"],
-    category: "Web Development",
-    viewUrl: "https://binasiswa.icsiak.sch.id/",
-    codeUrl: "",
-    featured: false,
-  },
-  {
-    title: "Perpus MAN IC Siak",
-    description: "Perpustakaan digital lengkap dengan katalog, peminjaman online, dan riwayat.",
-    image: projectPerpus,
-    tech: ["React", "Node.js", "MySQL"],
-    category: "Web Development",
-    viewUrl: "",
-    codeUrl: "",
-    featured: false,
-  },
-  {
-    title: "PDF Tools",
-    description: "Serangkaian alat online untuk mengelola PDF—gabung, pisah, dan kompres dengan cepat.",
-    image: projectPDF,
-    tech: ["React", "Bootstrap 5", "Node.js"],
-    category: "Web Development",
-    viewUrl: "https://pdf.andresptr.site/",
-    codeUrl: "https://github.com/andre-sptr/pdf-tools",
-    featured: false,
-  },
-  {
-    title: "TutorinBang - Platform Tutorial",
-    description: "Platform tutorial troubleshooting yang menyediakan panduan langkah demi langkah untuk berbagai masalah teknis.",
-    image: projectTutorin,
-    tech: ["React", "Bootstrap 5", "Node.js"],
-    category: "Web Development",
-    viewUrl: "https://tutorinbang.my.id/",
-    codeUrl: "https://github.com/andre-sptr/tutorin",
-    featured: false,
-  },
-  {
-    title: "HarLah 10 Tahun MAN IC Siak",
-    description: "Platform digital yang dirancang untuk mempublikasikan perayaan HarLah ke-10 MAN Insan Cendekia Siak.",
-    image: projectHarLah,
-    tech: ["React", "Bootstrap 5", "Node.js"],
-    category: "Web Development",
-    viewUrl: "https://harlah.icsiak.sch.id/",
-    codeUrl: "https://github.com/andre-sptr/harlah",
-    featured: false,
-  },
-  {
-    title: "CloudShare - File Hosting",
-    description: "Platform cloud storage modern dan aman untuk upload, simpan, dan bagikan file.",
-    image: projectFile,
-    tech: ["React", "Bootstrap 5", "Node.js"],
-    category: "Web Development",
-    viewUrl: "https://file.andresptr.site/",
-    codeUrl: "https://github.com/andre-sptr/file",
-    featured: false,
-  },
-  {
-    title: "Zona Integritas MAN IC Siak",
-    description: "Portal layanan digital terintegrasi untuk seluruh civitas akademika MAN Insan Cendekia Siak.",
-    image: projectZI,
-    tech: ["React", "Bootstrap 5", "Node.js"],
-    category: "Web Development",
-    viewUrl: "",
-    codeUrl: "https://github.com/andre-sptr/zi",
-    featured: false,
-  },
-  {
-    title: "EduForum - MAN IC Siak",
-    description: "Platform sosial edukatif untuk siswa, guru, dan alumni MAN IC Siak.",
-    image: projectEduForum,
-    tech: ["React", "Bootstrap 5", "Node.js"],
-    category: "Web Development",
-    viewUrl: "",
-    codeUrl: "https://github.com/andre-sptr/eduforum",
-    featured: false,
-  },
-  {
+    num: "04",
     title: "AetherNet",
-    description: "Visualisasi real-time koneksi antar node dalam jaringan AetherNet.",
-    image: projectAetherNet,
-    tech: ["React", "Bootstrap 5", "Node.js"],
-    category: "Web Development",
-    viewUrl: "",
-    codeUrl: "https://github.com/andre-sptr/aethernet",
-    featured: false,
-  },
-  {
-    title: "Aqiqah",
-    description: "Undangan digital aqiqah dengan desain modern dan interaktif.",
-    image: projectAqiqah,
-    tech: ["React", "Tailwind"],
-    category: "Web Development",
+    subtitle: "Real-time Network Monitor",
+    description:
+      "Dashboard monitoring jaringan real-time dengan visualisasi topologi interaktif dan alerting berbasis threshold.",
+    tech: ["React", "WebSocket", "D3.js"],
+    category: "Infrastructure",
+    image: "/pages/aethernetPage.png",
     viewUrl: "",
     codeUrl: "",
-    featured: false,
+    accent: "#f59e0b",
   },
 ];
 
-const categories = ["All", "IoT", "AI & Tools", "Web Development"];
-
-const categoryColors: Record<string, string> = {
-  IoT: "bg-emerald-500",
-  "AI & Tools": "bg-primary",
-  "Web Development": "bg-secondary",
-};
-
-interface TiltCardProps {
-  project: (typeof projects)[number];
-  className?: string;
-  prefersReduced: boolean;
-}
-
-const TiltCard = ({ project, className = "", prefersReduced }: TiltCardProps) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const rotateX = useMotionValue(0);
-  const rotateY = useMotionValue(0);
-  const glareX = useMotionValue(50);
-  const glareY = useMotionValue(50);
-
-  const springRotateX = useSpring(rotateX, { stiffness: 300, damping: 30 });
-  const springRotateY = useSpring(rotateY, { stiffness: 300, damping: 30 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (prefersReduced || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const offsetX = e.clientX - rect.left;
-    const offsetY = e.clientY - rect.top;
-    rotateY.set((offsetX / rect.width - 0.5) * 24);
-    rotateX.set((offsetY / rect.height - 0.5) * -24);
-    glareX.set((offsetX / rect.width) * 100);
-    glareY.set((offsetY / rect.height) * 100);
-  };
-
-  const handleMouseLeave = () => {
-    rotateX.set(0);
-    rotateY.set(0);
-    glareX.set(50);
-    glareY.set(50);
-  };
+// Desktop: full-bleed horizontal panel with parallax layers
+const ProjectPanel = ({
+  project,
+  index,
+}: {
+  project: (typeof featured)[0];
+  index: number;
+}) => {
+  const isEven = index % 2 === 0;
 
   return (
-    <motion.div
-      ref={cardRef}
-      className={`group relative rounded-2xl overflow-hidden glass-card hover:border-primary/40 transition-all duration-300 ${className}`}
-      style={
-        prefersReduced
-          ? {}
-          : { rotateX: springRotateX, rotateY: springRotateY, transformPerspective: 800 }
-      }
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+    <div
+      className="project-panel relative flex-shrink-0 w-screen h-screen flex items-center justify-center overflow-hidden"
+      style={{ background: "var(--surface-0)" }}
     >
-      {/* Glare overlay */}
-      {!prefersReduced && (
-        <motion.div
-          className="absolute inset-0 pointer-events-none z-30 rounded-2xl"
-          style={{
-            background: `radial-gradient(circle at ${glareX.get()}% ${glareY.get()}%, rgba(255,255,255,0.12) 0%, transparent 65%)`,
-          }}
-        />
-      )}
+      {/* Ambient glow behind image */}
+      <div
+        className="absolute w-[50vw] h-[50vw] rounded-full blur-[120px] opacity-10 pointer-events-none"
+        style={{
+          background: project.accent,
+          right: isEven ? "5%" : "auto",
+          left: isEven ? "auto" : "5%",
+          top: "50%",
+          transform: "translateY(-50%)",
+        }}
+      />
 
-      {/* Featured badge (mobile) */}
-      {project.featured && (
-        <div className="absolute top-3 left-3 z-20 sm:hidden">
-          <span className="px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider">
-            Featured
-          </span>
-        </div>
-      )}
-
-      {/* Image */}
-      <div className="relative aspect-video overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-        <img
-          src={project.image}
-          alt={project.title}
-          loading="lazy"
-          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-        />
-        <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 flex gap-2 translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300 z-20">
-          {project.codeUrl && (
-            <a href={project.codeUrl} target="_blank" rel="noopener noreferrer">
-              <Button size="icon" variant="secondary" className="rounded-full w-9 h-9 sm:w-10 sm:h-10 hover:scale-110 transition-transform shadow-lg backdrop-blur-md">
-                <Github className="w-5 h-5" />
-              </Button>
-            </a>
-          )}
-          {project.viewUrl && (
-            <a href={project.viewUrl} target="_blank" rel="noopener noreferrer">
-              <Button size="icon" className="rounded-full w-9 h-9 sm:w-10 sm:h-10 bg-primary hover:bg-primary/90 hover:scale-110 transition-transform shadow-lg">
-                <ExternalLink className="w-5 h-5" />
-              </Button>
-            </a>
-          )}
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="p-5 sm:p-6">
-        <div className="flex items-center gap-2 mb-2.5">
-          <span className={`w-2 h-2 rounded-full ${categoryColors[project.category] || "bg-muted-foreground"}`} />
-          <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-            {project.category}
-          </span>
-        </div>
-        <h3 className="text-lg sm:text-xl font-bold mb-2 group-hover:text-primary transition-colors line-clamp-1">
-          {project.title}
-        </h3>
-        <p className="text-xs sm:text-sm text-muted-foreground mb-4 line-clamp-2">
-          {project.description}
-        </p>
-        <div className="flex flex-wrap gap-1.5 mt-auto">
-          {project.tech.map((tech) => (
-            <motion.span
-              key={tech}
-              whileHover={{ scale: 1.05 }}
-              className="text-[11px] px-2.5 py-1 rounded-md bg-muted text-muted-foreground border border-border font-medium"
+      <div
+        className={`relative z-10 w-full max-w-7xl mx-auto px-8 grid grid-cols-2 gap-16 items-center ${
+          isEven ? "" : "direction-rtl"
+        }`}
+      >
+        {/* Text side */}
+        <div className={`flex flex-col gap-6 ${isEven ? "order-1" : "order-2"}`}>
+          <div className="flex items-center gap-3">
+            <span
+              className="text-7xl font-bold opacity-10 leading-none select-none"
+              style={{ fontFamily: "'Clash Display', sans-serif", color: project.accent }}
             >
-              {tech}
-            </motion.span>
-          ))}
-        </div>
-      </div>
-    </motion.div>
-  );
-};
+              {project.num}
+            </span>
+            <span
+              className="text-xs font-medium tracking-[0.2em] uppercase px-3 py-1 rounded-full border"
+              style={{ color: project.accent, borderColor: `${project.accent}40` }}
+            >
+              {project.category}
+            </span>
+          </div>
 
-const Projects = () => {
-  const [filter, setFilter] = useState("All");
-  const prefersReduced = usePrefersReducedMotion();
-  const gridRef = useRef(null);
-  const inView = useInView(gridRef, { once: true, margin: "-80px" });
+          <div>
+            <h2
+              className="text-5xl font-bold leading-tight mb-2 project-title"
+              style={{ fontFamily: "'Clash Display', sans-serif", color: "var(--warm-white)" }}
+            >
+              {project.title}
+            </h2>
+            <p className="text-lg font-medium" style={{ color: project.accent }}>
+              {project.subtitle}
+            </p>
+          </div>
 
-  const filteredProjects = projects.filter(
-    (p) => filter === "All" || p.category === filter
-  );
-
-  const isBento = filter === "All";
-
-  return (
-    <section id="projects" className="py-16 md:py-24 px-4 section-alt">
-      <div className="container mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12 md:mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Featured <span className="text-gradient">Projects</span>
-          </h2>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            A selection of my latest projects across networking, IoT, AI automation, and web development.
+          <p className="text-base leading-relaxed text-muted-foreground max-w-md project-desc">
+            {project.description}
           </p>
 
-          {/* Filter Tabs */}
-          <div className="inline-flex flex-wrap justify-center gap-2 p-1.5 bg-muted/60 rounded-full border border-border">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setFilter(category)}
-                className={`relative px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
-                  filter === category
-                    ? "text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+          <div className="flex flex-wrap gap-2 project-tech">
+            {project.tech.map((t) => (
+              <span
+                key={t}
+                className="text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-muted-foreground"
               >
-                {filter === category && (
-                  <motion.span
-                    layoutId="filter-pill"
-                    className="absolute inset-0 bg-primary rounded-full shadow-md"
-                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10">{category}</span>
-              </button>
+                {t}
+              </span>
             ))}
           </div>
-        </motion.div>
 
-        {/* Bento Grid (All filter) */}
-        {isBento ? (
-          <motion.div
-            ref={gridRef}
-            className="hidden lg:grid grid-cols-4 gap-5 md:gap-6 grid-flow-dense"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project, i) => {
-                let colClass = "col-span-1 row-span-1";
-                if (project.title === "Arena Debate") colClass = "col-span-2 row-span-1";
-                if (project.title === "Reka AI") colClass = "col-span-2 row-span-2";
+          <div className="flex gap-3 project-cta">
+            {project.viewUrl && (
+              <a
+                href={project.viewUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:gap-3"
+                style={{
+                  background: project.accent,
+                  color: "#0a0a0f",
+                }}
+              >
+                Live Demo <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            )}
+            {project.codeUrl && (
+              <a
+                href={project.codeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium border border-white/20 text-muted-foreground hover:text-foreground hover:border-white/40 transition-all duration-300"
+              >
+                <Github className="w-3.5 h-3.5" /> Code
+              </a>
+            )}
+            {!project.viewUrl && !project.codeUrl && (
+              <span className="text-xs text-muted-foreground/50 italic">In progress</span>
+            )}
+          </div>
+        </div>
 
-                const alreadyVisible = i < 4;
-                return (
-                  <motion.div
-                    key={project.title}
-                    layout
-                    className={colClass}
-                    initial={alreadyVisible ? false : prefersReduced ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.35, ease: "easeOut", delay: inView ? i * 0.07 : 0 }}
-                  >
-                    <TiltCard
-                      project={project}
-                      className={project.title === "Reka AI" ? "h-full" : ""}
-                      prefersReduced={prefersReduced}
-                    />
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </motion.div>
-        ) : null}
-
-        {/* Tablet bento (md, hidden on lg+) */}
-        {isBento ? (
-          <motion.div
-            className="hidden md:grid lg:hidden grid-cols-2 gap-5 grid-flow-dense"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project, i) => {
-                let colClass = "col-span-1";
-                if (project.title === "Arena Debate") colClass = "col-span-2";
-                return (
-                  <motion.div
-                    key={project.title}
-                    layout
-                    className={colClass}
-                    initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.35, ease: "easeOut", delay: i * 0.05 }}
-                  >
-                    <TiltCard project={project} prefersReduced={prefersReduced} />
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </motion.div>
-        ) : null}
-
-        {/* Mobile (sm) — always single column */}
-        {isBento ? (
-          <motion.div className="grid md:hidden grid-cols-1 gap-5">
-            <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project, i) => (
-                <motion.div
-                  key={project.title}
-                  layout
-                  initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.35, ease: "easeOut", delay: i * 0.04 }}
-                >
-                  <TiltCard project={project} prefersReduced={prefersReduced} />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        ) : null}
-
-        {/* Filtered view (non-All) */}
-        {!isBento ? (
-          <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-            <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project, i) => (
-                <motion.div
-                  key={project.title}
-                  layout
-                  initial={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                  transition={{ duration: 0.35, ease: "easeOut", delay: i * 0.05 }}
-                >
-                  <TiltCard project={project} prefersReduced={prefersReduced} />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        ) : null}
-
-        {/* Empty State */}
-        {filteredProjects.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center py-20"
-          >
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-muted flex items-center justify-center">
-              <Layers className="w-8 h-8 text-muted-foreground" />
+        {/* Image side */}
+        <div
+          className={`relative ${isEven ? "order-2" : "order-1"} project-img-wrap`}
+        >
+          {/* Frame */}
+          <div
+            className="absolute -inset-3 rounded-2xl opacity-20"
+            style={{
+              background: `linear-gradient(135deg, ${project.accent}40, transparent)`,
+              border: `1px solid ${project.accent}30`,
+            }}
+          />
+          <div className="relative rounded-xl overflow-hidden shadow-2xl">
+            {/* Parallax image layer — GSAP moves this */}
+            <div className="project-img-inner">
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-[400px] object-cover object-top"
+                loading="lazy"
+              />
             </div>
-            <p className="text-muted-foreground">No projects found for this category.</p>
-          </motion.div>
+            {/* Overlay gradient */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: `linear-gradient(to top, ${project.accent}20 0%, transparent 50%)`,
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Mobile: vertical stack with whileInView
+const ProjectCardMobile = ({ project }: { project: (typeof featured)[0] }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.2 }}
+    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+    className="relative rounded-2xl overflow-hidden border border-white/10"
+    style={{ background: "var(--surface-1)" }}
+  >
+    <div className="relative h-48 overflow-hidden">
+      <img
+        src={project.image}
+        alt={project.title}
+        className="w-full h-full object-cover object-top"
+        loading="lazy"
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `linear-gradient(to top, var(--surface-1) 0%, transparent 60%)`,
+        }}
+      />
+      <span
+        className="absolute top-3 right-3 text-xs font-medium tracking-widest uppercase px-2.5 py-1 rounded-full border backdrop-blur-sm"
+        style={{ color: project.accent, borderColor: `${project.accent}40`, background: `${project.accent}15` }}
+      >
+        {project.category}
+      </span>
+    </div>
+
+    <div className="p-5 flex flex-col gap-3">
+      <div>
+        <h3
+          className="text-xl font-bold leading-tight"
+          style={{ fontFamily: "'Clash Display', sans-serif", color: "var(--warm-white)" }}
+        >
+          {project.title}
+        </h3>
+        <p className="text-sm font-medium mt-0.5" style={{ color: project.accent }}>
+          {project.subtitle}
+        </p>
+      </div>
+
+      <p className="text-sm text-muted-foreground leading-relaxed">{project.description}</p>
+
+      <div className="flex flex-wrap gap-1.5">
+        {project.tech.map((t) => (
+          <span
+            key={t}
+            className="text-xs px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-muted-foreground"
+          >
+            {t}
+          </span>
+        ))}
+      </div>
+
+      <div className="flex gap-2 pt-1">
+        {project.viewUrl && (
+          <a
+            href={project.viewUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium"
+            style={{ background: project.accent, color: "#0a0a0f" }}
+          >
+            Live <ExternalLink className="w-3 h-3" />
+          </a>
         )}
+        {project.codeUrl && (
+          <a
+            href={project.codeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium border border-white/20 text-muted-foreground"
+          >
+            <Github className="w-3 h-3" /> Code
+          </a>
+        )}
+      </div>
+    </div>
+  </motion.div>
+);
+
+const ProjectsMobile = () => (
+  <section id="projects" className="py-24 px-4" style={{ background: "var(--surface-0)" }}>
+    <div className="max-w-lg mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="mb-12 text-center"
+      >
+        <span className="text-xs font-medium tracking-[0.25em] uppercase text-primary mb-3 block">
+          Selected Work
+        </span>
+        <h2
+          className="text-4xl font-bold"
+          style={{ fontFamily: "'Clash Display', sans-serif", color: "var(--warm-white)" }}
+        >
+          Projects
+        </h2>
+      </motion.div>
+
+      <div className="flex flex-col gap-6">
+        {featured.map((p) => (
+          <ProjectCardMobile key={p.num} project={p} />
+        ))}
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3 }}
+        className="mt-10 text-center"
+      >
+        <a
+          href="https://github.com/andre-sptr"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+        >
+          View all on GitHub <ArrowRight className="w-4 h-4" />
+        </a>
+      </motion.div>
+    </div>
+  </section>
+);
+
+const Projects = () => {
+  const isMobile = useIsMobile();
+  const prefersReduced = usePrefersReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (isMobile || prefersReduced || !trackRef.current || !sectionRef.current) return;
+
+      const panels = gsap.utils.toArray<HTMLElement>(".project-panel");
+      const totalWidth = panels.length * window.innerWidth;
+      const scrollDist = totalWidth - window.innerWidth;
+
+      // Master horizontal scroll timeline
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          pin: true,
+          start: "top top",
+          end: () => `+=${scrollDist}`,
+          scrub: 1.2,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+        },
+      });
+
+      tl.to(trackRef.current, {
+        x: () => -scrollDist,
+        ease: "none",
+        duration: 1,
+      });
+
+      // Per-panel entrance animations (stagger in at panel's own progress)
+      panels.forEach((panel, i) => {
+        const progress = i / panels.length;
+        const title = panel.querySelector(".project-title");
+        const desc = panel.querySelector(".project-desc");
+        const tech = panel.querySelector(".project-tech");
+        const cta = panel.querySelector(".project-cta");
+        const imgWrap = panel.querySelector(".project-img-wrap");
+
+        if (i > 0) {
+          tl.from(
+            [title, desc, tech, cta].filter(Boolean),
+            { opacity: 0, y: 30, stagger: 0.04, duration: 0.15, ease: "power2.out" },
+            progress + 0.02
+          );
+        }
+
+        // Parallax: image moves slightly opposite scroll direction
+        if (imgWrap) {
+          tl.fromTo(
+            imgWrap.querySelector(".project-img-inner"),
+            { xPercent: -6 },
+            { xPercent: 6, ease: "none", duration: 1 },
+            i / panels.length
+          );
+        }
+      });
+
+      // Section label parallax
+      const label = sectionRef.current.querySelector(".projects-label");
+      if (label) {
+        tl.fromTo(label, { xPercent: 0 }, { xPercent: -60, ease: "none", duration: 1 }, 0);
+      }
+    },
+    { scope: sectionRef, dependencies: [isMobile, prefersReduced] }
+  );
+
+  if (isMobile) return <ProjectsMobile />;
+
+  return (
+    <section
+      ref={sectionRef}
+      id="projects"
+      className="relative overflow-hidden"
+      style={{ background: "var(--surface-0)" }}
+    >
+      {/* Giant watermark label — parallaxes opposite scroll */}
+      <div
+        className="projects-label absolute top-6 left-0 pointer-events-none select-none z-0 whitespace-nowrap"
+        style={{
+          fontFamily: "'Clash Display', sans-serif",
+          fontSize: "clamp(6rem, 15vw, 14rem)",
+          fontWeight: 700,
+          color: "transparent",
+          WebkitTextStroke: "1px rgba(255,255,255,0.04)",
+          lineHeight: 1,
+        }}
+      >
+        PROJECTS
+      </div>
+
+      {/* Section header — stays fixed at top-left while panels scroll */}
+      <div className="absolute top-10 left-10 z-20 pointer-events-none">
+        <span className="text-xs font-medium tracking-[0.25em] uppercase text-primary block mb-1">
+          Selected Work
+        </span>
+        <span
+          className="text-2xl font-bold"
+          style={{ fontFamily: "'Clash Display', sans-serif", color: "var(--warm-white)" }}
+        >
+          Projects
+        </span>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-10 right-10 z-20 flex items-center gap-2 text-xs text-muted-foreground/50 pointer-events-none">
+        <span>scroll</span>
+        <ArrowRight className="w-3.5 h-3.5" />
+      </div>
+
+      {/* Horizontal track */}
+      <div ref={trackRef} className="flex" style={{ width: `${featured.length * 100}vw` }}>
+        {featured.map((project, i) => (
+          <ProjectPanel key={project.num} project={project} index={i} />
+        ))}
       </div>
     </section>
   );

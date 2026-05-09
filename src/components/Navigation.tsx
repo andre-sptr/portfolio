@@ -3,12 +3,12 @@ import { Menu, Sparkles, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence, useScroll, useSpring, useMotionValue } from "framer-motion";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-import { ModeToggle } from "./ModeToggle";
 
 const navLinks = [
   { name: "Home", href: "#" },
   { name: "About", href: "#about" },
   { name: "Projects", href: "#projects" },
+  { name: "Experience", href: "#experience" },
   { name: "Free Tools", href: "#tools" },
   { name: "Contact", href: "#contact" },
 ];
@@ -87,7 +87,7 @@ const Navigation = () => {
 
   // Active section detection via IntersectionObserver
   const observeSections = useCallback(() => {
-    const sectionIds = ["about", "projects", "tools", "contact"];
+    const sectionIds = ["about", "projects", "experience", "tools", "contact"];
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
@@ -172,12 +172,10 @@ const Navigation = () => {
                   Let's Talk
                 </Button>
               </a>
-              <ModeToggle />
             </div>
 
             {/* Mobile Menu Button */}
             <div className="flex md:hidden items-center gap-2">
-              <ModeToggle />
               <button
                 className="text-foreground p-2 hover:bg-accent rounded-lg transition-colors"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

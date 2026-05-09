@@ -2,49 +2,48 @@ import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial, Float } from '@react-three/drei';
 import * as THREE from 'three';
-import { useTheme } from '@/components/ui/theme-provider';
 
+// Shared ref: GSAP ScrollTrigger writes here (see Hero.tsx), Three.js reads here
 export const scrollProgressRef = { current: 0 };
+
+const PARTICLE_COLOR = "#818cf8"; // electric violet, dark-only palette
 
 const Particles = ({ count = 120 }: { count?: number }) => {
   const points = useRef<THREE.Points>(null);
 
-  const particlesPosition = useMemo(() => {
-    const positions = new Float32Array(count * 3);
+  const positions = useMemo(() => {
+    const arr = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 12;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 12;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 12;
+      arr[i * 3] = (Math.random() - 0.5) * 14;
+      arr[i * 3 + 1] = (Math.random() - 0.5) * 14;
+      arr[i * 3 + 2] = (Math.random() - 0.5) * 14;
     }
-    return positions;
+    return arr;
   }, [count]);
 
-  useFrame((state) => {
-    if (points.current) {
-      points.current.rotation.y = state.clock.getElapsedTime() * 0.04;
-      points.current.rotation.x = state.clock.getElapsedTime() * 0.015;
-    }
+  useFrame(({ clock }) => {
+    if (!points.current) return;
+    const t = clock.getElapsedTime();
+    points.current.rotation.y = t * 0.04;
+    points.current.rotation.x = t * 0.015;
   });
-
-  const { theme } = useTheme();
-  const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
   return (
     <points ref={points}>
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          count={particlesPosition.length / 3}
-          array={particlesPosition}
+          count={positions.length / 3}
+          array={positions}
           itemSize={3}
         />
       </bufferGeometry>
       <pointsMaterial
-        size={isDark ? 0.03 : 0.025}
-        color={isDark ? "#818cf8" : "#6366f1"}
+        size={0.03}
+        color={PARTICLE_COLOR}
         sizeAttenuation
         transparent
-        opacity={isDark ? 0.5 : 0.3}
+        opacity={0.45}
       />
     </points>
   );
@@ -52,12 +51,6 @@ const Particles = ({ count = 120 }: { count?: number }) => {
 
 const AnimatedSphere = ({ scrollEnabled }: { scrollEnabled: boolean }) => {
   const sphereRef = useRef<THREE.Mesh>(null);
-  const { theme } = useTheme();
-
-  const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  const primaryColor = isDark ? "#818cf8" : "#6366f1";
-  const secondaryColor = isDark ? "#22d3ee" : "#0891b2";
-  void secondaryColor;
 
   useFrame(({ clock }) => {
     if (!sphereRef.current) return;
@@ -65,21 +58,27 @@ const AnimatedSphere = ({ scrollEnabled }: { scrollEnabled: boolean }) => {
     const scroll = scrollEnabled ? scrollProgressRef.current : 0;
     sphereRef.current.rotation.x = t * 0.15 + scroll * Math.PI * 2;
     sphereRef.current.rotation.y = t * 0.2 + scroll * Math.PI * 2;
-    sphereRef.current.position.z = scroll * -50;
+    // Sphere recedes into background as user scrolls
+    sphereRef.current.position.z = scroll * -40;
+    // Fade out as user scrolls away
+    if (sphereRef.current.material instanceof THREE.Material) {
+      (sphereRef.current.material as THREE.Material & { opacity: number }).opacity =
+        Math.max(0, 1 - scroll * 2);
+    }
   });
 
   return (
-    <Float speed={1.5} rotationIntensity={0.4} floatIntensity={0.4}>
+    <Float speed={1.4} rotationIntensity={0.35} floatIntensity={0.35}>
       <Sphere ref={sphereRef} args={[1, 50, 100]} scale={2.2}>
         <MeshDistortMaterial
-          color={primaryColor}
+          color="#818cf8"
           attach="material"
-          distort={0.35}
+          distort={0.38}
           speed={1.2}
-          roughness={isDark ? 0.2 : 0.35}
-          metalness={isDark ? 0.8 : 0.6}
-          opacity={isDark ? 1 : 0.7}
+          roughness={0.15}
+          metalness={0.85}
           transparent
+          opacity={1}
         />
       </Sphere>
     </Float>
@@ -92,16 +91,17 @@ interface ThreeSceneProps {
 }
 
 const ThreeScene = ({ scrollEnabled = true, isMobile = false }: ThreeSceneProps) => {
-  const particleCount = isMobile ? 60 : 150;
+  // Mobile gets CSS gradient instead — this component only renders on desktop
+  if (isMobile) return null;
 
   return (
-    <div className="absolute inset-0 -z-10 h-full w-full overflow-hidden">
+    <div className="absolute inset-0 h-full w-full">
       <Canvas camera={{ position: [0, 0, 5] }}>
-        <ambientLight intensity={0.6} />
-        <pointLight position={[10, 10, 10]} intensity={0.8} />
-        <pointLight position={[-10, -10, -10]} intensity={0.4} color="#0891b2" />
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 10, 10]} intensity={0.7} />
+        <pointLight position={[-8, -8, -8]} intensity={0.3} color="#22d3ee" />
         <AnimatedSphere scrollEnabled={scrollEnabled} />
-        <Particles count={particleCount} />
+        <Particles count={150} />
       </Canvas>
     </div>
   );
