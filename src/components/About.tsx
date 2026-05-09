@@ -267,7 +267,7 @@ function PanelStack() {
             Tools I<br />live with
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            React · TypeScript · Node.js<br />
+            React · Next · Node.js<br />
             Three.js · GSAP · Python<br />
             Arduino · ESP32 · n8n · CCNA
           </p>

@@ -80,7 +80,7 @@ const Footer = () => {
               ))}
             </div>
             <div className="flex flex-wrap gap-2">
-              {["React", "TypeScript", "Node.js", "IoT"].map((tech) => (
+              {["React", "Next", "Node.js", "IoT"].map((tech) => (
                 <span
                   key={tech}
                   className="text-[11px] px-2.5 py-1 rounded-md bg-muted text-muted-foreground border border-border font-medium"
