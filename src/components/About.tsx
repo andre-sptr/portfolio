@@ -14,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 const STATS = [
   { value: "3.67", label: "GPA" },
   { value: "18+", label: "Projects" },
-  { value: "5+", label: "Certs" },
+  { value: "3", label: "Certs" },
 ];
 
 const EXPERIENCES = [
@@ -167,7 +167,7 @@ function PanelWhoIAm() {
         </h2>
         <p className="text-base text-muted-foreground leading-relaxed mb-8 max-w-md">
           Electronics & Telecommunication Engineering graduate from Politeknik
-          Caltex Riau. I teach informatics by day and build IoT systems, AI
+          Caltex Riau. I work by day and build IoT systems, AI
           tools, and web platforms by night — always shipping from Riau,
           Indonesia.
         </p>

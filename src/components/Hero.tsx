@@ -231,7 +231,7 @@ const Hero = () => {
 
                 {/* Subtitle */}
                 <p ref={subtitleRef} className="text-sm sm:text-base text-muted-foreground max-w-md mb-7 leading-relaxed">
-                  Informatics teacher & builder. Crafting{" "}
+                  Crafting{" "}
                   <span className="text-[var(--warm-white)] font-medium">IoT systems</span>,{" "}
                   <span className="text-[var(--warm-white)] font-medium">AI tools</span>, and{" "}
                   <span className="text-[var(--warm-white)] font-medium">web platforms</span>{" "}

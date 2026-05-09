@@ -30,7 +30,7 @@ const Index = () => {
         "name": "Andre Saputra",
         "url": "https://andresptr.site",
         "image": "https://andresptr.site/andre.png",
-        "jobTitle": ["Full Stack Developer", "Informatics Teacher"],
+        "jobTitle": ["Full Stack Developer"],
         "description": "Portofolio Andre Saputra, seorang Full Stack Developer dan Guru Informatika yang berfokus pada pengembangan web modern, AI, dan solusi digital.",
         "sameAs": [
           "https://github.com/andre-sptr",
@@ -84,7 +84,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background grain">
-      <SEO 
+      <SEO
         title="Andre Saputra | Full Stack Developer & AI Enthusiast"
         description="Jelajahi portofolio Andre Saputra: Proyek inovatif dalam pengembangan web, AI, dan IoT. Solusi digital profesional untuk kebutuhan modern."
         keywords={["Andre Saputra", "Portofolio", "Web Developer Indonesia", "React Developer", "AI Engineer", "IoT Specialist", "Guru Informatika"]}
@@ -93,7 +93,7 @@ const Index = () => {
 
       <Navigation />
       <Hero />
-      
+
       <Suspense fallback={<LoadingFallback />}>
         <About />
       </Suspense>
