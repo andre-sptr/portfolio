@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FileText, ArrowUpRight, CloudUpload } from 'lucide-react';
+import { FileText, ArrowUpRight, CloudUpload, Languages, Swords } from 'lucide-react';
 
 const tools = [
   {
@@ -16,6 +16,22 @@ const tools = [
     url: "https://file.andresptr.site",
     icon: CloudUpload,
     accent: "from-secondary/10 to-secondary/5",
+    isImage: false,
+  },
+  {
+    name: "EnglishHub",
+    description: "AI-powered TOEFL practice platform to sharpen your English skills.",
+    url: "https://englishhub.andresptr.site",
+    icon: Languages,
+    accent: "from-emerald-500/10 to-emerald-500/5",
+    isImage: false,
+  },
+  {
+    name: "Arena AI Debate",
+    description: "Engage in AI-powered debates and sharpen your argumentation skills.",
+    url: "https://debat.andresptr.site",
+    icon: Swords,
+    accent: "from-amber-500/10 to-amber-500/5",
     isImage: false,
   },
 ];

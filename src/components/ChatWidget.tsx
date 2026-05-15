@@ -7,9 +7,9 @@ import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 
-const API_ENDPOINT = "https://ai.sumopod.com/v1/chat/completions";
-const API_KEY = import.meta.env.VITE_SUMOPOD_API_KEY;
-const MODEL = "gpt-5";
+const API_ENDPOINT = "https://api.anthropic.com/v1/messages";
+const API_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY;
+const MODEL = "claude-haiku-4-5-20251001";
 const MAX_TOKENS = 500;
 const TEMPERATURE = 0.3;
 const HISTORY_WINDOW = 10;
@@ -38,7 +38,7 @@ Projects:
 8. FireSense: IoT fire detection system using ESP32, Firebase, and Fuzzy Logic.
 9. PDF Tools: Online PDF management suite (merge, split, compress).
 
-Free Tools provided by Andre: PDF Tools.
+Free Tools provided by Andre: PDF Tools, EnglishHub (AI TOEFL Practice), Arena AI Debate.
 Contact: andresaputra07012019@gmail.com, GitHub (andre-sptr), LinkedIn (andre-saputra-434561381), Instagram (andree.sptrr), WhatsApp (0823-8702-5429).
 
 Guidelines:
@@ -153,10 +153,16 @@ export function ChatWidget() {
     try {
       const response = await fetch(API_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${API_KEY}` },
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": API_KEY,
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-access": "true",
+        },
         body: JSON.stringify({
           model: MODEL,
-          messages: [{ role: "system", content: SYSTEM_PROMPT }, ...historyForAPI],
+          system: SYSTEM_PROMPT,
+          messages: historyForAPI,
           max_tokens: MAX_TOKENS,
           temperature: TEMPERATURE,
           stream: true,
@@ -170,24 +176,35 @@ export function ChatWidget() {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let accumulated = "";
+      let buffer = "";
 
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
 
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split("\n").filter((l) => l.startsWith("data: "));
+        buffer += decoder.decode(value, { stream: true });
+        const events = buffer.split("\n\n");
+        buffer = events.pop() || "";
 
-        for (const line of lines) {
-          const data = line.slice(6).trim();
-          if (data === "[DONE]") break;
-          try {
-            const parsed = JSON.parse(data);
-            const token = parsed.choices?.[0]?.delta?.content || "";
-            accumulated += token;
-            setStreamingContent(accumulated);
-          } catch {
-            // malformed chunk — skip
+        for (const event of events) {
+          const lines = event.split("\n");
+          const eventType = lines.find((l) => l.startsWith("event: "))?.slice(7).trim();
+          const dataLine = lines.find((l) => l.startsWith("data: "));
+
+          if (!dataLine) continue;
+          const data = dataLine.slice(6).trim();
+
+          if (eventType === "content_block_delta") {
+            try {
+              const parsed = JSON.parse(data);
+              const token = parsed.delta?.text || "";
+              accumulated += token;
+              setStreamingContent(accumulated);
+            } catch {
+              // malformed chunk — skip
+            }
+          } else if (eventType === "message_stop") {
+            break;
           }
         }
       }
