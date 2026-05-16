@@ -5,7 +5,7 @@
 module.exports = {
   apps: [
     {
-      name: "andresptr-chat-api",
+      name: "andresptr",
       script: "./server.mjs",
       instances: 1,
       autorestart: true,

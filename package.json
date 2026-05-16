@@ -12,9 +12,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "server:start": "pm2 start ecosystem.config.cjs",
-    "server:stop": "pm2 stop andresptr-chat-api",
-    "server:restart": "pm2 restart andresptr-chat-api",
-    "server:logs": "pm2 logs andresptr-chat-api"
+    "server:stop": "pm2 stop andresptr",
+    "server:restart": "pm2 restart andresptr",
+    "server:logs": "pm2 logs andresptr"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
