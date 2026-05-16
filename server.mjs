@@ -16,7 +16,7 @@ const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
 const MODEL = "claude-haiku-4-5-20251001";
 const MAX_TOKENS = 500;
 const TEMPERATURE = 0.3;
-const PORT = process.env.API_PORT || 3001;
+const PORT = process.env.API_PORT || 3010;
 
 // ─── Rate Limiting (per IP) ──────────────────────────────────────────
 const rateLimitMap = new Map();
