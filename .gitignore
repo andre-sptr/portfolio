@@ -26,3 +26,7 @@ dist-ssr
 # Environment Variables
 .env
 .env.production
+.env.local
+
+# PM2 Logs
+logs/
