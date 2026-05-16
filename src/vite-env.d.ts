@@ -1,8 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_ANTHROPIC_API_KEY: string
-  // more env variables...
+  // Client-side environment variables (VITE_ prefix) go here
 }
 
 interface ImportMeta {

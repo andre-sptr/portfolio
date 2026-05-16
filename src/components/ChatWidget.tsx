@@ -7,11 +7,7 @@ import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 
-const API_ENDPOINT = "https://api.anthropic.com/v1/messages";
-const API_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY;
-const MODEL = "claude-haiku-4-5-20251001";
-const MAX_TOKENS = 500;
-const TEMPERATURE = 0.3;
+const API_ENDPOINT = "/api/chat";
 const HISTORY_WINDOW = 10;
 const STORAGE_KEY = "andre-chat-history";
 
@@ -130,10 +126,6 @@ export function ChatWidget() {
 
   const handleSendMessage = async (content: string) => {
     if (!content.trim()) return;
-    if (!API_KEY) {
-      toast.error("API Key missing!");
-      return;
-    }
     if (!checkRateLimit()) {
       toast.error("Terlalu banyak permintaan. Mohon tunggu sebentar.");
       return;
@@ -155,17 +147,10 @@ export function ChatWidget() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": API_KEY,
-          "anthropic-version": "2023-06-01",
-          "anthropic-dangerous-direct-browser-access": "true",
         },
         body: JSON.stringify({
-          model: MODEL,
           system: SYSTEM_PROMPT,
           messages: historyForAPI,
-          max_tokens: MAX_TOKENS,
-          temperature: TEMPERATURE,
-          stream: true,
         }),
       });
 
