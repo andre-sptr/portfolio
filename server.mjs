@@ -54,11 +54,21 @@ function getClientIp(req) {
 
 // ─── Server ──────────────────────────────────────────────────────────
 const server = createServer(async (req, res) => {
-  // CORS headers (Nginx pada aaPanel biasanya menangani ini,
-  // tapi tetap disertakan untuk keamanan)
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  // ─── CORS ────────────────────────────────────────────────────────────
+  const ALLOWED_ORIGINS = ["https://andresptr.site"];
+  const origin = req.headers.origin;
+
+  if (origin) {
+    if (ALLOWED_ORIGINS.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+      res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+      res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    } else {
+      res.writeHead(403, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Forbidden" }));
+      return;
+    }
+  }
 
   // Preflight
   if (req.method === "OPTIONS") {
