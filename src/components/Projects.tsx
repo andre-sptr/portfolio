@@ -183,14 +183,17 @@ const ProjectPanel = ({
               border: `1px solid ${project.accent}30`,
             }}
           />
-          <div className="relative rounded-xl overflow-hidden shadow-2xl">
+          <div className="relative rounded-xl overflow-hidden shadow-2xl" style={{ transform: "translateZ(0)" }}>
             {/* Parallax image layer — GSAP moves this */}
-            <div className="project-img-inner">
+            <div className="project-img-inner" style={{ willChange: "transform" }}>
               <img
                 src={project.image}
                 alt={project.title}
+                width={1200}
+                height={800}
                 className="w-full h-[400px] object-cover object-top"
                 loading="lazy"
+                decoding="async"
               />
             </div>
             {/* Overlay gradient */}
@@ -351,9 +354,12 @@ const Projects = () => {
       const panels = gsap.utils.toArray<HTMLElement>(".project-panel");
       // Visual travel distance (how far the track slides)
       const trackTravel = (panels.length - 1) * window.innerWidth;
-      // Scroll distance the pin holds — 1× viewport HEIGHT per panel transition
-      // (much shorter than 1× viewport WIDTH, cuts ~44% of scroll on typical screens)
-      const scrollDist = (panels.length - 1) * window.innerHeight;
+      // Scroll distance the pin holds — ~1.2× viewport WIDTH per panel transition.
+      // Lenis already smooths the scroll, so we don't need to stretch this aggressively.
+      const scrollDist = (panels.length - 1) * window.innerWidth * 1.2;
+
+      // GPU hints — promote track to its own layer so transform is composited, not painted
+      gsap.set(trackRef.current, { force3D: true, willChange: "transform" });
 
       // Master horizontal scroll timeline
       const tl = gsap.timeline({
@@ -362,7 +368,8 @@ const Projects = () => {
           pin: true,
           start: "top top",
           end: () => `+=${scrollDist}`,
-          scrub: 1.2,
+          // Lower scrub — Lenis already does the smoothing, double-lerp causes the laggy feel
+          scrub: 0.6,
           invalidateOnRefresh: true,
           anticipatePin: 1,
         },
@@ -386,8 +393,8 @@ const Projects = () => {
         if (i > 0) {
           tl.from(
             [title, desc, tech, cta].filter(Boolean),
-            { opacity: 0, y: 30, stagger: 0.04, duration: 0.15, ease: "power2.out" },
-            progress + 0.02
+            { opacity: 0, y: 40, stagger: 0.08, duration: 0.35, ease: "power3.out" },
+            progress + 0.03
           );
         }
 

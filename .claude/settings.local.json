@@ -5,7 +5,11 @@
       "Bash(npx tsc *)",
       "Bash(npm run *)",
       "Bash(npm install *)",
-      "Skill(plan-eng-review)"
+      "Skill(plan-eng-review)",
+      "Bash(rtk ls *)",
+      "Bash(ffmpeg -version)",
+      "Bash(rtk pip *)",
+      "Bash(cygpath -w /tmp/frames/)"
     ]
   }
 }

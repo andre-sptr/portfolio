@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial, Float } from '@react-three/drei';
 import * as THREE from 'three';
@@ -91,12 +91,32 @@ interface ThreeSceneProps {
 }
 
 const ThreeScene = ({ scrollEnabled = true, isMobile = false }: ThreeSceneProps) => {
-  // Mobile gets CSS gradient instead — this component only renders on desktop
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(true);
+
+  // Pause WebGL render loop when hero scrolls out of view.
+  // This is the biggest win for downstream-section perf — a continuously
+  // rendering Canvas can eat 30-50% of frame budget on mid-tier hardware.
+  useEffect(() => {
+    if (isMobile || !wrapRef.current) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { rootMargin: "100px" }
+    );
+    io.observe(wrapRef.current);
+    return () => io.disconnect();
+  }, [isMobile]);
+
   if (isMobile) return null;
 
   return (
-    <div className="absolute inset-0 h-full w-full">
-      <Canvas camera={{ position: [0, 0, 5] }}>
+    <div ref={wrapRef} className="absolute inset-0 h-full w-full">
+      <Canvas
+        camera={{ position: [0, 0, 5] }}
+        dpr={[1, 1.5]}                  // cap pixel ratio (was unbounded — 2-3× on retina)
+        frameloop={visible ? "always" : "never"} // hard-stop render loop offscreen
+        performance={{ min: 0.5 }}      // auto-degrade under load
+      >
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={0.7} />
         <pointLight position={[-8, -8, -8]} intensity={0.3} color="#22d3ee" />
