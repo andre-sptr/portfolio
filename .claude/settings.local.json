@@ -16,7 +16,13 @@
       "WebFetch(domain:bruno-simon.com)",
       "WebFetch(domain:tympanus.net)",
       "WebFetch(domain:gsap.com)",
-      "Bash(rtk git *)"
+      "Bash(rtk git *)",
+      "Skill(run)",
+      "PowerShell(npm run *)",
+      "PowerShell($response = Invoke-WebRequest -Uri \"http://localhost:8080/lab\" -UseBasicParsing; \"Status: $\\($response.StatusCode\\)\"; $response.Content.Substring\\(0, [Math]::Min\\(500, $response.Content.Length\\)\\))",
+      "Skill(investigate)",
+      "PowerShell(npm install *)",
+      "PowerShell($response = Invoke-WebRequest -Uri \"http://localhost:8080/lab\" -UseBasicParsing; \"Status: $\\($response.StatusCode\\)\"; if \\($response.Content -match 'id=\"root\"'\\) { 'Root element found' } else { 'Root element missing' })"
     ]
   }
 }
