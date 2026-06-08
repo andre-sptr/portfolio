@@ -29,6 +29,7 @@ export default defineConfig(({ mode }) => ({
           vendor: ['react', 'react-dom', 'react-router-dom'],
           ui: ['lucide-react', 'framer-motion', 'clsx', 'tailwind-merge'],
           three: ['three', '@react-three/fiber', '@react-three/drei'],
+          physics: ['matter-js'],
           charts: ['recharts'],
           utils: ['date-fns', 'zod']
         }
