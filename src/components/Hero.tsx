@@ -317,6 +317,15 @@ const Hero = () => {
               >
                 <a href="#contact">Contact Me</a>
               </Button>
+              <Button
+                asChild size="lg" variant="outline"
+                className="rounded-full h-11 px-7 text-sm font-medium border-[var(--electric)]/30 bg-[var(--electric)]/10 hover:bg-[var(--electric)]/15 text-[var(--warm-white)] transition-all duration-300 backdrop-blur-sm w-full sm:w-auto justify-center"
+              >
+                <a href="/lab">
+                  <FlaskConical className="mr-2 w-4 h-4" />
+                  Open Lab
+                </a>
+              </Button>
             </div>
 
             {/* Socials */}

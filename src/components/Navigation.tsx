@@ -5,12 +5,13 @@ import { motion, AnimatePresence, useScroll, useSpring, useMotionValue } from "f
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 const navLinks = [
-  { name: "Home", href: "#" },
-  { name: "About", href: "#about" },
-  { name: "Projects", href: "#projects" },
-  { name: "Experience", href: "#experience" },
-  { name: "Free Tools", href: "#tools" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", href: "/" },
+  { name: "About", href: "/#about" },
+  { name: "Projects", href: "/#projects" },
+  { name: "Experience", href: "/#experience" },
+  { name: "Free Tools", href: "/#tools" },
+  { name: "Lab", href: "/lab" },
+  { name: "Contact", href: "/#contact" },
 ];
 
 const MagneticNavLink = ({
@@ -69,7 +70,7 @@ const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const prefersReduced = usePrefersReducedMotion();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("#");
+  const [activeSection, setActiveSection] = useState("/");
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -98,7 +99,7 @@ const Navigation = () => {
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              setActiveSection(`#${id}`);
+              setActiveSection(`/#${id}`);
             }
           });
         },
@@ -112,6 +113,10 @@ const Navigation = () => {
   }, []);
 
   useEffect(() => {
+    if (window.location.pathname === "/lab") {
+      setActiveSection("/lab");
+      return;
+    }
     const cleanup = observeSections();
     return cleanup;
   }, [observeSections]);
@@ -119,7 +124,7 @@ const Navigation = () => {
   // Reset to Home when at top
   useEffect(() => {
     const handleTop = () => {
-      if (window.scrollY < 200) setActiveSection("#");
+      if (window.location.pathname !== "/lab" && window.scrollY < 200) setActiveSection("/");
     };
     window.addEventListener("scroll", handleTop);
     return () => window.removeEventListener("scroll", handleTop);
@@ -142,7 +147,7 @@ const Navigation = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <a href="#" className="flex items-center gap-2.5 group">
+            <a href="/" className="flex items-center gap-2.5 group">
               <div className="relative w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-secondary flex items-center justify-center text-white font-bold text-lg overflow-hidden group-hover:shadow-[var(--glow-primary)] transition-shadow duration-300">
                 <span className="relative z-10">A</span>
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
@@ -164,7 +169,7 @@ const Navigation = () => {
                 />
               ))}
               <div className="w-px h-6 bg-border mx-2" />
-              <a href="#contact">
+              <a href="/#contact">
                 <Button
                   size="sm"
                   className="bg-primary text-primary-foreground hover:bg-primary/90 glow-hover transition-all duration-300 rounded-full"
@@ -218,7 +223,7 @@ const Navigation = () => {
                   })}
                   <div className="pt-2 border-t border-border mt-1">
                     <a
-                      href="#contact"
+                      href="/#contact"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <Button className="w-full bg-primary hover:bg-primary/90 rounded-full">
