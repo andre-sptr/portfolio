@@ -9,7 +9,14 @@
       "Bash(rtk ls *)",
       "Bash(ffmpeg -version)",
       "Bash(rtk pip *)",
-      "Bash(cygpath -w /tmp/frames/)"
+      "Bash(cygpath -w /tmp/frames/)",
+      "Skill(office-hours)",
+      "Skill(gstack-upgrade)",
+      "WebSearch",
+      "WebFetch(domain:bruno-simon.com)",
+      "WebFetch(domain:tympanus.net)",
+      "WebFetch(domain:gsap.com)",
+      "Bash(rtk git *)"
     ]
   }
 }
