@@ -1,9 +1,7 @@
 import { createContext, useContext, useEffect, useRef, ReactNode } from 'react';
 import Lenis from '@studio-freight/lenis';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, ScrollTrigger } from '@/lib/motion/gsap';
 
-gsap.registerPlugin(ScrollTrigger);
 
 const LenisContext = createContext<Lenis | null>(null);
 

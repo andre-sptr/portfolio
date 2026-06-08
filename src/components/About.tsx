@@ -1,13 +1,10 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/lib/motion/gsap";
 import { GraduationCap, Building2, School, CheckCircle2 } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-
-gsap.registerPlugin(ScrollTrigger);
 
 // ── Data ──────────────────────────────────────────────────────────
 

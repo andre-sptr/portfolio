@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import SEO from "@/components/SEO";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
+import { useDocumentReadyRefresh } from "@/lib/motion/useDocumentReadyRefresh";
 
 // Lazy load components for performance
 const About = React.lazy(() => import("@/components/About"));
@@ -21,6 +22,8 @@ const LoadingFallback = () => (
 );
 
 const Index = () => {
+  useDocumentReadyRefresh();
+
   const schema = {
     "@context": "https://schema.org",
     "@graph": [

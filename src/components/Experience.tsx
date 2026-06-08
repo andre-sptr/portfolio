@@ -1,13 +1,12 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/motion/gsap";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
-gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
+gsap.registerPlugin(DrawSVGPlugin);
 
 const timeline = [
   {

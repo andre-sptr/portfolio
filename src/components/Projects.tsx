@@ -2,75 +2,18 @@ import { useRef } from "react";
 import { ExternalLink, Github, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/lib/motion/gsap";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-
-gsap.registerPlugin(ScrollTrigger);
-
-// 4 featured projects only (D5 decision)
-const featured = [
-  {
-    num: "01",
-    title: "Arena Debate",
-    subtitle: "Multi-Agent AI Debate System",
-    description:
-      "Lima AI agent berdebat dalam format Tim 2v2, menganalisis topik apa pun secara mendalam dan mencapai kesimpulan berbasis konsensus.",
-    tech: ["Next.js", "Gemini AI", "Node.js"],
-    category: "AI & Tools",
-    image: "/pages/debatePage.png",
-    viewUrl: "https://debat.andresptr.site/",
-    codeUrl: "",
-    accent: "#818cf8",
-  },
-  {
-    num: "02",
-    title: "Reka AI",
-    subtitle: "AI-Assisted Coding Platform",
-    description:
-      "Platform AI untuk membantu developer menulis, debugging, dan optimasi kode secara real-time dengan konteks proyek penuh.",
-    tech: ["React", "Gemini AI", "Node.js"],
-    category: "AI & Tools",
-    image: "/pages/rekaPage.png",
-    viewUrl: "",
-    codeUrl: "https://github.com/andre-sptr/ai",
-    accent: "#22d3ee",
-  },
-  {
-    num: "03",
-    title: "Fiscal AI Finance",
-    subtitle: "Personal Finance Manager",
-    description:
-      "Web app manajemen keuangan personal berbasis AI untuk kategorisasi pengeluaran otomatis dan analisis finansial prediktif.",
-    tech: ["React", "AI", "Node.js"],
-    category: "AI & Tools",
-    image: "/pages/fiscalPage.png",
-    viewUrl: "",
-    codeUrl: "https://github.com/andre-sptr/fiscal",
-    accent: "#34d399",
-  },
-  {
-    num: "04",
-    title: "SiTiket",
-    subtitle: "Network Fault Ticket Management",
-    description:
-      "Sistem manajemen tiket gangguan jaringan berbasis web untuk tracking, pengelolaan, dan resolusi gangguan secara efisien di PT Telkom Infrastruktur Indonesia.",
-    tech: ["Next.js", "Node.js", "PostgreSQL"],
-    category: "Infrastructure",
-    image: "/pages/sitiketPage.png",
-    viewUrl: "",
-    codeUrl: "https://github.com/andre-sptr/sitiket",
-    accent: "#f59e0b",
-  },
-];
+import { featuredProjects } from "@/data/projects";
+import type { ProjectItem } from "@/data/projects";
 
 // Desktop: full-bleed horizontal panel with parallax layers
 const ProjectPanel = ({
   project,
   index,
 }: {
-  project: (typeof featured)[0];
+  project: ProjectItem;
   index: number;
 }) => {
   const isEven = index % 2 === 0;
@@ -211,7 +154,7 @@ const ProjectPanel = ({
 };
 
 // Mobile: vertical stack with whileInView
-const ProjectCardMobile = ({ project }: { project: (typeof featured)[0] }) => (
+const ProjectCardMobile = ({ project }: { project: ProjectItem }) => (
   <motion.div
     initial={{ opacity: 0, y: 40 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -316,7 +259,7 @@ const ProjectsMobile = () => (
       </motion.div>
 
       <div className="flex flex-col gap-6">
-        {featured.map((p) => (
+        {featuredProjects.map((p) => (
           <ProjectCardMobile key={p.num} project={p} />
         ))}
       </div>
@@ -462,8 +405,8 @@ const Projects = () => {
       </div>
 
       {/* Horizontal track */}
-      <div ref={trackRef} className="flex" style={{ width: `${featured.length * 100}vw` }}>
-        {featured.map((project, i) => (
+      <div ref={trackRef} className="flex" style={{ width: `${featuredProjects.length * 100}vw` }}>
+        {featuredProjects.map((project, i) => (
           <ProjectPanel key={project.num} project={project} index={i} />
         ))}
       </div>

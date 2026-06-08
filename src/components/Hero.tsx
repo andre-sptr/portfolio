@@ -1,16 +1,14 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Github, Linkedin, Mail, Instagram } from "lucide-react";
+import { ArrowRight, Download, Github, Linkedin, Mail, Instagram, FlaskConical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/lib/motion/gsap";
 import portraitImage from "/andre.png";
+import { heroPreviewProjects } from "@/data/projects";
 import ThreeScene, { scrollProgressRef } from "./ThreeScene";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const FIRST_NAME = "Andre";
 const LAST_NAME = "Saputra";
@@ -25,20 +23,13 @@ const SOCIALS = [
 ];
 
 // Floating tilted preview cards (JoyJam-style scattered around hero)
-const FLOATING_CARDS = [
-  { src: "/pages/debatePage.png",  alt: "Arena Debate",
-    className: "hidden md:block absolute left-[4%]  top-[18%] w-[180px] xl:w-[220px] rotate-[-14deg]" },
-  { src: "/pages/rekaPage.png",    alt: "Reka AI",
-    className: "hidden md:block absolute right-[5%] top-[14%] w-[180px] xl:w-[220px] rotate-[12deg]" },
-  { src: "/pages/fiscalPage.png",  alt: "Fiscal AI",
-    className: "hidden lg:block absolute left-[10%] bottom-[14%] w-[200px] xl:w-[240px] rotate-[10deg]" },
-  { src: "/pages/sitiketPage.png", alt: "SiTiket",
-    className: "hidden lg:block absolute right-[8%] bottom-[18%] w-[200px] xl:w-[240px] rotate-[-9deg]" },
-  { src: "/pages/aiPage.png",      alt: "AI Project",
-    className: "hidden xl:block absolute left-[22%] top-[6%] w-[150px] rotate-[6deg]" },
-  { src: "/pages/iotPage.png",     alt: "IoT",
-    className: "hidden xl:block absolute right-[22%] bottom-[4%] w-[150px] rotate-[-7deg]" },
-];
+const HERO_CARD_LAYOUT: Record<string, string> = {
+  "arena-debate": "hidden md:block absolute left-[4%] top-[18%] w-[180px] xl:w-[220px] rotate-[-14deg]",
+  "reka-ai": "hidden md:block absolute right-[5%] top-[14%] w-[180px] xl:w-[220px] rotate-[12deg]",
+  "fiscal-ai": "hidden lg:block absolute left-[10%] bottom-[14%] w-[200px] xl:w-[240px] rotate-[10deg]",
+  sitiket: "hidden lg:block absolute right-[8%] bottom-[18%] w-[200px] xl:w-[240px] rotate-[-9deg]",
+  "iot-system": "hidden xl:block absolute right-[22%] bottom-[4%] w-[150px] rotate-[-7deg]",
+};
 
 function SplitText({ text, className }: { text: string; className?: string }) {
   return (
@@ -200,15 +191,15 @@ const Hero = () => {
 
         {/* ── Floating tilted preview cards (JoyJam style) ── */}
         <div ref={cardsRef} className="absolute inset-0 z-[5] pointer-events-none">
-          {FLOATING_CARDS.map((c) => (
+          {heroPreviewProjects.map((project) => (
             <div
-              key={c.alt}
-              className={`float-card ${c.className} rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6)] ring-1 ring-white/10`}
+              key={project.id}
+              className={`float-card ${HERO_CARD_LAYOUT[project.id]} rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6)] ring-1 ring-white/10`}
               style={{ willChange: "transform" }}
             >
               <img
-                src={c.src}
-                alt={c.alt}
+                src={project.image}
+                alt={project.title}
                 loading="lazy"
                 decoding="async"
                 className="w-full h-auto block"
