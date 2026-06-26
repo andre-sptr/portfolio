@@ -30,3 +30,9 @@ dist-ssr
 
 # PM2 Logs
 logs/
+
+.claude/
+
+.agents/
+
+*.tsbuildinfo
