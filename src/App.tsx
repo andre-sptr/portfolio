@@ -13,6 +13,7 @@ import { ChatWidget } from "./components/ChatWidget";
 import Analytics from "./components/Analytics";
 
 const Lab = React.lazy(() => import("./pages/Lab"));
+const ProjectDetail = React.lazy(() => import("./pages/ProjectDetail"));
 
 const RouteFallback = () => (
   <div className="min-h-screen bg-[var(--surface-0)] flex items-center justify-center">
@@ -37,6 +38,7 @@ const App = () => (
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/lab" element={<Lab />} />
+                  <Route path="/project/:slug" element={<ProjectDetail />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
