@@ -236,3 +236,10 @@ export const archiveProjects = projects.filter((project) => !project.featured);
 export const heroPreviewProjects = projects.filter((project) =>
   ["arena-debate", "reka-ai", "fiscal-ai", "sitiket", "iot-system"].includes(project.id)
 );
+
+// Projects that have a dedicated case study page (reuses the `featured` flag).
+export const caseStudyProjects = featuredProjects;
+
+export function getCaseStudy(slug: string): ProjectItem | undefined {
+  return caseStudyProjects.find((project) => project.id === slug);
+}
