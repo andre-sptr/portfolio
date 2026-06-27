@@ -115,9 +115,6 @@ const ProjectPanel = ({
                 <Github className="w-3.5 h-3.5" /> Code
               </a>
             )}
-            {!project.viewUrl && !project.codeUrl && (
-              <span className="text-xs text-muted-foreground/50 italic">In progress</span>
-            )}
           </div>
         </div>
 
