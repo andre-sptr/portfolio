@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useRef, ReactNode } from 'react';
-import Lenis from '@studio-freight/lenis';
+import Lenis from "lenis";
 import { gsap, ScrollTrigger } from '@/lib/motion/gsap';
 
 

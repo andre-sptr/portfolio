@@ -32,7 +32,7 @@ const Index = () => {
         "@id": "https://andresptr.site/#person",
         "name": "Andre Saputra",
         "url": "https://andresptr.site",
-        "image": "https://andresptr.site/andre.png",
+        "image": "https://andresptr.site/andre-saputra.png",
         "jobTitle": ["Full Stack Developer"],
         "description": "Portofolio Andre Saputra, seorang Full Stack Developer dan Guru Informatika yang berfokus pada pengembangan web modern, AI, dan solusi digital.",
         "sameAs": [

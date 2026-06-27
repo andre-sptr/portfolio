@@ -5,7 +5,7 @@ export function useDocumentReadyRefresh(enabled = true) {
   useEffect(() => {
     if (!enabled || typeof window === "undefined") return;
 
-    let frame = window.requestAnimationFrame(() => {
+    const frame = window.requestAnimationFrame(() => {
       ScrollTrigger.refresh();
     });
 

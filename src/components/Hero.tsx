@@ -4,7 +4,7 @@ import { ArrowRight, Download, Github, Linkedin, Mail, Instagram, FlaskConical }
 import { Button } from "@/components/ui/button";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/motion/gsap";
-import portraitImage from "/andre.png";
+import portraitImage from "/andre-saputra.png";
 import { heroPreviewProjects } from "@/data/projects";
 import ThreeScene, { scrollProgressRef } from "./ThreeScene";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
@@ -344,7 +344,7 @@ const Hero = () => {
               ))}
               <div className="w-px h-5 bg-white/10 mx-2" />
               <a
-                href="/CV_Andre-Saputra.pdf"
+                href="/cv-andre-saputra.pdf"
                 className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-[var(--electric)] hover:bg-[var(--electric)]/10 rounded-full transition-all duration-200 group"
               >
                 <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />

@@ -7,14 +7,14 @@ interface SEOProps {
   image?: string;
   url?: string;
   type?: 'website' | 'article';
-  schema?: Record<string, any>;
+  schema?: Record<string, unknown>;
 }
 
 const SEO = ({ 
   title = "Andre Saputra | Full Stack Developer & AI Enthusiast", 
   description = "Portofolio Andre Saputra, seorang Full Stack Developer dan Guru Informatika yang berfokus pada pengembangan web modern, AI, dan solusi digital.",
   keywords = ["Andre Saputra", "Full Stack Developer", "Web Developer", "React", "TypeScript", "AI", "Informatics Teacher", "Portfolio"],
-  image = "/preview.png",
+  image = "/andre-saputra.png",
   url = "https://andresptr.site",
   type = "website",
   schema
