@@ -7,6 +7,11 @@ export type ProjectCategory =
   | "Utilities"
   | "Web Platform";
 
+export interface ProjectMetric {
+  value: string;
+  label: string;
+}
+
 export interface ProjectItem {
   id: string;
   num: string;
@@ -19,6 +24,12 @@ export interface ProjectItem {
   impact: string;
   role: string;
   tech: string[];
+  /**
+   * Optional outcome metrics shown on the project card.
+   * Prefer verifiable numbers (users, throughput, response time).
+   * Fallback: deployment status + scale / stakeholder.
+   */
+  metrics?: ProjectMetric[];
   image: string;
   viewUrl: string;
   codeUrl: string;
@@ -40,6 +51,11 @@ export const projects: ProjectItem[] = [
     impact: "Membantu pengguna membandingkan argumen dan melihat kontra-argumen lebih cepat.",
     role: "Full-stack developer and AI interaction designer",
     tech: ["Next.js", "Gemini AI", "Node.js"],
+    metrics: [
+      { value: "Live", label: "Status" },
+      { value: "5", label: "AI Agents" },
+      { value: "2v2", label: "Debate Format" },
+    ],
     image: "/pages/debate-page.png",
     viewUrl: "https://debat.andresptr.site/",
     codeUrl: "",
@@ -59,6 +75,10 @@ export const projects: ProjectItem[] = [
     impact: "Mempercepat iterasi coding, debugging, dan eksplorasi solusi teknis.",
     role: "Full-stack developer",
     tech: ["React", "Gemini AI", "Node.js"],
+    metrics: [
+      { value: "Open Source", label: "Repository" },
+      { value: "Context-Aware", label: "AI Mode" },
+    ],
     image: "/pages/reka-page.png",
     viewUrl: "",
     codeUrl: "https://github.com/andre-sptr/ai",
@@ -78,6 +98,10 @@ export const projects: ProjectItem[] = [
     impact: "Membantu pengguna memahami pengeluaran dan mengambil keputusan finansial lebih jelas.",
     role: "Full-stack developer",
     tech: ["React", "AI", "Node.js"],
+    metrics: [
+      { value: "Open Source", label: "Repository" },
+      { value: "Auto-Categorize", label: "AI Feature" },
+    ],
     image: "/pages/fiscal-page.png",
     viewUrl: "",
     codeUrl: "https://github.com/andre-sptr/fiscal",
@@ -97,6 +121,11 @@ export const projects: ProjectItem[] = [
     impact: "Membantu monitoring gangguan dan koordinasi penyelesaian tiket operasional.",
     role: "Full-stack developer",
     tech: ["Next.js", "Node.js", "PostgreSQL"],
+    metrics: [
+      { value: "Telkom Infra", label: "Built For" },
+      { value: "SLA-Tracked", label: "Workflow" },
+      { value: "Internal Tool", label: "Deployment" },
+    ],
     image: "/pages/sitiket-page.png",
     viewUrl: "",
     codeUrl: "https://github.com/andre-sptr/sitiket",
@@ -116,6 +145,11 @@ export const projects: ProjectItem[] = [
     impact: "Memusatkan pendaftaran murid baru MAN IC Siak agar prosesnya lebih tertib dan mudah diakses.",
     role: "Full-stack developer",
     tech: ["React", "Vite", "Node.js"],
+    metrics: [
+      { value: "Live", label: "Status" },
+      { value: "MAN IC Siak", label: "Stakeholder" },
+      { value: "Official Portal", label: "Scope" },
+    ],
     image: "/pages/snmb-page.png",
     viewUrl: "https://snmb.icsiak.sch.id/",
     codeUrl: "",
@@ -135,6 +169,11 @@ export const projects: ProjectItem[] = [
     impact: "Membantu mahasiswa AET PCR menulis laporan, debugging, dan berdiskusi lebih cepat.",
     role: "Full-stack developer",
     tech: ["Next.js", "Gemini AI"],
+    metrics: [
+      { value: "Live", label: "Status" },
+      { value: "3", label: "AI Modes" },
+      { value: "HIMA AET PCR", label: "Stakeholder" },
+    ],
     image: "/pages/aet-page.png",
     viewUrl: "https://aetpcr.site/",
     codeUrl: "",

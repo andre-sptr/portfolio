@@ -24,9 +24,9 @@ const ProjectPanel = ({
       className="project-panel relative flex-shrink-0 w-screen h-screen flex items-center justify-center overflow-hidden"
       style={{ background: "var(--surface-0)" }}
     >
-      {/* Ambient glow behind image */}
+      {/* Ambient glow behind image — kept intentionally low (project-storytelling only) */}
       <div
-        className="absolute w-[50vw] h-[50vw] rounded-full blur-[120px] opacity-10 pointer-events-none"
+        className="absolute w-[40vw] h-[40vw] rounded-full blur-[140px] opacity-[0.06] pointer-events-none"
         style={{
           background: project.accent,
           right: isEven ? "5%" : "auto",
@@ -44,13 +44,13 @@ const ProjectPanel = ({
         <div className={`flex flex-col gap-6 ${isEven ? "order-1" : "order-2"}`}>
           <div className="flex items-center gap-3">
             <span
-              className="text-7xl font-bold opacity-10 leading-none select-none"
-              style={{ fontFamily: "'Clash Display', sans-serif", color: project.accent }}
+              className="text-6xl font-medium opacity-[0.12] leading-none select-none tabular-nums font-mono-tight"
+              style={{ color: project.accent }}
             >
               {project.num}
             </span>
             <span
-              className="text-xs font-medium tracking-[0.2em] uppercase px-3 py-1 rounded-full border"
+              className="text-[10px] font-medium tracking-[0.22em] uppercase px-3 py-1 rounded-full border font-mono-tight"
               style={{ color: project.accent, borderColor: `${project.accent}40` }}
             >
               {project.category}
@@ -59,7 +59,7 @@ const ProjectPanel = ({
 
           <div>
             <h2
-              className="text-5xl font-bold leading-tight mb-2 project-title"
+              className="text-4xl md:text-5xl font-bold leading-tight mb-2 project-title"
               style={{ fontFamily: "'Clash Display', sans-serif", color: "var(--warm-white)" }}
             >
               {project.title}
@@ -72,6 +72,27 @@ const ProjectPanel = ({
           <p className="text-base leading-relaxed text-muted-foreground max-w-md project-desc">
             {project.description}
           </p>
+
+          {project.metrics && project.metrics.length > 0 && (
+            <div className="flex flex-wrap gap-2 project-metrics">
+              {project.metrics.map((m) => (
+                <div
+                  key={m.label}
+                  className="flex items-baseline gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/10"
+                >
+                  <span
+                    className="text-sm font-semibold font-mono-tight tabular-nums"
+                    style={{ color: project.accent }}
+                  >
+                    {m.value}
+                  </span>
+                  <span className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground font-mono-tight">
+                    {m.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="flex flex-wrap gap-2 project-tech">
             {project.tech.map((t) => (
@@ -89,7 +110,7 @@ const ProjectPanel = ({
               to={`/project/${project.id}`}
               className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium border border-white/20 text-muted-foreground hover:text-foreground hover:border-white/40 transition-all duration-300"
             >
-              <BookOpen className="w-3.5 h-3.5" /> Lihat Detail
+              <BookOpen className="w-3.5 h-3.5" /> Case Study
             </Link>
             {project.viewUrl && (
               <a
@@ -203,6 +224,27 @@ const ProjectCardMobile = ({ project }: { project: ProjectItem }) => (
 
       <p className="text-sm text-muted-foreground leading-relaxed">{project.description}</p>
 
+      {project.metrics && project.metrics.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {project.metrics.map((m) => (
+            <div
+              key={m.label}
+              className="flex items-baseline gap-1.5 px-2.5 py-1 rounded-lg bg-white/[0.03] border border-white/10"
+            >
+              <span
+                className="text-xs font-semibold font-mono-tight tabular-nums"
+                style={{ color: project.accent }}
+              >
+                {m.value}
+              </span>
+              <span className="text-[9px] uppercase tracking-[0.16em] text-muted-foreground font-mono-tight">
+                {m.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className="flex flex-wrap gap-1.5">
         {project.tech.map((t) => (
           <span
@@ -219,7 +261,7 @@ const ProjectCardMobile = ({ project }: { project: ProjectItem }) => (
           to={`/project/${project.id}`}
           className="flex items-center gap-2 px-5 py-3 rounded-full text-xs font-medium border border-white/20 text-muted-foreground min-h-[44px]"
         >
-          <BookOpen className="w-3.5 h-3.5" /> Detail
+          <BookOpen className="w-3.5 h-3.5" /> Case Study
         </Link>
         {project.viewUrl && (
           <a
@@ -339,13 +381,14 @@ const Projects = () => {
         const progress = i / panels.length;
         const title = panel.querySelector(".project-title");
         const desc = panel.querySelector(".project-desc");
+        const metrics = panel.querySelector(".project-metrics");
         const tech = panel.querySelector(".project-tech");
         const cta = panel.querySelector(".project-cta");
         const imgWrap = panel.querySelector(".project-img-wrap");
 
         if (i > 0) {
           tl.from(
-            [title, desc, tech, cta].filter(Boolean),
+            [title, desc, metrics, tech, cta].filter(Boolean),
             { opacity: 0, y: 40, stagger: 0.08, duration: 0.35, ease: "power3.out" },
             progress + 0.03
           );

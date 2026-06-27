@@ -49,6 +49,11 @@
     --electric: hsl(246 70% 68%);
     --electric-dim: hsl(246 70% 68% / 0.15);
     --warm-white: #f0f0f5;
+
+    /* Font families */
+    --font-display: 'Clash Display', 'Satoshi', system-ui, sans-serif;
+    --font-sans: 'Satoshi', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
   }
 
   /* Keep .dark alias for any shadcn components that read it */
@@ -240,11 +245,17 @@
 
   /* ─── Section number label ─── */
   .section-label {
-    font-family: 'Satoshi', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: hsl(var(--primary) / 0.6);
+    color: hsl(var(--primary) / 0.7);
+  }
+
+  .font-mono-tight {
+    font-family: var(--font-mono);
+    font-feature-settings: 'ss01', 'cv11';
   }
 }
 

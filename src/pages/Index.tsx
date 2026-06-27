@@ -5,8 +5,10 @@ import Hero from "@/components/Hero";
 import { useDocumentReadyRefresh } from "@/lib/motion/useDocumentReadyRefresh";
 
 // Lazy load components for performance
+const TrustBar = React.lazy(() => import("@/components/TrustBar"));
 const About = React.lazy(() => import("@/components/About"));
 const Projects = React.lazy(() => import("@/components/Projects"));
+const NowBlock = React.lazy(() => import("@/components/NowBlock"));
 const Experience = React.lazy(() => import("@/components/Experience"));
 const FreeTools = React.lazy(() => import("@/components/FreeTools"));
 const Contact = React.lazy(() => import("@/components/Contact"));
@@ -98,6 +100,10 @@ const Index = () => {
       <Hero />
 
       <Suspense fallback={<LoadingFallback />}>
+        <TrustBar />
+      </Suspense>
+
+      <Suspense fallback={<LoadingFallback />}>
         <About />
       </Suspense>
 
@@ -105,6 +111,12 @@ const Index = () => {
 
       <Suspense fallback={<LoadingFallback />}>
         <Projects />
+      </Suspense>
+
+      <hr className="section-sep" />
+
+      <Suspense fallback={<LoadingFallback />}>
+        <NowBlock />
       </Suspense>
 
       <hr className="section-sep" />

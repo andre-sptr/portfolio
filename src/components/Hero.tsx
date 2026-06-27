@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Github, Linkedin, Mail, Instagram, FlaskConical } from "lucide-react";
+import { ArrowRight, Download, Github, Linkedin, Mail, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/motion/gsap";
@@ -240,10 +240,6 @@ const Hero = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <span className="absolute -bottom-1 -right-1 flex h-4 w-4">
-                  <span className="animate-ping absolute h-full w-full rounded-full bg-green-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-4 w-4 bg-green-500 ring-2 ring-[var(--surface-0)]" />
-                </span>
               </div>
             </motion.div>
 
@@ -292,12 +288,12 @@ const Hero = () => {
               ref={subtitleRef}
               className="text-sm sm:text-base text-muted-foreground max-w-xl mb-7 leading-relaxed mx-auto"
             >
-              Crafting{" "}
-              <span className="text-[var(--warm-white)] font-medium">networking solutions</span>,{" "}
-              <span className="text-[var(--warm-white)] font-medium">IoT systems</span>,{" "}
-              <span className="text-[var(--warm-white)] font-medium">AI tools</span>, and{" "}
-              <span className="text-[var(--warm-white)] font-medium">web platforms</span>{" "}
-              from Riau, Indonesia.
+              Building{" "}
+              <span className="text-[var(--warm-white)] font-medium">production web apps</span>,{" "}
+              <span className="text-[var(--warm-white)] font-medium">IoT systems</span>, and{" "}
+              <span className="text-[var(--warm-white)] font-medium">AI tools</span>.
+              Currently at{" "}
+              <span className="text-[var(--warm-white)] font-medium">PT Telkom Infrastruktur Indonesia</span>.
             </p>
 
             {/* CTAs */}
@@ -313,17 +309,11 @@ const Hero = () => {
               </Button>
               <Button
                 asChild size="lg" variant="outline"
-                className="rounded-full h-11 px-7 text-sm font-medium border-white/10 bg-white/5 hover:bg-white/10 text-[var(--warm-white)] transition-all duration-300 backdrop-blur-sm w-full sm:w-auto justify-center"
+                className="rounded-full h-11 px-7 text-sm font-medium border-white/10 bg-white/5 hover:bg-white/10 text-[var(--warm-white)] transition-all duration-300 backdrop-blur-sm w-full sm:w-auto justify-center group"
               >
-                <a href="#contact">Contact Me</a>
-              </Button>
-              <Button
-                asChild size="lg" variant="outline"
-                className="rounded-full h-11 px-7 text-sm font-medium border-[var(--electric)]/30 bg-[var(--electric)]/10 hover:bg-[var(--electric)]/15 text-[var(--warm-white)] transition-all duration-300 backdrop-blur-sm w-full sm:w-auto justify-center"
-              >
-                <a href="/lab">
-                  <FlaskConical className="mr-2 w-4 h-4" />
-                  Open Lab
+                <a href="/cv-andre-saputra.pdf">
+                  <Download className="mr-2 w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                  Download CV
                 </a>
               </Button>
             </div>
@@ -342,14 +332,6 @@ const Hero = () => {
                   <s.icon className="w-5 h-5" />
                 </a>
               ))}
-              <div className="w-px h-5 bg-white/10 mx-2" />
-              <a
-                href="/cv-andre-saputra.pdf"
-                className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-[var(--electric)] hover:bg-[var(--electric)]/10 rounded-full transition-all duration-200 group"
-              >
-                <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
-                <span>CV</span>
-              </a>
             </div>
           </div>
         </div>
