@@ -1,5 +1,6 @@
 import { useRef } from "react";
-import { ExternalLink, Github, ArrowRight } from "lucide-react";
+import { ExternalLink, Github, ArrowRight, BookOpen } from "lucide-react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/motion/gsap";
@@ -84,6 +85,12 @@ const ProjectPanel = ({
           </div>
 
           <div className="flex gap-3 project-cta">
+            <Link
+              to={`/project/${project.id}`}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium border border-white/20 text-muted-foreground hover:text-foreground hover:border-white/40 transition-all duration-300"
+            >
+              <BookOpen className="w-3.5 h-3.5" /> Lihat Detail
+            </Link>
             {project.viewUrl && (
               <a
                 href={project.viewUrl}
@@ -211,6 +218,12 @@ const ProjectCardMobile = ({ project }: { project: ProjectItem }) => (
       </div>
 
       <div className="flex gap-2 pt-1">
+        <Link
+          to={`/project/${project.id}`}
+          className="flex items-center gap-2 px-5 py-3 rounded-full text-xs font-medium border border-white/20 text-muted-foreground min-h-[44px]"
+        >
+          <BookOpen className="w-3.5 h-3.5" /> Detail
+        </Link>
         {project.viewUrl && (
           <a
             href={project.viewUrl}
