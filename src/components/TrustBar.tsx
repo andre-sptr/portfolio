@@ -2,9 +2,8 @@ import { motion } from "framer-motion";
 
 const ORGS = [
   "PT Telkom Infrastruktur Indonesia",
-  "Politeknik Caltex Riau",
   "MAN Insan Cendekia Siak",
-  "PT PLN Icon Plus",
+  "Politeknik Caltex Riau",
   "HIMA AET PCR",
 ];
 

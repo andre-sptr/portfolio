@@ -16,7 +16,7 @@ const STATS = [
 
 const EXPERIENCES = [
   {
-    period: "Jan 2026 – Now",
+    period: "Jan – Jun 2026",
     role: "Admin Operation",
     company: "PT Telkom Infrastruktur Indonesia",
     icon: Building2,

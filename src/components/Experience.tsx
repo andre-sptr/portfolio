@@ -10,7 +10,7 @@ gsap.registerPlugin(DrawSVGPlugin);
 
 const timeline = [
   {
-    year: "Jan 2026 – Now",
+    year: "Jan – Jun 2026",
     role: "Admin Operation",
     org: "PT Telkom Infrastruktur Indonesia (Outsource)",
     type: "work",
