@@ -10,6 +10,8 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
+    "test:home": "node scripts/verify-home-command-center.mjs",
+    "test:projects": "node scripts/verify-project-links.mjs",
     "preview": "vite preview",
     "server:start": "pm2 start ecosystem.config.cjs",
     "server:stop": "pm2 stop andresptr",

@@ -23,17 +23,43 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     chunkSizeWarningLimit: 1000,
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['lucide-react', 'framer-motion', 'clsx', 'tailwind-merge'],
-          three: ['three', '@react-three/fiber', '@react-three/drei'],
-          physics: ['matter-js'],
-          charts: ['recharts'],
-          utils: ['date-fns', 'zod']
-        }
-      }
-    }
-  }
+        codeSplitting: {
+          groups: [
+            {
+              name: "three",
+              test: /node_modules[\\/](three|@react-three[\\/](fiber|drei))[\\/]/,
+              priority: 30,
+            },
+            {
+              name: "vendor",
+              test: /node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
+              priority: 25,
+            },
+            {
+              name: "ui",
+              test: /node_modules[\\/](lucide-react|framer-motion|clsx|tailwind-merge)[\\/]/,
+              priority: 20,
+            },
+            {
+              name: "physics",
+              test: /node_modules[\\/]matter-js[\\/]/,
+              priority: 15,
+            },
+            {
+              name: "charts",
+              test: /node_modules[\\/]recharts[\\/]/,
+              priority: 15,
+            },
+            {
+              name: "utils",
+              test: /node_modules[\\/](date-fns|zod)[\\/]/,
+              priority: 10,
+            },
+          ],
+        },
+      },
+    },
+  },
 }));

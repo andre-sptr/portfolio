@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 let printed = false;
 
-const ConsoleSignature = () => {
+const Signature = () => {
   useEffect(() => {
     if (printed || typeof window === "undefined") return;
     printed = true;
@@ -18,7 +18,7 @@ const ConsoleSignature = () => {
 
     const styles = {
       art: "color:#818cf8;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;line-height:1.1;",
-      hi: "color:#f0f0f5;font-size:14px;font-weight:600;",
+      hi: "color:#000;font-size:14px;font-weight:600;",
       label: "color:#7c6df2;font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;",
       value: "color:#b0b0bc;font-size:12px;",
       hint: "color:#5f5f6c;font-size:11px;font-style:italic;",
@@ -50,4 +50,4 @@ const ConsoleSignature = () => {
   return null;
 };
 
-export default ConsoleSignature;
+export default Signature;

@@ -1,20 +1,45 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Mail } from "lucide-react";
-import { Github, Linkedin, Instagram } from "@/components/icons/BrandIcons";
+import {
+  Activity,
+  ArrowRight,
+  Cpu,
+  Download,
+  Mail,
+  RadioTower,
+  Server,
+  ShieldCheck,
+  Terminal,
+} from "lucide-react";
+import { Github, Instagram, Linkedin } from "@/components/icons/BrandIcons";
 import { Button } from "@/components/ui/button";
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "@/lib/motion/gsap";
+import { gsap } from "@/lib/motion/gsap";
 import portraitImage from "/andre-saputra.png";
-import { heroPreviewProjects } from "@/data/projects";
+import { projects, type ProjectItem } from "@/data/projects";
 import ThreeScene, { scrollProgressRef } from "./ThreeScene";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-const FIRST_NAME = "Andre";
-const LAST_NAME = "Saputra";
-const ROLE_1 = "Full Stack";
-const ROLE_2 = "Developer";
+const COMMAND_PROJECT_IDS = ["sitiket", "reka-ai", "iot-system"] as const;
+
+const COMMAND_PROJECTS = COMMAND_PROJECT_IDS.map((id) =>
+  projects.find((project) => project.id === id)
+).filter((project): project is ProjectItem => Boolean(project));
+
+const SIGNALS = [
+  { label: "Network operations", value: "Telecom infra", icon: RadioTower },
+  { label: "AI tools", value: "Gemini + web apps", icon: Cpu },
+  { label: "IoT systems", value: "ESP32 + MQTT", icon: Activity },
+];
+
+const CAPABILITIES = ["React", "Node.js", "IoT", "AI Integration", "Network Automation"];
+
+const STATUS_ROWS = [
+  { label: "Current post", value: "PT Telkom Infrastruktur Indonesia" },
+  { label: "Primary focus", value: "Production systems" },
+  { label: "Operating mode", value: "Build, automate, monitor" },
+];
 
 const SOCIALS = [
   { href: "https://github.com/andre-sptr", icon: Github, label: "GitHub" },
@@ -23,132 +48,58 @@ const SOCIALS = [
   { href: "mailto:andresaputra07012019@gmail.com", icon: Mail, label: "Email" },
 ];
 
-// Floating tilted preview cards (JoyJam-style scattered around hero)
-const HERO_CARD_LAYOUT: Record<string, string> = {
-  "arena-debate": "hidden md:block absolute left-[4%] top-[18%] w-[180px] xl:w-[220px] rotate-[-14deg]",
-  "reka-ai": "hidden md:block absolute right-[5%] top-[14%] w-[180px] xl:w-[220px] rotate-[12deg]",
-  "fiscal-ai": "hidden lg:block absolute left-[10%] bottom-[14%] w-[200px] xl:w-[240px] rotate-[10deg]",
-  sitiket: "hidden lg:block absolute right-[8%] bottom-[18%] w-[200px] xl:w-[240px] rotate-[-9deg]",
-  "iot-system": "hidden xl:block absolute right-[22%] bottom-[4%] w-[150px] rotate-[-7deg]",
-};
-
-function SplitText({ text, className }: { text: string; className?: string }) {
-  return (
-    <span aria-label={text} className={className}>
-      {text.split("").map((char, i) => (
-        <span
-          key={i}
-          className="hero-char inline-block"
-          style={{ willChange: "transform, opacity" }}
-        >
-          {char === " " ? " " : char}
-        </span>
-      ))}
-    </span>
-  );
-}
-
 const Hero = () => {
   const prefersReduced = usePrefersReducedMotion();
   const isMobile = useIsMobile();
 
   const sectionRef = useRef<HTMLElement>(null);
-  const firstNameRef = useRef<HTMLDivElement>(null);
-  const lastNameRef = useRef<HTMLDivElement>(null);
-  const role1Ref = useRef<HTMLDivElement>(null);
-  const role2Ref = useRef<HTMLDivElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const socialsRef = useRef<HTMLDivElement>(null);
-  const badgeRef = useRef<HTMLDivElement>(null);
-  const portraitRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
+  const copyRef = useRef<HTMLDivElement>(null);
+  const signalsRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
+  const commandPanelRef = useRef<HTMLDivElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const firstChars = firstNameRef.current?.querySelectorAll<HTMLSpanElement>(".hero-char");
-    const lastChars = lastNameRef.current?.querySelectorAll<HTMLSpanElement>(".hero-char");
-    const r1Chars = role1Ref.current?.querySelectorAll<HTMLSpanElement>(".hero-char");
-    const r2Chars = role2Ref.current?.querySelectorAll<HTMLSpanElement>(".hero-char");
-    const allChars = [...(firstChars ?? []), ...(lastChars ?? []), ...(r1Chars ?? []), ...(r2Chars ?? [])];
-    const fadeEls = [badgeRef.current, subtitleRef.current, ctaRef.current, socialsRef.current].filter(Boolean);
-    const cardEls = cardsRef.current?.querySelectorAll<HTMLDivElement>(".float-card");
+    const introEls = [
+      copyRef.current,
+      signalsRef.current,
+      profileRef.current,
+      commandPanelRef.current,
+      scrollIndicatorRef.current,
+    ].filter((el): el is HTMLElement => Boolean(el));
 
     if (!prefersReduced) {
-      gsap.set(allChars, { y: "110%", opacity: 0, rotateX: -80, transformOrigin: "bottom center" });
-      gsap.set(fadeEls, { y: 24, opacity: 0 });
-      gsap.set(portraitRef.current, { opacity: 0, scale: 0.85, y: 20 });
-      if (cardEls) gsap.set(cardEls, { opacity: 0, scale: 0.6, y: 30 });
-      gsap.set(scrollIndicatorRef.current, { opacity: 0 });
+      gsap.set(introEls, { y: 28, opacity: 0 });
 
-      const tl = gsap.timeline({ delay: 0.2 });
-
-      tl.to(portraitRef.current, { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "power3.out" });
-      tl.to([...(firstChars ?? [])], {
-        y: "0%", opacity: 1, rotateX: 0,
-        stagger: 0.04, duration: 0.65, ease: "power3.out",
-      }, "-=0.5");
-      tl.to([...(lastChars ?? [])], {
-        y: "0%", opacity: 1, rotateX: 0,
-        stagger: 0.035, duration: 0.6, ease: "power3.out",
-      }, "-=0.45");
-      tl.to([...(r1Chars ?? []), ...(r2Chars ?? [])], {
-        y: "0%", opacity: 1, rotateX: 0,
-        stagger: 0.025, duration: 0.5, ease: "power2.out",
-      }, "-=0.4");
-      tl.to(fadeEls, {
-        y: 0, opacity: 1,
-        stagger: 0.1, duration: 0.5, ease: "power2.out",
-      }, "-=0.2");
-      if (cardEls && cardEls.length) {
-        tl.to(cardEls, {
-          opacity: 1, scale: 1, y: 0,
-          stagger: { each: 0.08, from: "random" },
-          duration: 0.7, ease: "back.out(1.4)",
-        }, "-=0.8");
-      }
-      tl.to(scrollIndicatorRef.current, { opacity: 1, duration: 0.4 }, "+=0.2");
+      gsap
+        .timeline({ delay: 0.16 })
+        .to(copyRef.current, { y: 0, opacity: 1, duration: 0.72, ease: "power3.out" })
+        .to(signalsRef.current, { y: 0, opacity: 1, duration: 0.52, ease: "power2.out" }, "-=0.32")
+        .to(profileRef.current, { y: 0, opacity: 1, duration: 0.58, ease: "power2.out" }, "-=0.34")
+        .to(commandPanelRef.current, { y: 0, opacity: 1, duration: 0.68, ease: "power3.out" }, "-=0.42")
+        .to(scrollIndicatorRef.current, { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, "-=0.2");
     } else {
-      gsap.set(allChars, { y: 0, opacity: 1, rotateX: 0 });
-      gsap.set(fadeEls, { y: 0, opacity: 1 });
-      gsap.set(portraitRef.current, { opacity: 1, scale: 1, y: 0 });
-      if (cardEls) gsap.set(cardEls, { opacity: 1, scale: 1, y: 0 });
-      gsap.set(scrollIndicatorRef.current, { opacity: 1 });
+      gsap.set(introEls, { y: 0, opacity: 1 });
     }
 
-    // Idle floating loop for cards (subtle drift)
-    if (!prefersReduced && cardEls) {
-      cardEls.forEach((el, i) => {
-        gsap.to(el, {
-          y: `+=${10 + (i % 3) * 4}`,
-          rotate: `+=${i % 2 === 0 ? 2 : -2}`,
-          duration: 4 + (i % 4) * 0.6,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-          delay: i * 0.15,
-        });
-      });
-    }
-
-    gsap.to(scrollIndicatorRef.current, {
-      y: 8, duration: 1.2, ease: "sine.inOut", yoyo: true, repeat: -1,
-    });
-
-    // Scroll-driven parallax + Three.js progress feed
-    if (!isMobile) {
-      gsap.to([firstNameRef.current, lastNameRef.current], {
-        y: -80, ease: "none",
+    if (!prefersReduced && !isMobile) {
+      gsap.to(commandPanelRef.current, {
+        y: -24,
+        ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
           end: "bottom top",
           scrub: 1.2,
-          onUpdate: (self) => { scrollProgressRef.current = self.progress; },
+          onUpdate: (self) => {
+            scrollProgressRef.current = self.progress;
+          },
         },
       });
-      gsap.to([role1Ref.current, role2Ref.current, subtitleRef.current], {
-        y: -50, ease: "none",
+
+      gsap.to(profileRef.current, {
+        y: -12,
+        ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
@@ -156,195 +107,253 @@ const Hero = () => {
           scrub: 1.5,
         },
       });
-      if (cardEls) {
-        cardEls.forEach((el, i) => {
-          gsap.to(el, {
-            y: `-=${60 + (i % 3) * 20}`,
-            ease: "none",
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top top",
-              end: "bottom top",
-              scrub: 1 + (i % 3) * 0.3,
-            },
-          });
-        });
-      }
     }
-  }, { scope: sectionRef, dependencies: [isMobile] });
+  }, { scope: sectionRef, dependencies: [isMobile, prefersReduced] });
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen lg:min-h-[150vh]" id="hero">
-      {/* ── Sticky viewport ───────────────────────────── */}
-      <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Background */}
-        {!isMobile ? (
-          <div className="absolute inset-0 -z-10 overflow-hidden">
-            <ThreeScene scrollEnabled={!prefersReduced} isMobile={false} />
-          </div>
-        ) : (
-          <div className="absolute inset-0 -z-10 mobile-bg-gradient" />
-        )}
-
-        {/* Grain + vignette */}
-        <div className="grain pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-0)]/40 via-transparent to-[var(--surface-0)]/95 pointer-events-none z-0" />
-
-        {/* ── Floating tilted preview cards (JoyJam style) ── */}
-        <div ref={cardsRef} className="absolute inset-0 z-[5] pointer-events-none">
-          {heroPreviewProjects.map((project) => (
-            <div
-              key={project.id}
-              className={`float-card ${HERO_CARD_LAYOUT[project.id]} rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6)] ring-1 ring-white/10`}
-              style={{ willChange: "transform" }}
-            >
-              <img
-                src={project.image}
-                alt={project.title}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-auto block"
-              />
-            </div>
-          ))}
+    <section
+      ref={sectionRef}
+      className="relative min-h-screen overflow-hidden pt-24 lg:pt-28"
+      id="hero"
+      aria-label="Andre Saputra command center"
+    >
+      {!isMobile ? (
+        <div className="absolute inset-0 -z-10 overflow-hidden opacity-55">
+          <ThreeScene scrollEnabled={!prefersReduced} isMobile={false} />
         </div>
+      ) : (
+        <div className="absolute inset-0 -z-10 mobile-bg-gradient" />
+      )}
 
-        {/* ── Centered hero content ──────────────────────── */}
-        <div className="relative z-10 h-full flex flex-col items-center justify-center px-6 text-center">
-          <div className="mx-auto w-full max-w-4xl flex flex-col items-center">
+      <div className="command-center-grid pointer-events-none absolute inset-0 z-0" />
+      <div className="grain pointer-events-none" />
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(180deg,rgba(10,10,15,0.62)_0%,rgba(10,10,15,0.18)_45%,rgba(10,10,15,0.92)_100%)]" />
 
-            {/* Status badge */}
-            <div
-              ref={badgeRef}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--electric)]/20 bg-[var(--electric)]/8 text-[10px] uppercase tracking-[0.2em] text-[var(--electric)] mb-7 font-medium"
-            >
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute h-full w-full rounded-full bg-[var(--electric)] opacity-60" />
-                <span className="relative flex rounded-full h-1.5 w-1.5 bg-[var(--electric)]" />
+      <div className="container relative z-10 mx-auto flex min-h-[calc(100vh-6rem)] items-center px-4 pb-16">
+        <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,0.96fr)_minmax(420px,0.74fr)] xl:gap-14">
+          <div ref={copyRef} className="max-w-3xl">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--electric)]/25 bg-[var(--electric)]/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--electric)]">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--electric)] opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--electric)]" />
               </span>
-              Open to collaborations
+              Signal online
             </div>
 
-            {/* Portrait pill (centered, like the JoyJam middle phone) */}
-            <motion.div
-              ref={portraitRef}
-              className="relative mb-6 z-10"
-              whileHover={{ scale: 1.04 }}
-              transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            >
-              <div className="relative w-[110px] h-[110px] sm:w-[130px] sm:h-[130px]">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[var(--electric)]/40 to-[hsl(192_72%_55%)]/30 blur-2xl scale-125" />
-                <div className="relative w-full h-full rounded-full overflow-hidden ring-2 ring-white/20 bg-[var(--surface-1)] shadow-[0_10px_40px_-10px_rgba(124,109,242,0.6)]">
-                  <img
-                    src={portraitImage}
-                    alt="Andre Saputra"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-            </motion.div>
-
-            {/* First name */}
-            <div
-              ref={firstNameRef}
-              className="overflow-hidden leading-none"
-              style={{ perspective: "800px" }}
-            >
-              <SplitText
-                text={FIRST_NAME}
-                className="block text-[clamp(3rem,12vw,9rem)] font-bold leading-[0.88] tracking-tight text-[var(--warm-white)]"
-              />
-            </div>
-
-            {/* Last name */}
-            <div
-              ref={lastNameRef}
-              className="overflow-hidden leading-none mb-3"
-              style={{ perspective: "800px" }}
-            >
-              <SplitText
-                text={LAST_NAME}
-                className="block text-[clamp(3rem,12vw,9rem)] font-bold leading-[0.88] tracking-tight text-[var(--warm-white)]"
-              />
-            </div>
-
-            {/* Role gradient */}
-            <div className="flex flex-wrap justify-center gap-x-3 mb-5">
-              <div ref={role1Ref} className="overflow-hidden" style={{ perspective: "600px" }}>
-                <SplitText
-                  text={ROLE_1}
-                  className="block text-[clamp(1.4rem,3.8vw,2.4rem)] font-bold leading-tight tracking-tight text-gradient"
-                />
-              </div>
-              <div ref={role2Ref} className="overflow-hidden" style={{ perspective: "600px" }}>
-                <SplitText
-                  text={ROLE_2}
-                  className="block text-[clamp(1.4rem,3.8vw,2.4rem)] font-bold leading-tight tracking-tight text-gradient"
-                />
-              </div>
-            </div>
-
-            {/* Subtitle */}
-            <p
-              ref={subtitleRef}
-              className="text-sm sm:text-base text-muted-foreground max-w-xl mb-7 leading-relaxed mx-auto"
-            >
-              Building{" "}
-              <span className="text-[var(--warm-white)] font-medium">production web apps</span>,{" "}
-              <span className="text-[var(--warm-white)] font-medium">IoT systems</span>, and{" "}
-              <span className="text-[var(--warm-white)] font-medium">AI tools</span>.
-              Currently at{" "}
-              <span className="text-[var(--warm-white)] font-medium">PT Telkom Infrastruktur Indonesia</span>.
+            <p className="mb-4 flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+              <Terminal className="h-4 w-4 text-[var(--electric)]" />
+              Network operations / AI tools / IoT systems
             </p>
 
-            {/* CTAs */}
-            <div ref={ctaRef} className="flex flex-col sm:flex-row gap-3 mb-6 justify-center">
+            <h1 className="max-w-4xl text-[clamp(3.4rem,11vw,8.5rem)] font-bold leading-[0.86] tracking-normal text-[var(--warm-white)]">
+              Andre
+              <span className="block text-gradient">Saputra</span>
+            </h1>
+
+            <p className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
+              Production web apps, AI tools, and IoT systems for telecom infrastructure.
+              Currently building operational systems at{" "}
+              <span className="font-semibold text-[var(--warm-white)]">
+                PT Telkom Infrastruktur Indonesia
+              </span>
+              .
+            </p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button
-                asChild size="lg"
-                className="rounded-full h-11 px-7 text-sm font-medium bg-[var(--electric)] hover:bg-[var(--electric)]/90 text-white border-0 shadow-[0_0_28px_hsl(246_70%_68%/0.4)] hover:shadow-[0_0_40px_hsl(246_70%_68%/0.6)] transition-all duration-300 group w-full sm:w-auto justify-center"
+                asChild
+                size="lg"
+                className="h-12 rounded-full border-0 bg-[var(--electric)] px-7 text-sm font-semibold text-white shadow-[0_0_32px_hsl(246_70%_68%/0.36)] transition-all duration-300 hover:bg-[var(--electric)]/90 hover:shadow-[0_0_44px_hsl(246_70%_68%/0.5)]"
               >
                 <a href="#projects">
-                  See My Work
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  View Projects
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
+
               <Button
-                asChild size="lg" variant="outline"
-                className="rounded-full h-11 px-7 text-sm font-medium border-white/10 bg-white/5 hover:bg-white/10 text-[var(--warm-white)] transition-all duration-300 backdrop-blur-sm w-full sm:w-auto justify-center group"
+                asChild
+                size="lg"
+                variant="outline"
+                className="h-12 rounded-full border-white/12 bg-white/[0.04] px-7 text-sm font-semibold text-[var(--warm-white)] backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.08]"
               >
                 <a href="/cv-andre-saputra.pdf">
-                  <Download className="mr-2 w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                  <Download className="mr-2 h-4 w-4" />
                   Download CV
                 </a>
               </Button>
             </div>
 
-            {/* Socials */}
-            <div ref={socialsRef} className="flex items-center gap-1 justify-center">
-              {SOCIALS.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target={s.href.startsWith("mailto") ? undefined : "_blank"}
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className="p-2.5 rounded-full text-muted-foreground hover:text-[var(--electric)] hover:bg-[var(--electric)]/10 transition-all duration-200"
+            <div ref={signalsRef} className="mt-8 grid gap-3 sm:grid-cols-3">
+              {SIGNALS.map((signal) => (
+                <div
+                  key={signal.label}
+                  className="rounded-[8px] border border-white/10 bg-white/[0.035] p-3 backdrop-blur-md"
                 >
-                  <s.icon className="w-5 h-5" />
-                </a>
+                  <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-[8px] border border-[var(--electric)]/20 bg-[var(--electric)]/10 text-[var(--electric)]">
+                    <signal.icon className="h-4 w-4" />
+                  </div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                    {signal.label}
+                  </p>
+                  <p className="mt-1 text-sm font-medium text-[var(--warm-white)]">{signal.value}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              {CAPABILITIES.map((capability) => (
+                <span
+                  key={capability}
+                  className="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-xs font-medium text-muted-foreground"
+                >
+                  {capability}
+                </span>
               ))}
             </div>
           </div>
-        </div>
 
-        {/* Scroll indicator */}
-        <div
-          ref={scrollIndicatorRef}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
-        >
-          <span className="text-[9px] text-muted-foreground uppercase tracking-[0.35em]">Scroll</span>
-          <div className="w-px h-8 bg-gradient-to-b from-[var(--electric)]/50 to-transparent" />
+          <div className="space-y-4 lg:justify-self-end">
+            <motion.div
+              ref={profileRef}
+              className="rounded-[8px] border border-white/10 bg-[rgba(13,13,20,0.78)] p-3 shadow-[0_18px_60px_rgba(0,0,0,0.26)] backdrop-blur-2xl sm:p-4 lg:p-3"
+              whileHover={prefersReduced ? undefined : { y: -3 }}
+              transition={{ type: "spring", stiffness: 260, damping: 24 }}
+            >
+              <div className="grid gap-3 sm:grid-cols-[auto_1fr]">
+                <div className="relative h-20 w-20 overflow-hidden rounded-[8px] border border-white/15 bg-[var(--surface-1)] xl:h-24 xl:w-24">
+                  <img
+                    src={portraitImage}
+                    alt="Andre Saputra"
+                    className="h-full w-full object-cover"
+                    decoding="async"
+                  />
+                </div>
+
+                <div>
+                  <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--electric)]">
+                    <ShieldCheck className="h-4 w-4" />
+                    Verified builder profile
+                  </div>
+                  <div className="space-y-1.5">
+                    {STATUS_ROWS.map((row) => (
+                      <div key={row.label} className="grid grid-cols-[96px_1fr] gap-2 text-xs xl:grid-cols-[112px_1fr] xl:text-sm">
+                        <span className="text-muted-foreground">{row.label}</span>
+                        <span className="font-medium text-[var(--warm-white)]">{row.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                  Available for collaboration
+                </div>
+
+                <div className="flex items-center gap-1">
+                  {SOCIALS.map((social) => (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target={social.href.startsWith("mailto") ? undefined : "_blank"}
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      className="rounded-full p-2 text-muted-foreground transition-colors hover:bg-[var(--electric)]/10 hover:text-[var(--electric)]"
+                    >
+                      <social.icon className="h-4 w-4" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            <div ref={commandPanelRef} className="command-center-shell p-3 sm:p-4">
+              <div className="relative z-10 mb-3 flex items-start justify-between gap-4">
+                <div>
+                  <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--electric)]">
+                    <Server className="h-4 w-4" />
+                    Featured systems
+                  </p>
+                  <h2 className="text-xl font-semibold tracking-normal text-[var(--warm-white)] xl:text-2xl">
+                    Operational builds in the field
+                  </h2>
+                </div>
+                <div className="hidden rounded-[8px] border border-emerald-400/20 bg-emerald-400/10 px-3 py-1.5 text-right text-xs text-emerald-200 sm:block">
+                  <span className="block font-semibold">Live stack</span>
+                  <span className="text-emerald-200/70">monitored</span>
+                </div>
+              </div>
+
+              <div className="relative z-10 space-y-3">
+                {COMMAND_PROJECTS.map((project, index) => {
+                  const href = project.viewUrl || project.codeUrl || "#projects";
+
+                  return (
+                    <a
+                      key={project.id}
+                      href={href}
+                      target={href.startsWith("http") ? "_blank" : undefined}
+                      rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      className="command-system-row group grid gap-3 border border-white/10 bg-white/[0.035] p-2.5 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.065] sm:grid-cols-[116px_1fr_auto] xl:grid-cols-[132px_1fr_auto]"
+                      style={{ borderLeftColor: project.accent }}
+                    >
+                      <div className="aspect-[16/10] overflow-hidden rounded-[6px] border border-white/10 bg-[var(--surface-1)]">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="h-full w-full object-cover opacity-[0.82] transition duration-300 group-hover:scale-[1.03] group-hover:opacity-100"
+                          loading={index === 0 ? "eager" : "lazy"}
+                          decoding="async"
+                        />
+                      </div>
+
+                      <div className="min-w-0">
+                        <div className="mb-2 flex items-center gap-2">
+                          <span className="font-mono-tight text-[11px] text-muted-foreground">
+                            SYS-{String(index + 1).padStart(2, "0")}
+                          </span>
+                          <span className="rounded-full border border-white/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                            {project.category}
+                          </span>
+                        </div>
+                        <h3 className="text-base font-semibold tracking-normal text-[var(--warm-white)] xl:text-lg">
+                          {project.title}
+                        </h3>
+                        <p className="mt-1 text-xs leading-5 text-muted-foreground xl:text-sm xl:leading-6">
+                          {project.subtitle}
+                        </p>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          {project.tech.slice(0, 3).map((tech) => (
+                            <span
+                              key={tech}
+                              className="rounded-full bg-white/[0.055] px-2 py-0.5 text-[11px] font-medium text-muted-foreground xl:px-2.5 xl:py-1"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center text-[var(--electric)] sm:justify-end">
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div
+        ref={scrollIndicatorRef}
+        className="absolute bottom-7 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 lg:flex"
+      >
+        <span className="text-[9px] uppercase tracking-[0.35em] text-muted-foreground">Scroll</span>
+        <div className="h-8 w-px bg-gradient-to-b from-[var(--electric)]/50 to-transparent" />
       </div>
     </section>
   );
