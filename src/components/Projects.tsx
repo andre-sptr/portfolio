@@ -1,215 +1,44 @@
-import { useRef } from "react";
-import { ExternalLink, Github, ArrowRight, BookOpen } from "lucide-react";
+import { ExternalLink, ArrowRight, BookOpen } from "lucide-react";
+import { Github } from "@/components/icons/BrandIcons";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "@/lib/motion/gsap";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { featuredProjects } from "@/data/projects";
 import type { ProjectItem } from "@/data/projects";
+import BrowserFrame from "@/components/BrowserFrame";
 
-// Desktop: full-bleed horizontal panel with parallax layers
-const ProjectPanel = ({
-  project,
-  index,
-}: {
-  project: ProjectItem;
-  index: number;
-}) => {
-  const isEven = index % 2 === 0;
-
-  return (
-    <div
-      className="project-panel relative flex-shrink-0 w-screen h-screen flex items-center justify-center overflow-hidden"
-      style={{ background: "var(--surface-0)" }}
-    >
-      {/* Ambient glow behind image — kept intentionally low (project-storytelling only) */}
-      <div
-        className="absolute w-[40vw] h-[40vw] rounded-full blur-[140px] opacity-[0.06] pointer-events-none"
-        style={{
-          background: project.accent,
-          right: isEven ? "5%" : "auto",
-          left: isEven ? "auto" : "5%",
-          top: "50%",
-          transform: "translateY(-50%)",
-        }}
-      />
-
-      <div
-        className={`relative z-10 w-full max-w-7xl mx-auto px-8 grid grid-cols-2 gap-16 items-center ${isEven ? "" : "direction-rtl"
-          }`}
-      >
-        {/* Text side */}
-        <div className={`flex flex-col gap-6 ${isEven ? "order-1" : "order-2"}`}>
-          <div className="flex items-center gap-3">
-            <span
-              className="text-6xl font-medium opacity-[0.12] leading-none select-none tabular-nums font-mono-tight"
-              style={{ color: project.accent }}
-            >
-              {project.num}
-            </span>
-            <span
-              className="text-[10px] font-medium tracking-[0.22em] uppercase px-3 py-1 rounded-full border font-mono-tight"
-              style={{ color: project.accent, borderColor: `${project.accent}40` }}
-            >
-              {project.category}
-            </span>
-          </div>
-
-          <div>
-            <h2
-              className="text-4xl md:text-5xl font-bold leading-tight mb-2 project-title"
-              style={{ fontFamily: "'Clash Display', sans-serif", color: "var(--warm-white)" }}
-            >
-              {project.title}
-            </h2>
-            <p className="text-lg font-medium" style={{ color: project.accent }}>
-              {project.subtitle}
-            </p>
-          </div>
-
-          <p className="text-base leading-relaxed text-muted-foreground max-w-md project-desc">
-            {project.description}
-          </p>
-
-          {project.metrics && project.metrics.length > 0 && (
-            <div className="flex flex-wrap gap-2 project-metrics">
-              {project.metrics.map((m) => (
-                <div
-                  key={m.label}
-                  className="flex items-baseline gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/10"
-                >
-                  <span
-                    className="text-sm font-semibold font-mono-tight tabular-nums"
-                    style={{ color: project.accent }}
-                  >
-                    {m.value}
-                  </span>
-                  <span className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground font-mono-tight">
-                    {m.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <div className="flex flex-wrap gap-2 project-tech">
-            {project.tech.map((t) => (
-              <span
-                key={t}
-                className="text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-muted-foreground"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-
-          <div className="flex gap-3 project-cta">
-            <Link
-              to={`/project/${project.id}`}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium border border-white/20 text-muted-foreground hover:text-foreground hover:border-white/40 transition-all duration-300"
-            >
-              <BookOpen className="w-3.5 h-3.5" /> Case Study
-            </Link>
-            {project.viewUrl && (
-              <a
-                href={project.viewUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:gap-3"
-                style={{
-                  background: project.accent,
-                  color: "#0a0a0f",
-                }}
-              >
-                Live Demo <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            )}
-            {project.codeUrl && (
-              <a
-                href={project.codeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium border border-white/20 text-muted-foreground hover:text-foreground hover:border-white/40 transition-all duration-300"
-              >
-                <Github className="w-3.5 h-3.5" /> Code
-              </a>
-            )}
-          </div>
-        </div>
-
-        {/* Image side */}
-        <div
-          className={`relative ${isEven ? "order-2" : "order-1"} project-img-wrap`}
-        >
-          {/* Frame */}
-          <div
-            className="absolute -inset-3 rounded-2xl opacity-20"
-            style={{
-              background: `linear-gradient(135deg, ${project.accent}40, transparent)`,
-              border: `1px solid ${project.accent}30`,
-            }}
-          />
-          <div className="relative rounded-xl overflow-hidden shadow-2xl" style={{ transform: "translateZ(0)" }}>
-            {/* Parallax image layer — GSAP moves this */}
-            <div className="project-img-inner" style={{ willChange: "transform" }}>
-              <img
-                src={project.image}
-                alt={project.title}
-                width={1200}
-                height={800}
-                className="w-full h-[400px] object-cover object-top"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            {/* Overlay gradient */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: `linear-gradient(to top, ${project.accent}20 0%, transparent 50%)`,
-              }}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Mobile: vertical stack with whileInView
-const ProjectCardMobile = ({ project }: { project: ProjectItem }) => (
+const ProjectCard = ({ project }: { project: ProjectItem }) => (
   <motion.div
     initial={{ opacity: 0, y: 40 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, amount: 0.2 }}
     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-    className="relative rounded-2xl overflow-hidden border border-white/10"
+    className="relative rounded-2xl overflow-hidden border border-white/10 flex flex-col"
     style={{ background: "var(--surface-1)" }}
   >
-    <div className="relative h-48 overflow-hidden">
-      <img
-        src={project.image}
-        alt={project.title}
-        className="w-full h-full object-cover object-top"
-        loading="lazy"
-      />
-      <div
-        className="absolute inset-0"
-        style={{
-          background: `linear-gradient(to top, var(--surface-1) 0%, transparent 60%)`,
-        }}
-      />
-      <span
-        className="absolute top-3 right-3 text-xs font-medium tracking-widest uppercase px-2.5 py-1 rounded-full border backdrop-blur-sm"
-        style={{ color: project.accent, borderColor: `${project.accent}40`, background: `${project.accent}15` }}
-      >
-        {project.category}
-      </span>
-    </div>
+    <BrowserFrame url={project.viewUrl} className="rounded-none border-0 border-b border-white/[0.05]">
+      <div className="relative h-44 sm:h-56 overflow-hidden">
+        <img
+          src={project.image}
+          alt={project.title}
+          className="w-full h-full object-cover object-top"
+          loading="lazy"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `linear-gradient(to top, var(--surface-1) 0%, transparent 60%)`,
+          }}
+        />
+        <span
+          className="absolute top-3 right-3 text-[10px] font-medium tracking-[0.16em] uppercase px-2.5 py-1 rounded-full border backdrop-blur-sm font-mono-tight"
+          style={{ color: project.accent, borderColor: `${project.accent}40`, background: `${project.accent}15` }}
+        >
+          {project.category}
+        </span>
+      </div>
+    </BrowserFrame>
 
-    <div className="p-5 flex flex-col gap-3">
+    <div className="p-5 flex flex-col gap-3 flex-1">
       <div>
         <h3
           className="text-xl font-bold leading-tight"
@@ -256,10 +85,10 @@ const ProjectCardMobile = ({ project }: { project: ProjectItem }) => (
         ))}
       </div>
 
-      <div className="flex gap-2 pt-1">
+      <div className="flex gap-2 pt-1 mt-auto flex-wrap">
         <Link
           to={`/project/${project.id}`}
-          className="flex items-center gap-2 px-5 py-3 rounded-full text-xs font-medium border border-white/20 text-muted-foreground min-h-[44px]"
+          className="flex items-center gap-2 px-5 py-3 rounded-full text-xs font-medium border border-white/20 text-muted-foreground hover:text-foreground hover:border-white/40 transition-all min-h-[44px]"
         >
           <BookOpen className="w-3.5 h-3.5" /> Case Study
         </Link>
@@ -268,7 +97,7 @@ const ProjectCardMobile = ({ project }: { project: ProjectItem }) => (
             href={project.viewUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-3 rounded-full text-xs font-medium min-h-[44px]"
+            className="flex items-center gap-2 px-5 py-3 rounded-full text-xs font-medium min-h-[44px] hover:gap-3 transition-all"
             style={{ background: project.accent, color: "#0a0a0f" }}
           >
             Live <ExternalLink className="w-3.5 h-3.5" />
@@ -279,7 +108,7 @@ const ProjectCardMobile = ({ project }: { project: ProjectItem }) => (
             href={project.codeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-3 rounded-full text-xs font-medium border border-white/20 text-muted-foreground min-h-[44px]"
+            className="flex items-center gap-2 px-5 py-3 rounded-full text-xs font-medium border border-white/20 text-muted-foreground hover:text-foreground hover:border-white/40 transition-all min-h-[44px]"
           >
             <Github className="w-3.5 h-3.5" /> Code
           </a>
@@ -289,30 +118,32 @@ const ProjectCardMobile = ({ project }: { project: ProjectItem }) => (
   </motion.div>
 );
 
-const ProjectsMobile = () => (
-  <section id="projects" className="py-24 px-4" style={{ background: "var(--surface-0)" }}>
-    <div className="max-w-lg mx-auto">
+const Projects = () => (
+  <section
+    id="projects"
+    className="py-24 md:py-32 px-4"
+    style={{ background: "var(--surface-0)" }}
+  >
+    <div className="max-w-6xl mx-auto">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.6 }}
-        className="mb-12 text-center"
+        className="mb-12 md:mb-16 max-w-2xl"
       >
-        <span className="text-xs font-medium tracking-[0.25em] uppercase text-primary mb-3 block">
-          Selected Work
-        </span>
+        <span className="section-label mb-3 block">Selected Work</span>
         <h2
-          className="text-4xl font-bold"
+          className="text-3xl md:text-4xl font-bold leading-tight"
           style={{ fontFamily: "'Clash Display', sans-serif", color: "var(--warm-white)" }}
         >
           Projects
         </h2>
       </motion.div>
 
-      <div className="flex flex-col gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
         {featuredProjects.map((p) => (
-          <ProjectCardMobile key={p.num} project={p} />
+          <ProjectCard key={p.num} project={p} />
         ))}
       </div>
 
@@ -321,7 +152,7 @@ const ProjectsMobile = () => (
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 0.3 }}
-        className="mt-10 text-center"
+        className="mt-12 text-center"
       >
         <a
           href="https://github.com/andre-sptr"
@@ -335,136 +166,5 @@ const ProjectsMobile = () => (
     </div>
   </section>
 );
-
-const Projects = () => {
-  const isMobile = useIsMobile();
-  const prefersReduced = usePrefersReducedMotion();
-  const sectionRef = useRef<HTMLElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      if (isMobile || prefersReduced || !trackRef.current || !sectionRef.current) return;
-
-      const panels = gsap.utils.toArray<HTMLElement>(".project-panel");
-      // Visual travel distance (how far the track slides)
-      const trackTravel = (panels.length - 1) * window.innerWidth;
-      // Scroll distance the pin holds — ~1.2× viewport WIDTH per panel transition.
-      // Lenis already smooths the scroll, so we don't need to stretch this aggressively.
-      const scrollDist = (panels.length - 1) * window.innerWidth * 1.2;
-
-      // GPU hints — promote track to its own layer so transform is composited, not painted
-      gsap.set(trackRef.current, { force3D: true, willChange: "transform" });
-
-      // Master horizontal scroll timeline
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          pin: true,
-          start: "top top",
-          end: () => `+=${scrollDist}`,
-          // Lower scrub — Lenis already does the smoothing, double-lerp causes the laggy feel
-          scrub: 0.6,
-          invalidateOnRefresh: true,
-          anticipatePin: 1,
-        },
-      });
-
-      tl.to(trackRef.current, {
-        x: () => -trackTravel,
-        ease: "none",
-        duration: 1,
-      });
-
-      // Per-panel entrance animations (stagger in at panel's own progress)
-      panels.forEach((panel, i) => {
-        const progress = i / panels.length;
-        const title = panel.querySelector(".project-title");
-        const desc = panel.querySelector(".project-desc");
-        const metrics = panel.querySelector(".project-metrics");
-        const tech = panel.querySelector(".project-tech");
-        const cta = panel.querySelector(".project-cta");
-        const imgWrap = panel.querySelector(".project-img-wrap");
-
-        if (i > 0) {
-          tl.from(
-            [title, desc, metrics, tech, cta].filter(Boolean),
-            { opacity: 0, y: 40, stagger: 0.08, duration: 0.35, ease: "power3.out" },
-            progress + 0.03
-          );
-        }
-
-        // Parallax: image moves slightly opposite scroll direction
-        if (imgWrap) {
-          tl.fromTo(
-            imgWrap.querySelector(".project-img-inner"),
-            { xPercent: -6 },
-            { xPercent: 6, ease: "none", duration: 1 },
-            i / panels.length
-          );
-        }
-      });
-
-      // Section label parallax
-      const label = sectionRef.current.querySelector(".projects-label");
-      if (label) {
-        tl.fromTo(label, { xPercent: 0 }, { xPercent: -60, ease: "none", duration: 1 }, 0);
-      }
-    },
-    { scope: sectionRef, dependencies: [isMobile, prefersReduced] }
-  );
-
-  if (isMobile) return <ProjectsMobile />;
-
-  return (
-    <section
-      ref={sectionRef}
-      id="projects"
-      className="relative overflow-hidden"
-      style={{ background: "var(--surface-0)" }}
-    >
-      {/* Giant watermark label — parallaxes opposite scroll */}
-      <div
-        className="projects-label absolute top-6 left-0 pointer-events-none select-none z-0 whitespace-nowrap"
-        style={{
-          fontFamily: "'Clash Display', sans-serif",
-          fontSize: "clamp(6rem, 15vw, 14rem)",
-          fontWeight: 700,
-          color: "transparent",
-          WebkitTextStroke: "1px rgba(255,255,255,0.04)",
-          lineHeight: 1,
-        }}
-      >
-        PROJECTS
-      </div>
-
-      {/* Section header — stays fixed at top-left while panels scroll */}
-      <div className="absolute top-10 left-10 z-20 pointer-events-none">
-        <span className="text-xs font-medium tracking-[0.25em] uppercase text-primary block mb-1">
-          Selected Work
-        </span>
-        <span
-          className="text-2xl font-bold"
-          style={{ fontFamily: "'Clash Display', sans-serif", color: "var(--warm-white)" }}
-        >
-          Projects
-        </span>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-10 right-10 z-20 flex items-center gap-2 text-xs text-muted-foreground/50 pointer-events-none">
-        <span>scroll</span>
-        <ArrowRight className="w-3.5 h-3.5" />
-      </div>
-
-      {/* Horizontal track */}
-      <div ref={trackRef} className="flex" style={{ width: `${featuredProjects.length * 100}vw` }}>
-        {featuredProjects.map((project, i) => (
-          <ProjectPanel key={project.num} project={project} index={i} />
-        ))}
-      </div>
-    </section>
-  );
-};
 
 export default Projects;

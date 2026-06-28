@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import NetworkStatus from "@/components/NetworkStatus";
 
 const NOW_ITEMS = [
   {
@@ -76,6 +77,8 @@ const NowBlock = () => {
             </motion.li>
           ))}
         </ul>
+
+        <NetworkStatus />
       </div>
     </section>
   );

@@ -2,13 +2,14 @@ import React, { Suspense } from 'react';
 import SEO from "@/components/SEO";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
+import TrustBar from "@/components/TrustBar";
+import NowBlock from "@/components/NowBlock";
 import { useDocumentReadyRefresh } from "@/lib/motion/useDocumentReadyRefresh";
 
-// Lazy load components for performance
-const TrustBar = React.lazy(() => import("@/components/TrustBar"));
+// Lazy load heavy components only — small ones (TrustBar, NowBlock) are eager
+// to reduce Suspense boundary churn that conflicts with GSAP pin spacers in React 19.
 const About = React.lazy(() => import("@/components/About"));
 const Projects = React.lazy(() => import("@/components/Projects"));
-const NowBlock = React.lazy(() => import("@/components/NowBlock"));
 const Experience = React.lazy(() => import("@/components/Experience"));
 const FreeTools = React.lazy(() => import("@/components/FreeTools"));
 const Contact = React.lazy(() => import("@/components/Contact"));
@@ -99,9 +100,7 @@ const Index = () => {
       <Navigation />
       <Hero />
 
-      <Suspense fallback={<LoadingFallback />}>
-        <TrustBar />
-      </Suspense>
+      <TrustBar />
 
       <Suspense fallback={<LoadingFallback />}>
         <About />
@@ -115,9 +114,7 @@ const Index = () => {
 
       <hr className="section-sep" />
 
-      <Suspense fallback={<LoadingFallback />}>
-        <NowBlock />
-      </Suspense>
+      <NowBlock />
 
       <hr className="section-sep" />
 

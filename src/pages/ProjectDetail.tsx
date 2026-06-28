@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, ExternalLink, Github } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
+import { Github } from "@/components/icons/BrandIcons";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 import NotFound from "./NotFound";

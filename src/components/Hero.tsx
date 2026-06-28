@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Github, Linkedin, Mail, Instagram } from "lucide-react";
+import { ArrowRight, Download, Mail } from "lucide-react";
+import { Github, Linkedin, Instagram } from "@/components/icons/BrandIcons";
 import { Button } from "@/components/ui/button";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/motion/gsap";

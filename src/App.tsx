@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { ChatWidget } from "./components/ChatWidget";
 import Analytics from "./components/Analytics";
+import ConsoleSignature from "./components/ConsoleSignature";
 
 const Lab = React.lazy(() => import("./pages/Lab"));
 const ProjectDetail = React.lazy(() => import("./pages/ProjectDetail"));
@@ -29,6 +30,7 @@ const App = () => (
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <LenisProvider>
           <TooltipProvider>
+            <ConsoleSignature />
             <ChatWidget />
             <Toaster />
             <Sonner />

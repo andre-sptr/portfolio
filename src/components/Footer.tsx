@@ -1,4 +1,5 @@
-import { ArrowUp, Github, Linkedin, Instagram } from "lucide-react";
+import { ArrowUp } from "lucide-react";
+import { Github, Linkedin, Instagram } from "@/components/icons/BrandIcons";
 import { motion } from "framer-motion";
 import { useLenis } from "@/providers/LenisProvider";
 
