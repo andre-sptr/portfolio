@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 const ORGS = [
   "PT Telkom Infrastruktur Indonesia",
   "MAN Insan Cendekia Siak",
+  "PT PLN Icon Plus",
   "Politeknik Caltex Riau",
-  "HIMA AET PCR",
 ];
 
 const TrustBar = () => {

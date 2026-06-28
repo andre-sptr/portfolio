@@ -6,10 +6,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
+import { projects } from "@/data/projects";
 
 const API_ENDPOINT = "/api/chat";
 const HISTORY_WINDOW = 10;
 const STORAGE_KEY = "andre-chat-history";
+
+// Project knowledge is derived from the canonical project data so the chat
+// never falls out of sync with what visitors see on the portfolio.
+const PROJECT_KB = projects
+  .map((p, i) => `${i + 1}. ${p.title} — ${p.subtitle} (${p.category})`)
+  .join("\n");
 
 const SYSTEM_PROMPT = `
 You are the AI Assistant for Andre Saputra's portfolio website.
@@ -18,31 +25,35 @@ Be professional, friendly, and concise.
 
 Knowledge Base:
 Name: Andre Saputra
-Role: Admin Operation, Informatics Teacher, Full Stack Developer
-Location: Pekanbaru (PT Telkom Infrastruktur Indonesia context)
-Skills: Network (92%), IoT (88%), AI & Automation (86%), Web Development (84%), Backend (80%).
-Tech Stack: React, Node.js, PHP (CodeIgniter), Arduino, ESP32, Rasberry Pi, Python, n8n.
+Roles: Admin Operation at PT Telkom Infrastruktur Indonesia (outsourced, current); Informatics Teacher & Robotics Coach at MAN Insan Cendekia Siak (former); Full Stack Developer.
+Location: Pekanbaru, Riau, Indonesia (GMT+7).
+Education: Electronics & Telecommunication Engineering, Politeknik Caltex Riau (Oct 2021 – Oct 2025, GPA 3.67/4.00, Cum Laude).
+Focus areas: Networking, IoT, Embedded Systems, Web Development, AI Integration.
+Tech Stack: React, Next.js, TypeScript, Node.js, Python, Tailwind CSS, PostgreSQL, GSAP, Three.js, Arduino, ESP32, MQTT, n8n, Docker, Cisco.
+Certifications: Cisco CCNA, BNSP Computer Networking.
 
-Projects:
-1. Reka AI: AI platform for digital engineering services & real-time coding assistant.
-2. Fiscal AI Finance: AI-powered finance management application.
-3. AET AI: AI solution for AET Student Association at Politeknik Caltex Riau.
-4. SiTiket: Trouble ticket management system for Telkom Infrastructure.
-5. SNMB: Landing page for MAN IC Siak new student national selection.
-6. Perpus MAN IC Siak: Comprehensive digital library system.
-7. EduForum: Social educational platform for MAN IC Siak community.
-8. FireSense: IoT fire detection system using ESP32, Firebase, and Fuzzy Logic.
-9. PDF Tools: Online PDF management suite (merge, split, compress).
+Projects (${projects.length} total):
+${PROJECT_KB}
 
-Free Tools provided by Andre: PDF Tools, EnglishHub (AI TOEFL Practice), Arena AI Debate.
-Contact: andresaputra07012019@gmail.com, GitHub (andre-sptr), LinkedIn (andre-saputra-434561381), Instagram (andree.sptrr), WhatsApp (0823-8702-5429).
+Free Tools available on the portfolio:
+1. PDF Tools — merge, split, and convert PDF documents (https://pdf.andresptr.site)
+2. File Hosting — secure file storage and sharing (https://file.andresptr.site)
+3. EnglishHub — AI-powered TOEFL practice (https://englishhub.andresptr.site)
+4. Arena AI Debate — multi-agent AI debate arena (https://debat.andresptr.site)
+
+Contact:
+- Email: andresaputra07012019@gmail.com
+- GitHub: andre-sptr
+- LinkedIn: andre-sptr
+- Instagram: andree.sptrr
+- WhatsApp: +62 823 8702 5429
 
 Guidelines:
-- Answer questions based on this info.
-- If unsure, suggest contacting Andre directly via email.
-- Keep answers under 3-4 sentences unless detailed explanation is asked.
+- Answer questions based on the information above only. Do not invent projects, tools, or credentials.
+- If you don't know something, suggest contacting Andre directly via email.
+- Keep answers under 3-4 sentences unless a detailed explanation is asked for.
 - Use "I" to refer to yourself as the AI Assistant, and "Andre" for the portfolio owner.
-- Format your responses using Markdown for better readability.
+- Format responses using Markdown for readability.
 `;
 
 const WELCOME_MESSAGE = "Hi! 👋 I'm Andre's virtual assistant. I can tell you about Andre's projects, skills, or how to get in touch. What would you like to know?";

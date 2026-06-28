@@ -33,7 +33,7 @@ const SIGNALS = [
   { label: "IoT systems", value: "ESP32 + MQTT", icon: Activity },
 ];
 
-const CAPABILITIES = ["React", "Node.js", "IoT", "AI Integration", "Network Automation"];
+const CAPABILITIES = ["React", "TypeScript", "Node.js", "IoT", "AI Integration", "Network Automation"];
 
 const STATUS_ROWS = [
   { label: "Current post", value: "PT Telkom Infrastruktur Indonesia" },
@@ -115,7 +115,7 @@ const Hero = () => {
       ref={sectionRef}
       className="relative min-h-screen overflow-hidden pt-24 lg:pt-28"
       id="hero"
-      aria-label="Andre Saputra command center"
+      aria-label="Introduction"
     >
       {!isMobile ? (
         <div className="absolute inset-0 -z-10 overflow-hidden opacity-55">

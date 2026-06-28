@@ -12,7 +12,7 @@ const timeline = [
   {
     year: "Jan – Jun 2026",
     role: "Admin Operation",
-    org: "PT Telkom Infrastruktur Indonesia (Outsourced)",
+    org: "PT Telkom Infrastruktur Indonesia",
     type: "work",
     accent: "#818cf8",
     bullets: [

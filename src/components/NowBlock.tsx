@@ -20,8 +20,8 @@ const NOW_ITEMS = [
   },
 ];
 
-const LAST_UPDATED_ISO = "2026-06-27";
-const LAST_UPDATED_LABEL = "27 Jun 2026";
+const LAST_UPDATED_ISO = "2026-06-28";
+const LAST_UPDATED_LABEL = "28 Jun 2026";
 
 const NowBlock = () => {
   return (

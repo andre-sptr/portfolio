@@ -43,6 +43,8 @@ const Footer = () => {
                 { name: "About", href: "#about" },
                 { name: "Projects", href: "#projects" },
                 { name: "Experience", href: "#experience" },
+                { name: "Free Tools", href: "#tools" },
+                { name: "Lab", href: "/lab" },
                 { name: "Contact", href: "#contact" },
               ].map((link) => (
                 <a

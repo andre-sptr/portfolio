@@ -9,9 +9,9 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 // ── Data ──────────────────────────────────────────────────────────
 
 const STATS = [
-  { value: "18+", label: "Projects" },
-  { value: "4+", label: "Live Apps" },
-  { value: "3", label: "Certs" },
+  { value: "22", label: "Projects" },
+  { value: "15", label: "Live Apps" },
+  { value: "2", label: "Certs" },
 ];
 
 const EXPERIENCES = [
@@ -41,7 +41,7 @@ const EXPERIENCES = [
     role: "Bachelor of Applied Engineering",
     company: "Politeknik Caltex Riau",
     icon: GraduationCap,
-    details: ["GPA 3.67 / Cum Laude", "Electronics & Telecommunication", "Focus: IoT, Networking, ML"],
+    details: ["GPA 3.67 / Cum Laude", "Electronics & Telecommunication", "Focus: Networking, IoT, Embedded Systems"],
   },
 ];
 
@@ -262,8 +262,8 @@ function PanelStack() {
             Tools I<br />live with
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            React · Next · Node · TypeScript<br />
-            Python · Tailwind · Postgres · GSAP<br />
+            React · Next.js · Node.js · TypeScript<br />
+            Python · Tailwind · PostgreSQL · GSAP<br />
             Three.js · Arduino · ESP32 · n8n<br />
             MQTT · Cisco · Docker
           </p>
