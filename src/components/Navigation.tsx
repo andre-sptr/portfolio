@@ -14,16 +14,25 @@ const navLinks = [
   { name: "Contact", href: "/#contact" },
 ];
 
+const getInitialActiveSection = () => {
+  if (typeof window === "undefined") return "/";
+  if (window.location.pathname === "/lab") return "/lab";
+  if (window.location.pathname === "/" && window.location.hash) return `/${window.location.hash}`;
+  return "/";
+};
+
 const MagneticNavLink = ({
   href,
   name,
   isActive,
   prefersReduced,
+  onClick,
 }: {
   href: string;
   name: string;
   isActive: boolean;
   prefersReduced: boolean;
+  onClick: () => void;
 }) => {
   const ref = useRef<HTMLAnchorElement>(null);
   const x = useMotionValue(0);
@@ -48,6 +57,7 @@ const MagneticNavLink = ({
       ref={ref}
       href={href}
       style={{ x: springX, y: springY }}
+      onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
@@ -70,7 +80,7 @@ const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const prefersReduced = usePrefersReducedMotion();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("/");
+  const [activeSection, setActiveSection] = useState(getInitialActiveSection);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -114,7 +124,6 @@ const Navigation = () => {
 
   useEffect(() => {
     if (window.location.pathname === "/lab") {
-      setActiveSection("/lab");
       return;
     }
     const cleanup = observeSections();
@@ -128,6 +137,10 @@ const Navigation = () => {
     };
     window.addEventListener("scroll", handleTop);
     return () => window.removeEventListener("scroll", handleTop);
+  }, []);
+
+  const handleNavClick = useCallback((href: string) => {
+    setActiveSection(href);
   }, []);
 
   return (
@@ -166,6 +179,7 @@ const Navigation = () => {
                   name={link.name}
                   isActive={activeSection === link.href}
                   prefersReduced={prefersReduced}
+                  onClick={() => handleNavClick(link.href)}
                 />
               ))}
               <div className="w-px h-6 bg-border mx-2" />
@@ -215,7 +229,10 @@ const Navigation = () => {
                           ? "text-primary bg-primary/10 font-medium"
                           : "text-muted-foreground hover:text-foreground hover:bg-accent"
                           }`}
-                        onClick={() => setIsMobileMenuOpen(false)}
+                        onClick={() => {
+                          handleNavClick(link.href);
+                          setIsMobileMenuOpen(false);
+                        }}
                       >
                         {link.name}
                       </a>
