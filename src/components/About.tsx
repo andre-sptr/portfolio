@@ -46,16 +46,17 @@ const EXPERIENCES = [
 ];
 
 // Three orbit rings worth of tech
+// Abbreviations: consistent 2–3 letter uppercase (single style across rings)
 const ORBIT_RINGS = [
   {
     radius: 80,
     durationSec: 18,
     direction: 1 as const,
     items: [
-      { abbr: "⚛", label: "React" },
+      { abbr: "RCT", label: "React" },
+      { abbr: "NXT", label: "Next.js" },
       { abbr: "TS", label: "TypeScript" },
-      { abbr: "Nd", label: "Node.js" },
-      { abbr: "Nx", label: "Next.js" },
+      { abbr: "ND", label: "Node.js" },
     ],
   },
   {
@@ -67,7 +68,7 @@ const ORBIT_RINGS = [
       { abbr: "TW", label: "Tailwind" },
       { abbr: "PG", label: "PostgreSQL" },
       { abbr: "GS", label: "GSAP" },
-      { abbr: "3J", label: "Three.js" },
+      { abbr: "3JS", label: "Three.js" },
     ],
   },
   {
@@ -75,12 +76,12 @@ const ORBIT_RINGS = [
     durationSec: 52,
     direction: 1 as const,
     items: [
-      { abbr: "AVR", label: "Arduino" },
+      { abbr: "ARD", label: "Arduino" },
       { abbr: "ESP", label: "ESP32" },
-      { abbr: "n8n", label: "n8n" },
-      { abbr: "MQ", label: "MQTT" },
+      { abbr: "N8N", label: "n8n" },
+      { abbr: "MQT", label: "MQTT" },
       { abbr: "CSC", label: "Cisco" },
-      { abbr: "DOK", label: "Docker" },
+      { abbr: "DCK", label: "Docker" },
     ],
   },
 ];
@@ -113,13 +114,17 @@ function OrbitRing({
         return (
           <motion.div
             key={item.label}
-            title={item.label}
-            className="absolute w-11 h-11 flex items-center justify-center rounded-xl bg-[var(--surface-1)] border border-white/[0.07] text-[10px] font-bold text-muted-foreground hover:text-[var(--electric)] hover:border-[var(--electric)]/30 transition-colors cursor-default select-none"
+            className="group absolute w-11 h-11 flex items-center justify-center rounded-xl bg-[var(--surface-1)] border border-white/[0.07] text-[10px] font-bold text-muted-foreground hover:text-[var(--electric)] hover:border-[var(--electric)]/30 transition-colors cursor-default select-none"
             style={{ left: x, top: y }}
             animate={{ rotate: direction * -360 }}
             transition={{ duration: durationSec, ease: "linear", repeat: Infinity }}
           >
             {item.abbr}
+            <span
+              className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded-md bg-[var(--surface-1)] border border-white/[0.07] text-[10px] font-medium text-[var(--warm-white)] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity z-20"
+            >
+              {item.label}
+            </span>
           </motion.div>
         );
       })}
@@ -257,9 +262,10 @@ function PanelStack() {
             Tools I<br />live with
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            React · Next · Node.js<br />
-            Three.js · GSAP · Python<br />
-            Arduino · ESP32 · n8n · CCNA
+            React · Next · Node · TypeScript<br />
+            Python · Tailwind · Postgres · GSAP<br />
+            Three.js · Arduino · ESP32 · n8n<br />
+            MQTT · Cisco · Docker
           </p>
         </div>
 
