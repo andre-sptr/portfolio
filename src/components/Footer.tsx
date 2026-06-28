@@ -43,7 +43,6 @@ const Footer = () => {
                 { name: "About", href: "#about" },
                 { name: "Projects", href: "#projects" },
                 { name: "Experience", href: "#experience" },
-                { name: "Free Tools", href: "#tools" },
                 { name: "Contact", href: "#contact" },
               ].map((link) => (
                 <a
@@ -62,7 +61,7 @@ const Footer = () => {
             <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider text-muted-foreground">
               Connect
             </h4>
-            <div className="flex gap-2 mb-6">
+            <div className="flex gap-2 mb-4">
               {[
                 { icon: Github, href: "https://github.com/andre-sptr", label: "GitHub" },
                 { icon: Linkedin, href: "https://www.linkedin.com/in/andre-sptr", label: "LinkedIn" },
@@ -80,23 +79,16 @@ const Footer = () => {
                 </a>
               ))}
             </div>
-            <div className="flex flex-wrap gap-2">
-              {["React", "Next", "Node.js", "IoT"].map((tech) => (
-                <span
-                  key={tech}
-                  className="text-[11px] px-2.5 py-1 rounded-md bg-muted text-muted-foreground border border-border font-medium"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
+            <p className="text-xs text-muted-foreground/80 leading-relaxed max-w-[14rem]">
+              Open to freelance & collaboration — Riau, Indonesia.
+            </p>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4 sm:pr-24">
           <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-            <span>© {currentYear} Andre Saputra.</span>
+            <span>© {currentYear} Andre Saputra. All rights reserved.</span>
           </div>
 
           {/* Back to Top */}

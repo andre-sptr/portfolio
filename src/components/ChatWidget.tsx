@@ -45,7 +45,7 @@ Guidelines:
 - Format your responses using Markdown for better readability.
 `;
 
-const WELCOME_MESSAGE = "Halo! 👋 Saya asisten virtual Andre. Saya bisa ceritakan tentang project, skill, atau cara kontak Andre. Ada yang ingin kamu tahu?";
+const WELCOME_MESSAGE = "Hi! 👋 I'm Andre's virtual assistant. I can tell you about Andre's projects, skills, or how to get in touch. What would you like to know?";
 
 interface Message {
   role: "user" | "assistant" | "system";
@@ -53,10 +53,10 @@ interface Message {
 }
 
 const SUGGESTIONS = [
-  "Bagaimana cara kontak Andre?",
-  "Apa saja projects Andre?",
-  "Skill apa yang Andre kuasai?",
-  "Ceritakan tentang Andre",
+  "How can I contact Andre?",
+  "What projects has Andre built?",
+  "What skills does Andre have?",
+  "Tell me about Andre",
 ];
 
 const TypingDots = () => (
@@ -127,7 +127,7 @@ export function ChatWidget() {
   const handleSendMessage = async (content: string) => {
     if (!content.trim()) return;
     if (!checkRateLimit()) {
-      toast.error("Terlalu banyak permintaan. Mohon tunggu sebentar.");
+      toast.error("Too many requests. Please wait a moment.");
       return;
     }
 
@@ -194,13 +194,13 @@ export function ChatWidget() {
         }
       }
 
-      const finalMessages: Message[] = [...updatedMessages, { role: "assistant", content: accumulated || "Maaf, saya tidak dapat memproses permintaan Anda." }];
+      const finalMessages: Message[] = [...updatedMessages, { role: "assistant", content: accumulated || "Sorry, I couldn't process your request." }];
       setMessages(finalMessages);
       saveHistory(finalMessages);
       setStreamingContent("");
     } catch (error) {
       console.error("Chat Error:", error);
-      const errorMsg = "Maaf, terjadi kesalahan. Silakan coba lagi nanti.";
+      const errorMsg = "Something went wrong. Please try again later.";
       const finalMessages: Message[] = [...updatedMessages, { role: "assistant", content: errorMsg }];
       setMessages(finalMessages);
       saveHistory(finalMessages);
@@ -213,7 +213,7 @@ export function ChatWidget() {
     setMessages([]);
     setStreamingContent("");
     localStorage.removeItem(STORAGE_KEY);
-    toast.info("Percakapan telah dibersihkan.");
+    toast.info("Conversation cleared.");
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -275,13 +275,13 @@ export function ChatWidget() {
                 </div>
               </div>
               <div className="flex items-center gap-0.5">
-                <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-accent" onClick={handleClearChat} title="Bersihkan Chat">
+                <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-accent" onClick={handleClearChat} title="Clear chat">
                   <Trash2 className="w-4 h-4 text-muted-foreground" />
                 </Button>
                 <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-accent" onClick={() => setIsMinimized(true)} title="Minimize">
                   <Minimize2 className="w-4 h-4" />
                 </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-destructive/10 hover:text-destructive" onClick={() => setIsOpen(false)} title="Tutup">
+                <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-destructive/10 hover:text-destructive" onClick={() => setIsOpen(false)} title="Close">
                   <X className="w-4 h-4" />
                 </Button>
               </div>
@@ -295,9 +295,9 @@ export function ChatWidget() {
                     <Bot className="w-8 h-8 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-lg mb-1.5">Halo! 👋</h4>
+                    <h4 className="font-bold text-lg mb-1.5">Hi! 👋</h4>
                     <p className="text-muted-foreground text-sm max-w-[85%] mx-auto">
-                      Saya asisten virtual Andre. Ada yang bisa saya bantu?
+                      I'm Andre's virtual assistant. How can I help?
                     </p>
                   </div>
                   <div className="grid grid-cols-1 gap-2 max-w-[90%] mx-auto">
@@ -352,7 +352,7 @@ export function ChatWidget() {
                   </div>
                   <div className="bg-muted/60 border border-border rounded-2xl rounded-tl-sm p-3 flex items-center gap-2">
                     <TypingDots />
-                    <span className="text-xs text-muted-foreground">Mengetik...</span>
+                    <span className="text-xs text-muted-foreground">Typing...</span>
                   </div>
                 </div>
               )}
@@ -361,7 +361,7 @@ export function ChatWidget() {
             {/* Input */}
             <div className="p-4 border-t border-border bg-background/50 backdrop-blur-md">
               <div className="flex gap-2">
-                <Input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown} placeholder="Tulis pesan..." className="bg-muted/50 border-border focus:border-primary/50" disabled={isLoading || !!streamingContent} />
+                <Input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown} placeholder="Type a message..." className="bg-muted/50 border-border focus:border-primary/50" disabled={isLoading || !!streamingContent} />
                 <Button onClick={() => handleSendMessage(input)} disabled={isLoading || !!streamingContent || !input.trim()} size="icon" className="bg-primary hover:bg-primary/90 shrink-0 rounded-xl">
                   <Send className="w-4 h-4" />
                 </Button>

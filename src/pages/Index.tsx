@@ -37,7 +37,7 @@ const Index = () => {
         "url": "https://andresptr.site",
         "image": "https://andresptr.site/andre-saputra.png",
         "jobTitle": ["Full Stack Developer"],
-        "description": "Portofolio Andre Saputra, seorang Full Stack Developer dan Guru Informatika yang berfokus pada pengembangan web modern, AI, dan solusi digital.",
+        "description": "Andre Saputra's portfolio — Full Stack Developer and Informatics Teacher focused on modern web, AI, and digital solutions.",
         "sameAs": [
           "https://github.com/andre-sptr",
           "https://www.linkedin.com/in/andre-sptr",
@@ -54,7 +54,7 @@ const Index = () => {
         "@id": "https://andresptr.site/#website",
         "url": "https://andresptr.site",
         "name": "Andre Saputra Portfolio",
-        "description": "Portofolio Andre Saputra: Proyek inovatif dalam pengembangan web, AI, networking, dan IoT.",
+        "description": "Andre Saputra's portfolio: innovative projects across web development, AI, networking, and IoT.",
         "publisher": {
           "@id": "https://andresptr.site/#person"
         }
@@ -66,21 +66,21 @@ const Index = () => {
             "@type": "ListItem",
             "position": 1,
             "name": "Reka AI",
-            "description": "Platform kecerdasan buatan (AI) sebagai coding assistant",
+            "description": "AI platform as a coding assistant",
             "url": "https://ai.andresptr.site/"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Fiscal AI Finance",
-            "description": "Aplikasi manajemen keuangan berbasis AI",
+            "description": "AI-powered finance management app",
             "url": "https://fiscal.andresptr.site/"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": "SiTiket Telkom Infra",
-            "description": "Sistem manajemen tiket gangguan PT Telkom Infrastruktur Indonesia",
+            "description": "Incident ticket management system for PT Telkom Infrastruktur Indonesia",
             "url": "https://sitiket.andresptr.site/"
           }
         ]
@@ -92,8 +92,8 @@ const Index = () => {
     <div className="min-h-screen bg-background grain">
       <SEO
         title="Andre Saputra | Full Stack Developer & AI Enthusiast"
-        description="Jelajahi portofolio Andre Saputra: Proyek inovatif dalam pengembangan web, AI, networking, dan IoT. Solusi digital profesional untuk kebutuhan modern."
-        keywords={["Andre Saputra", "Portofolio", "Web Developer Indonesia", "React Developer", "AI Engineer", "IoT Specialist", "Network Engineer", "Guru Informatika"]}
+        description="Explore Andre Saputra's portfolio: innovative projects across web development, AI, networking, and IoT. Professional digital solutions for modern needs."
+        keywords={["Andre Saputra", "Portfolio", "Web Developer", "React Developer", "AI Engineer", "IoT Specialist", "Network Engineer", "Informatics Teacher"]}
         schema={schema}
       />
 

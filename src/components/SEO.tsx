@@ -12,7 +12,7 @@ interface SEOProps {
 
 const SEO = ({ 
   title = "Andre Saputra | Full Stack Developer & AI Enthusiast", 
-  description = "Portofolio Andre Saputra, seorang Full Stack Developer dan Guru Informatika yang berfokus pada pengembangan web modern, AI, dan solusi digital.",
+  description = "Andre Saputra's portfolio — Full Stack Developer and Informatics Teacher focused on modern web, AI, and digital solutions.",
   keywords = ["Andre Saputra", "Full Stack Developer", "Web Developer", "React", "TypeScript", "AI", "Informatics Teacher", "Portfolio"],
   image = "/andre-saputra.png",
   url = "https://andresptr.site",

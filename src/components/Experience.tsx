@@ -12,13 +12,13 @@ const timeline = [
   {
     year: "Jan – Jun 2026",
     role: "Admin Operation",
-    org: "PT Telkom Infrastruktur Indonesia (Outsource)",
+    org: "PT Telkom Infrastruktur Indonesia (Outsourced)",
     type: "work",
     accent: "#818cf8",
     bullets: [
-      "Mengelola resolusi tiket gangguan Note-B end-to-end",
-      "Memastikan kepatuhan teknisi terhadap SLA",
-      "Instalasi & pemeliharaan kabel Fiber Optic di data center",
+      "Managed Note-B incident ticket resolution end-to-end",
+      "Ensured technician compliance with SLA targets",
+      "Installed & maintained fiber optic cabling in the data center",
     ],
   },
   {
@@ -28,9 +28,9 @@ const timeline = [
     type: "work",
     accent: "#22d3ee",
     bullets: [
-      "Mengajar Informatika & mengembangkan materi ajar",
-      "Membimbing ekstrakurikuler Coding & Robotics",
-      "Melatih tim robotik siswa untuk kompetisi teknologi",
+      "Taught Informatics and developed teaching materials",
+      "Mentored Coding & Robotics extracurricular programs",
+      "Coached the student robotics team for tech competitions",
     ],
   },
   {
@@ -40,21 +40,21 @@ const timeline = [
     type: "work",
     accent: "#34d399",
     bullets: [
-      "Instalasi, konfigurasi & troubleshooting infrastruktur jaringan",
-      "Deploy & maintain solusi jaringan untuk klien",
-      "Mengelola rekap data operasional & dokumentasi lapangan",
+      "Installed, configured & troubleshot network infrastructure",
+      "Deployed & maintained network solutions for clients",
+      "Managed operational data records and field documentation",
     ],
   },
   {
     year: "Oct 2021 – Oct 2025",
-    role: "Teknik Elektronika & Telekomunikasi",
+    role: "Electronics & Telecommunication Engineering",
     org: "Politeknik Caltex Riau",
     type: "edu",
     accent: "#f59e0b",
     bullets: [
-      "IPK 3.67/4.00 — Predikat Cum Laude",
-      "Fokus: Networking, IoT, Embedded Systems",
-      "Sertifikasi: Cisco CCNA & BNSP Jaringan Komputer",
+      "GPA 3.67/4.00 — Cum Laude",
+      "Focus: Networking, IoT, Embedded Systems",
+      "Certifications: Cisco CCNA & BNSP Computer Networking",
     ],
   },
 ];
