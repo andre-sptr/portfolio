@@ -12,11 +12,11 @@ export function getSiteUrl(): URL | undefined {
 export const siteUrl = getSiteUrl();
 export const metadata: Metadata = {
   ...(siteUrl ? { metadataBase: siteUrl, alternates: { canonical: "/" } } : {}),
-  title: "Andre Saputra | Networking, Automation & Digital Engineering",
-  description: "Electronics and Telecommunication Engineering graduate working across networking, telecommunications operations, data automation, IoT, and web applications.",
+  title: "Andre Saputra | RF Engineer",
+  description: "RF Engineer focused on radio trunking systems, radio communication infrastructure, and network operations. Based in Indonesia.",
   authors: [{ name: "Andre Saputra" }],
-  openGraph: { type: "website", locale: "en_US", title: "Andre Saputra — Engineering, Connected.", description: "Networking, automation, IoT, and practical digital solutions.", siteName: "Andre Saputra", ...(siteUrl ? { url: siteUrl } : {}), images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Andre Saputra — Networking, Automation & Digital Engineering" }] },
-  twitter: { card: "summary_large_image", title: "Andre Saputra — Engineering, Connected.", description: "Networking, automation, IoT, and practical digital solutions.", images: ["/og-image.png"] },
+  openGraph: { type: "website", locale: "en_US", title: "Andre Saputra | RF Engineer", description: "RF Engineer focused on radio trunking and communication infrastructure.", siteName: "Andre Saputra", ...(siteUrl ? { url: siteUrl } : {}), images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Andre Saputra | RF Engineer" }] },
+  twitter: { card: "summary_large_image", title: "Andre Saputra | RF Engineer", description: "RF Engineer focused on radio trunking and communication infrastructure.", images: ["/og-image.png"] },
   icons: {
     icon: [
       { url: "/favicon.ico?v=20261021", type: "image/x-icon", sizes: "16x16 32x32 48x48 64x64 128x128 256x256" },

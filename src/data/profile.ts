@@ -1,15 +1,14 @@
 export const profile = {
   name: "Andre Saputra",
-  headline: "Electronics and Telecommunication Engineering Graduate",
+  headline: "RF Engineer | Radio Trunking & Communication Infrastructure",
   location: "Jakarta Selatan, Indonesia",
   email: "andresaputra07012019@gmail.com",
   linkedin: "https://www.linkedin.com/in/andre-sptr",
   portrait: { src: "/images/andre-saputra.jpg", width: 433, height: 577 },
   cv: { href: "/documents/CV_Andre_Saputra.pdf", filename: "CV_Andre_Saputra.pdf", details: "PDF · 2 pages · 128 KB" },
   hero: {
-    eyebrow: "Electronics & Telecommunication Engineering",
-    lines: ["Engineering networks.", "Automating operations.", "Building digital solutions."],
-    description: "I work across networking, telecommunications operations, data automation, IoT, and web-based applications to build practical technology solutions.",
+    role: "RF ENGINEER",
+    descriptor: "RADIO TRUNKING · COMMUNICATION INFRASTRUCTURE",
   },
   about: {
     title: "Technology, Connected.",
@@ -18,23 +17,28 @@ export const profile = {
     note: "From the network to the application.",
   },
   contact: {
-    title: "Have a project or an engineering challenge?",
-    description: "Let's connect and explore how networking, automation, and software can support your next project.",
+    title: "Let's talk about radio systems.",
+    description: "For conversations about radio communication, infrastructure operations, and practical engineering work.",
   },
   navigation: [
+    { id: "top", label: "Home" },
     { id: "about", label: "About" },
-    { id: "expertise", label: "Expertise" },
     { id: "projects", label: "Projects" },
-    { id: "experience", label: "Experience" },
+    { id: "education", label: "Credentials" },
     { id: "contact", label: "Contact" },
   ],
-  footer: "Networking. Automation. Digital engineering.",
+  detailNavigation: [
+    { id: "expertise", label: "Expertise" },
+    { id: "experience", label: "Experience" },
+    { id: "toolkit", label: "Technical Toolkit" },
+  ],
+  footer: "RF engineering · Radio communication · Network infrastructure.",
 } as const;
 
 export const interfaceCopy = {
-  projects: { title: "Selected Projects.", description: "Practical systems, automation workflows, and digital applications.", detail: "View Details", illustration: "Conceptual interface", count: "05 projects / 2025–2026" },
-  expertise: { title: "Where engineering meets automation.", description: "Connected capabilities, from the physical network to the digital experience." },
-  experience: { title: "Experience in Practice.", description: "Working with infrastructure, operations, and the people behind them." },
+  projects: { title: "Selected Projects.", description: "A selection of operational tools, automation workflows, and digital applications developed across professional and academic contexts.", detail: "View Details", illustration: "Conceptual interface", count: "05 PROJECTS / 2025–2026" },
+  expertise: { title: "Connected systems, from radio to software.", description: "A practical mix of radio communication, network operations, automation, and application development." },
+  experience: { title: "Experience in Practice.", description: "Roles across radio communication, network infrastructure, operational support, and technical education." },
   education: { title: "Education & Credentials." },
-  toolkit: { title: "The technical toolkit.", description: "The technologies and tools I work with." },
+  toolkit: { title: "The technical toolkit.", description: "Tools, technologies, and working methods used across my engineering and digital projects." },
 } as const;

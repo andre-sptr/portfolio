@@ -4,5 +4,72 @@ import { interfaceCopy } from "@/data/profile";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 export function EducationSection() {
-  return <section className="education-section section container" id="education" tabIndex={-1}><SectionHeading index="05" label="FOUNDATIONS & LEARNING" title={interfaceCopy.education.title}/><div className="education-grid"><div><article className="education-card" data-reveal><div className="education-card-top"><GraduationCap size={29} strokeWidth={1.4}/><span className="mono">{education.period}</span></div><h3>{education.degree}</h3><p className="institution">{education.institution}</p><div className="gpa"><span>GPA</span><strong>{education.gpa}</strong></div><div className="coursework"><span className="mini-label">RELEVANT COURSEWORK</span><p>{education.coursework.join(" · ")}</p></div></article><article className="mentor-note" data-reveal><div className="mentor-icon"><ArrowUpRight size={18}/></div><div><span className="mini-label">BEYOND THE CLASSROOM</span><h3>{education.activity.role} · {education.activity.name}</h3><p>{education.activity.description}</p><small>{education.activity.institution} · {education.activity.period}</small></div></article></div><div className="certifications" data-reveal><h3 className="credentials-label">Professional certifications <span className="mono">05</span></h3>{certifications.map((cert,index)=><div className="cert-row" key={cert.title}><span className="cert-index mono">0{index+1}</span><div><h4>{cert.title}</h4><span>{cert.issuer}</span></div><span className="cert-year mono">{cert.year}</span></div>)}</div></div></section>;
+  return (
+    <section className="credentials-section section" id="education" tabIndex={-1} aria-labelledby="credentials-title">
+      <div className="container">
+        <SectionHeading
+          index="05"
+          label="EDUCATION & CREDENTIALS"
+          title={interfaceCopy.education.title}
+          headingId="credentials-title"
+          description="Academic foundations, professional training, and continued learning."
+        />
+
+        <div className="credentials-layout">
+          <div className="credentials-primary">
+            <article className="education-entry" data-reveal>
+              <div className="credentials-entry-top">
+                <span className="credentials-icon"><GraduationCap size={22} strokeWidth={1.5} aria-hidden="true" /></span>
+                <span className="credentials-period mono">{education.period}</span>
+              </div>
+              <span className="credentials-overline">ACADEMIC BACKGROUND</span>
+              <h3>{education.degree}</h3>
+              <p className="credentials-institution">{education.institution}</p>
+              <div className="credentials-gpa">
+                <span>GRADE POINT AVERAGE</span>
+                <strong>{education.gpa}</strong>
+              </div>
+              <div className="credentials-coursework">
+                <span>RELEVANT COURSEWORK</span>
+                <p>{education.coursework.join(" · ")}</p>
+              </div>
+            </article>
+
+            <article className="mentor-entry" data-reveal>
+              <span className="mentor-entry-mark"><ArrowUpRight size={17} aria-hidden="true" /></span>
+              <div>
+                <span className="credentials-overline">BEYOND THE CLASSROOM</span>
+                <h3>{education.activity.role} · {education.activity.name}</h3>
+                <p>{education.activity.description}</p>
+                <span className="mentor-entry-meta">{education.activity.institution} · {education.activity.period}</span>
+              </div>
+            </article>
+          </div>
+
+          <div className="credentials-list-wrap" data-reveal>
+            <div className="credentials-list-heading">
+              <div>
+                <span className="credentials-overline">PROFESSIONAL DEVELOPMENT</span>
+                <h3>Certifications</h3>
+              </div>
+              <span className="credentials-count mono">{String(certifications.length).padStart(2, "0")}</span>
+            </div>
+            <ol className="credentials-list">
+              {certifications.map((cert, index) => (
+                <li className="credential-row" key={cert.title}>
+                  <span className="credential-index mono">{String(index + 1).padStart(2, "0")}</span>
+                  <div className="credential-copy">
+                    <h4>{cert.title}</h4>
+                    <p>{cert.issuer}</p>
+                  </div>
+                  <span className="credential-year mono">{cert.year}</span>
+                </li>
+              ))}
+            </ol>
+            <p className="credentials-note">Credential titles and issuers are shown as provided in the portfolio source material.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
