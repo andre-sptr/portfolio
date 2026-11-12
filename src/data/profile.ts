@@ -4,7 +4,6 @@ export const profile = {
   location: "Jakarta Selatan, Indonesia",
   email: "andresaputra07012019@gmail.com",
   linkedin: "https://www.linkedin.com/in/andre-sptr",
-  portrait: { src: "/images/andre-saputra.jpg", width: 433, height: 577 },
   cv: { href: "/documents/CV_Andre_Saputra.pdf", filename: "CV_Andre_Saputra.pdf", details: "PDF · 2 pages · 128 KB" },
   hero: {
     role: "RF ENGINEER",

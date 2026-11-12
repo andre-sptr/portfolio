@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ArrowDownRight, ArrowUpRight, Download, FileText, RadioTower, Settings2, Wrench } from "lucide-react";
 import { profile } from "@/data/profile";
 
@@ -53,14 +52,6 @@ export function AboutSection() {
             </div>
 
             <div className="about-personal-row">
-              <Image
-                className="about-avatar"
-                src={profile.portrait.src}
-                alt="Andre Saputra"
-                width={profile.portrait.width}
-                height={profile.portrait.height}
-                sizes="76px"
-              />
               <div className="about-personal-copy">
                 <strong>{profile.name}</strong>
                 <span>Electronics &amp; Telecommunication</span>

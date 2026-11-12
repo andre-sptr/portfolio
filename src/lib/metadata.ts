@@ -15,8 +15,8 @@ export const metadata: Metadata = {
   title: "Andre Saputra | RF Engineer",
   description: "RF Engineer focused on radio trunking systems, radio communication infrastructure, and network operations. Based in Indonesia.",
   authors: [{ name: "Andre Saputra" }],
-  openGraph: { type: "website", locale: "en_US", title: "Andre Saputra | RF Engineer", description: "RF Engineer focused on radio trunking and communication infrastructure.", siteName: "Andre Saputra", ...(siteUrl ? { url: siteUrl } : {}), images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Andre Saputra | RF Engineer" }] },
-  twitter: { card: "summary_large_image", title: "Andre Saputra | RF Engineer", description: "RF Engineer focused on radio trunking and communication infrastructure.", images: ["/og-image.png"] },
+  openGraph: { type: "website", locale: "en_US", title: "Andre Saputra | RF Engineer", description: "RF Engineer focused on radio trunking and communication infrastructure.", siteName: "Andre Saputra", ...(siteUrl ? { url: siteUrl } : {}) },
+  twitter: { card: "summary", title: "Andre Saputra | RF Engineer", description: "RF Engineer focused on radio trunking and communication infrastructure." },
   icons: {
     icon: [
       { url: "/favicon.ico?v=20261021", type: "image/x-icon", sizes: "16x16 32x32 48x48 64x64 128x128 256x256" },
