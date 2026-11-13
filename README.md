@@ -1,55 +1,63 @@
-# Andre Saputra | RF Engineer Portfolio
+# Andre Saputra — Portfolio
 
-A dark editorial portfolio focused on RF engineering, radio trunking operations, and communication infrastructure. The visual direction uses deep charcoal, off-white typography, and a restrained peach accent.
+Personal portfolio website built with Next.js (App Router), React, TypeScript, and Tailwind CSS, featuring a custom WebGL Obsidian Silk shader background and dedicated detail pages.
 
-## Run locally
+## Tech Stack
 
-Use Node.js 22.18 or newer and npm.
+- **Framework**: Next.js 16 (App Router) & React 19
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4 & custom CSS ([`globals.css`](src/app/globals.css))
+- **Icons**: Lucide React & custom inline SVGs
+- **Graphics**: Custom WebGL fragment shader (`obsidian-silk-canvas` in [`HeroSection.tsx`](src/components/sections/HeroSection.tsx))
+
+## Routes & Structure
+
+- `/` — Main portfolio landing page ([`src/app/page.tsx`](src/app/page.tsx)):
+  - **Hero**: Name display, role header, and WebGL Obsidian Silk backdrop
+  - **About**: Profile overview and current focus areas
+  - **Selected Projects**: Desktop horizontal accordion showcase (*Feral Blinds*) & mobile card carousel
+  - **Credentials**: Toggleable Open Source & Certifications grid with modal preview
+  - **Experience**: Timeline/grid of engineering and technical roles
+  - **Contact**: Terminal-inspired CLI info panel and `mailto:` message composer
+- `/about` — Full narrative biography, snapshot, milestones, and core capabilities ([`src/app/about/page.tsx`](src/app/about/page.tsx))
+- `/projects` — Filterable catalog (`All`, `Website`, `AI Agent Tools`, `Useful Tools`) ([`src/app/projects/page.tsx`](src/app/projects/page.tsx))
+
+```text
+public/
+  documents/            Certifications & CV assets
+src/
+  app/                  App Router pages (/ , /about, /projects), layout, metadata & globals.css
+  components/
+    layout/             Navbar (floating pill & Detail dropdown) and Footer
+    sections/           Hero, About, Projects, ProjectsCatalogClient, Credentials, Experience, Contact
+  data/                 profile.ts, projects.ts, experience.ts, education.ts
+  lib/                  metadata.ts
+```
+
+## Getting Started
+
+Requires **Node.js >= 22.18.0** and npm.
 
 ```bash
 npm ci
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open `http://localhost:3000` in your browser.
 
-## Quality checks
+## Available Scripts
 
 ```bash
-npm test
-npm run typecheck
-npm run lint
-npm run build
+npm run dev         # Start development server
+npm run build       # Create production build
+npm run lint        # Run ESLint
+npm run typecheck   # Run TypeScript type checking
 ```
 
-The test script uses Node's built-in TypeScript type stripping and requires Node.js 22.18 or newer. The static production build is written to `out/`.
+## Contact Form Behavior
 
-## Contact behavior
+The contact form in `ContactSection` validates name, email, and message on the client and opens a pre-filled `mailto:` draft in the visitor's default email client. No backend or database is used to store submissions.
 
-The contact message composer validates its fields in the browser and prepares a `mailto:` draft in the visitor's default email application. This website does not send, store, or process messages on a server. A backend or form provider must be configured before adding direct website submissions.
+## Design Reference
 
-## Project structure
-
-```text
-public/                       Portrait, CV, favicon, and social card assets
-src/app/                      Next.js app entry, metadata, and global styles
-src/components/layout/        Floating navigation and footer
-src/components/sections/      Home, About, Expertise, Projects, Experience, Credentials, Toolkit, Contact
-src/components/ui/            Shared headings, project cards, dialogs, and contact actions
-src/data/                     Profile, projects, experience, education, and skills
-src/hooks/                    Responsive and reduced-motion preferences
-src/lib/                      Metadata and shared scene utilities
-tests/                        Unit and portfolio integrity tests
-```
-
-## Implementation stages
-
-- Stage 01: Home Page
-- Stage 02: About Page
-- Stage 03: Projects Page
-- Stage 04: Credentials Page
-- Stage 05: Contact Page
-- Stage 06: Components and design system
-- Stage 07: Test and quality assurance
-
-See the `STAGE-*-CHANGELOG.md` files and `STAGE-07-TEST-REPORT.md` for implementation notes and verification status.
+Layout and visual direction inspired by [miqdadbadjuber.id](https://miqdadbadjuber.id).
