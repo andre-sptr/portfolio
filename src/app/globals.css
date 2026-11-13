@@ -2826,7 +2826,7 @@ body { background: var(--portfolio-bg); color: var(--portfolio-text); }
   position: relative;
   z-index: 20;
   width: 100%;
-  max-width: 800px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 38.4px 38.4px 0;
   display: flex;
@@ -2891,7 +2891,7 @@ body { background: var(--portfolio-bg); color: var(--portfolio-text); }
   position: relative;
   z-index: 10;
   width: 100%;
-  max-width: 800px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 44.8px 38.4px 76.8px;
   box-sizing: border-box;
@@ -3023,7 +3023,7 @@ body { background: var(--portfolio-bg); color: var(--portfolio-text); }
   position: relative;
   z-index: 20;
   width: 100%;
-  max-width: 800px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 32px 38.4px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
