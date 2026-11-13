@@ -5,6 +5,8 @@ export const profile = {
   email: "andresaputra07012019@gmail.com",
   linkedin: "https://www.linkedin.com/in/andre-sptr",
   github: "https://github.com/andre-sptr",
+  threads: "https://www.threads.com/@andree.sptrr",
+  instagram: "https://www.instagram.com/andree.sptrr",
   cv: { href: "/documents/CV_Andre_Saputra.pdf", filename: "CV_Andre_Saputra.pdf", details: "PDF · 2 pages · 128 KB" },
   hero: {
     role: "RF & NETWORK ENGINEER",
