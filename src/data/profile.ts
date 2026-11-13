@@ -6,8 +6,8 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/andre-sptr",
   cv: { href: "/documents/CV_Andre_Saputra.pdf", filename: "CV_Andre_Saputra.pdf", details: "PDF · 2 pages · 128 KB" },
   hero: {
-    role: "RF ENGINEER",
-    descriptor: "RADIO TRUNKING · COMMUNICATION INFRASTRUCTURE",
+    role: "RF & NETWORK ENGINEER",
+    descriptor: "",
   },
   about: {
     title: "Technology, Connected.",
