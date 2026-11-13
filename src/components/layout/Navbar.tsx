@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { profile } from "@/data/profile";
 
@@ -16,22 +16,35 @@ export function Navbar() {
 
   useEffect(() => {
     const targets = [...profile.navigation, ...profile.detailNavigation];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive(visible.target.id);
-      },
-      { rootMargin: "-18% 0px -62% 0px", threshold: [0, 0.15, 0.35] },
-    );
 
-    targets.forEach(({ id }) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
+    const updateActiveSection = () => {
+      const scrollPos = window.scrollY + 200;
+      if (window.scrollY < 120) {
+        setActive("top");
+        return;
+      }
+      let current = "top";
+      let bestTop = -Infinity;
+      for (const { id } of targets) {
+        if (id === "top") continue;
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top + window.scrollY;
+        if (top <= scrollPos && top >= bestTop) {
+          bestTop = top;
+          current = id;
+        }
+      }
+      setActive(current);
+    };
 
-    return () => observer.disconnect();
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
   }, []);
 
   useEffect(() => {
@@ -69,9 +82,21 @@ export function Navbar() {
     };
   }, [detailOpen, mobileOpen]);
 
-  const closeMobileMenu = (id: string) => {
+  const scrollToSection = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
+    event.preventDefault();
+    setActive(id);
+    setDetailOpen(false);
     setMobileOpen(false);
-    requestAnimationFrame(() => document.getElementById(id)?.focus({ preventScroll: true }));
+    if (id === "top") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.history.replaceState(null, "", "#top");
+      return;
+    }
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.replaceState(null, "", `#${id}`);
+    }
   };
 
   return (
@@ -85,6 +110,7 @@ export function Navbar() {
                 className={`floating-nav-link${active === id ? " is-active" : ""}`}
                 href={`#${id}`}
                 aria-current={active === id ? "location" : undefined}
+                onClick={(event) => scrollToSection(event, id)}
               >
                 {label}
               </a>
@@ -140,7 +166,7 @@ export function Navbar() {
                   ref={index === 0 ? detailFirstLink : undefined}
                   href={`#${id}`}
                   role="menuitem"
-                  onClick={() => setDetailOpen(false)}
+                  onClick={(event) => scrollToSection(event, id)}
                 >
                   {label}
                 </a>
@@ -174,7 +200,7 @@ export function Navbar() {
           <div className="mobile-nav-group">
               <span className="mobile-nav-label">MAIN</span>
               {profile.navigation.map(({ id, label }) => (
-                <a key={id} href={`#${id}`} onClick={() => closeMobileMenu(id)}>
+                <a key={id} href={`#${id}`} onClick={(event) => scrollToSection(event, id)}>
                   {label}
                 </a>
               ))}
@@ -182,7 +208,7 @@ export function Navbar() {
           <div className="mobile-nav-group">
             <span className="mobile-nav-label">DETAIL</span>
               {profile.detailNavigation.map(({ id, label }) => (
-                <a key={id} href={`#${id}`} onClick={() => closeMobileMenu(id)}>
+                <a key={id} href={`#${id}`} onClick={(event) => scrollToSection(event, id)}>
                   {label}
                 </a>
               ))}

@@ -4,6 +4,7 @@ export const profile = {
   location: "Jakarta Selatan, Indonesia",
   email: "andresaputra07012019@gmail.com",
   linkedin: "https://www.linkedin.com/in/andre-sptr",
+  github: "https://github.com/andre-sptr",
   cv: { href: "/documents/CV_Andre_Saputra.pdf", filename: "CV_Andre_Saputra.pdf", details: "PDF · 2 pages · 128 KB" },
   hero: {
     role: "RF & NETWORK ENGINEER",
@@ -11,8 +12,8 @@ export const profile = {
   },
   about: {
     title: "Technology, Connected.",
-    introduction: "I'm Andre, an Electronics and Telecommunication Engineering graduate from Politeknik Caltex Riau. I connect an understanding of physical infrastructure with a hands-on approach to automation and software.",
-    description: "Currently an Engineer at PT Nexcom Indonesia, I support radio trunking operations, radio configuration, license registration and activation, and Radio Base Station maintenance.",
+    introduction: "I am a Bachelor of Applied Science in Electronics and Telecommunication Engineering graduate from Politeknik Caltex Riau, with a professional focus on radio communication systems and networking.",
+    description: "Currently, I work as an Engineer at PT Nexcom Indonesia, supporting the operations, installation, maintenance, and troubleshooting of radio communication infrastructure. Additionally, I have a strong interest in network infrastructure, AI implementation, and workflow automation.",
     note: "From the network to the application.",
   },
   contact: {
@@ -27,7 +28,6 @@ export const profile = {
     { id: "contact", label: "Contact" },
   ],
   detailNavigation: [
-    { id: "expertise", label: "Expertise" },
     { id: "experience", label: "Experience" },
     { id: "toolkit", label: "Technical Toolkit" },
   ],
@@ -36,7 +36,7 @@ export const profile = {
 
 export const interfaceCopy = {
   projects: { title: "Selected Projects.", description: "A selection of operational tools, automation workflows, and digital applications developed across professional and academic contexts.", detail: "View Details", illustration: "Conceptual interface", count: "05 PROJECTS / 2025–2026" },
-  expertise: { title: "Connected systems, from radio to software.", description: "A practical mix of radio communication, network operations, automation, and application development." },
+  expertise: { title: "Conned systems, from radio to software.", description: "A practical mix of radio communication, network operations, automation, and application development." },
   experience: { title: "Experience in Practice.", description: "Roles across radio communication, network infrastructure, operational support, and technical education." },
   education: { title: "Education & Credentials." },
   toolkit: { title: "The technical toolkit.", description: "Tools, technologies, and working methods used across my engineering and digital projects." },
