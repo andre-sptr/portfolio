@@ -1,57 +1,58 @@
-export type ProjectKind = "tickets" | "automation" | "fire" | "assistant" | "finance";
-export type Project = {
+export interface ProjectItem {
   id: string;
+  index: string;
   name: string;
   subtitle: string;
-  period: string;
-  organization: string;
-  category: string;
   description: string;
-  need: string;
-  functions: string[];
-  role: string;
-  kind: ProjectKind;
-};
+  category: string;
+  period: string;
+  tags: string[];
+  github: string;
+  href: string;
+  accent: string;
+}
 
-export const projects: Project[] = [
+export const projects: ProjectItem[] = [
   {
-    id: "sitiket", name: "SiTiket", subtitle: "Network Fault Ticket Management", period: "Feb–Jun 2026",
-    organization: "PT Telkom Infrastruktur Indonesia", category: "Web Application", kind: "tickets",
-    description: "A web-based network fault ticket management system designed to track, manage, and follow up on network disturbance tickets.",
-    need: "Tracking and following up on network disturbance tickets.",
-    functions: ["Track network fault tickets", "Manage disturbance records", "Follow up on network issues"],
-    role: "Developed the web-based fault ticket management system.",
+    id: "project-placeholder-01",
+    index: "01",
+    name: "Project Placeholder 01",
+    subtitle: "Radio Communication & Telemetry Monitoring Dashboard",
+    description:
+      "Placeholder project untuk sistem pemantauan infrastruktur radio trunking, telemetri base station, dan visualisasi status kanal secara real-time.",
+    category: "Radio Systems",
+    period: "2026",
+    tags: ["Radio Trunking", "Telemetry", "Monitoring"],
+    github: "https://github.com/andre-sptr",
+    href: "#projects",
+    accent: "#38bdf8",
   },
   {
-    id: "daily-recap", name: "Daily Fault Recap", subtitle: "Automated WhatsApp Bot", period: "Jan–Feb 2026",
-    organization: "PT Telkom Infrastruktur Indonesia", category: "Data Automation", kind: "automation",
-    description: "An automated WhatsApp bot developed to extract daily fault ticket data, populate spreadsheets, and capture required screenshots for operational reporting.",
-    need: "Routine preparation of daily fault ticket recaps for operational reporting.",
-    functions: ["Extract daily fault ticket data", "Populate spreadsheets", "Capture required reporting screenshots"],
-    role: "Developed the automated WhatsApp reporting bot.",
+    id: "project-placeholder-02",
+    index: "02",
+    name: "Project Placeholder 02",
+    subtitle: "Network Infrastructure & Provisioning Automation",
+    description:
+      "Placeholder project untuk otomasi konfigurasi perangkat jaringan, manajemen inventaris radio, dan workflow provisioning terpusat.",
+    category: "Network Automation",
+    period: "2026",
+    tags: ["Networking", "Automation", "Provisioning"],
+    github: "https://github.com/andre-sptr",
+    href: "#projects",
+    accent: "#a855f7",
   },
   {
-    id: "firesense", name: "FireSense", subtitle: "Real-Time Fire Monitoring", period: "Jan–Jul 2025",
-    organization: "Politeknik Caltex Riau", category: "Monitoring Application", kind: "fire",
-    description: "A real-time fire detection and monitoring application designed to support early warning systems.",
-    need: "Fire detection and monitoring to support early warning.",
-    functions: ["Real-time fire detection", "Monitoring to support early warning systems"],
-    role: "Designed and developed the fire monitoring application.",
-  },
-  {
-    id: "aet-ai", name: "AET AI PCR", subtitle: "AI-Powered Information Platform", period: "Sep–Oct 2025",
-    organization: "Politeknik Caltex Riau", category: "AI Application", kind: "assistant",
-    description: "An AI-powered web platform developed to streamline information access and automate responses for the AET Student Association.",
-    need: "Access to information for the AET Student Association.",
-    functions: ["Provide web-based access to information", "Automate responses using AI"],
-    role: "Developed the AI-powered information platform.",
-  },
-  {
-    id: "fiscal-ai", name: "Fiscal AI Finance", subtitle: "Personal Financial Tracking", period: "Jul–Sep 2025",
-    organization: "Personal Project", category: "AI Application", kind: "finance",
-    description: "A web-based personal finance application that uses AI to automate expense categorization and support financial data analysis.",
-    need: "Categorizing personal expenses and analyzing financial data.",
-    functions: ["Automate expense categorization using AI", "Support financial data analysis"],
-    role: "Developed the personal finance web application.",
+    id: "project-placeholder-03",
+    index: "03",
+    name: "Project Placeholder 03",
+    subtitle: "AI-Assisted Field Operations & Maintenance Assistant",
+    description:
+      "Placeholder project untuk integrasi AI dan workflow automation dalam mendukung pencatatan preventive/corrective maintenance infrastruktur.",
+    category: "AI & Workflow",
+    period: "2026",
+    tags: ["AI Implementation", "Workflow", "Maintenance"],
+    github: "https://github.com/andre-sptr",
+    href: "#projects",
+    accent: "#10b981",
   },
 ];
