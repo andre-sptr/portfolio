@@ -31,6 +31,7 @@ export const profile = {
   ],
   detailNavigation: [
     { id: "about-page", label: "About", href: "/about" },
+    { id: "projects-page", label: "Projects", href: "/projects" },
   ] as readonly { id: string; label: string; href?: string }[],
   footer: "RF engineering · Radio communication · Network infrastructure.",
 } as const;
