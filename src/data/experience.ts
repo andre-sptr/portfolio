@@ -1,4 +1,15 @@
-export const experience = [
+export interface ExperienceItem {
+  readonly role: string;
+  readonly organization: string;
+  readonly context?: string;
+  readonly location: string;
+  readonly period: string;
+  readonly current: boolean;
+  readonly summary: string;
+  readonly points: readonly string[];
+}
+
+export const experience: readonly ExperienceItem[] = [
   {
     role: "Engineer",
     organization: "PT Nexcom Indonesia",
