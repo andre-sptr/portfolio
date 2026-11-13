@@ -84,7 +84,7 @@ export function Footer() {
                   <a href="#projects">Selected Projects</a>
                 </li>
                 <li>
-                  <a href="#education">Credentials</a>
+                  <a href="#credentials">Credentials</a>
                 </li>
                 <li>
                   <a href="#contact">Contact</a>

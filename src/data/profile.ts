@@ -26,7 +26,7 @@ export const profile = {
     { id: "top", label: "Home" },
     { id: "about", label: "About" },
     { id: "projects", label: "Projects" },
-    { id: "education", label: "Credentials" },
+    { id: "credentials", label: "Credentials" },
     { id: "contact", label: "Contact" },
   ],
   detailNavigation: [
