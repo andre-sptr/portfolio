@@ -29,10 +29,7 @@ export const profile = {
     { id: "credentials", label: "Credentials" },
     { id: "contact", label: "Contact" },
   ],
-  detailNavigation: [
-    { id: "experience", label: "Experience" },
-    { id: "toolkit", label: "Technical Toolkit" },
-  ],
+  detailNavigation: [] as readonly { id: string; label: string; href?: string }[],
   footer: "RF engineering · Radio communication · Network infrastructure.",
 } as const;
 

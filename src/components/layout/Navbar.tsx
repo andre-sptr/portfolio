@@ -160,17 +160,21 @@ export function Navbar() {
                 links[next].focus();
               }}
             >
-              {profile.detailNavigation.map(({ id, label }, index) => (
-                <a
-                  key={id}
-                  ref={index === 0 ? detailFirstLink : undefined}
-                  href={`#${id}`}
-                  role="menuitem"
-                  onClick={(event) => scrollToSection(event, id)}
-                >
-                  {label}
-                </a>
-              ))}
+              {profile.detailNavigation.length > 0 ? (
+                profile.detailNavigation.map(({ id, label }, index) => (
+                  <a
+                    key={id}
+                    ref={index === 0 ? detailFirstLink : undefined}
+                    href={`#${id}`}
+                    role="menuitem"
+                    onClick={(event) => scrollToSection(event, id)}
+                  >
+                    {label}
+                  </a>
+                ))
+              ) : (
+                <span className="floating-nav-empty" aria-hidden="true" />
+              )}
             </div>
           </div>
         </div>
@@ -205,14 +209,16 @@ export function Navbar() {
                 </a>
               ))}
           </div>
-          <div className="mobile-nav-group">
-            <span className="mobile-nav-label">DETAIL</span>
+          {profile.detailNavigation.length > 0 && (
+            <div className="mobile-nav-group">
+              <span className="mobile-nav-label">DETAIL</span>
               {profile.detailNavigation.map(({ id, label }) => (
                 <a key={id} href={`#${id}`} onClick={(event) => scrollToSection(event, id)}>
                   {label}
                 </a>
               ))}
-          </div>
+            </div>
+          )}
         </div>
       </nav>
     </header>
