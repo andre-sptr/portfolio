@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { profile } from "@/data/profile";
@@ -15,7 +16,10 @@ export function Navbar() {
   const mobilePanel = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const targets = [...profile.navigation, ...profile.detailNavigation];
+    const targets = [
+      ...profile.navigation,
+      ...profile.detailNavigation.filter((item) => !item.href?.startsWith("/")),
+    ];
 
     const updateActiveSection = () => {
       const scrollPos = window.scrollY + 200;
@@ -161,17 +165,32 @@ export function Navbar() {
               }}
             >
               {profile.detailNavigation.length > 0 ? (
-                profile.detailNavigation.map(({ id, label }, index) => (
-                  <a
-                    key={id}
-                    ref={index === 0 ? detailFirstLink : undefined}
-                    href={`#${id}`}
-                    role="menuitem"
-                    onClick={(event) => scrollToSection(event, id)}
-                  >
-                    {label}
-                  </a>
-                ))
+                profile.detailNavigation.map(({ id, label, href }, index) =>
+                  href?.startsWith("/") ? (
+                    <Link
+                      key={id}
+                      ref={index === 0 ? detailFirstLink : undefined}
+                      href={href}
+                      role="menuitem"
+                      onClick={() => {
+                        setDetailOpen(false);
+                        setMobileOpen(false);
+                      }}
+                    >
+                      {label}
+                    </Link>
+                  ) : (
+                    <a
+                      key={id}
+                      ref={index === 0 ? detailFirstLink : undefined}
+                      href={href ?? `#${id}`}
+                      role="menuitem"
+                      onClick={(event) => scrollToSection(event, id)}
+                    >
+                      {label}
+                    </a>
+                  )
+                )
               ) : (
                 <span className="floating-nav-empty" aria-hidden="true" />
               )}
@@ -202,21 +221,34 @@ export function Navbar() {
           }}
         >
           <div className="mobile-nav-group">
-              <span className="mobile-nav-label">MAIN</span>
-              {profile.navigation.map(({ id, label }) => (
-                <a key={id} href={`#${id}`} onClick={(event) => scrollToSection(event, id)}>
-                  {label}
-                </a>
-              ))}
+            <span className="mobile-nav-label">MAIN</span>
+            {profile.navigation.map(({ id, label }) => (
+              <a key={id} href={`#${id}`} onClick={(event) => scrollToSection(event, id)}>
+                {label}
+              </a>
+            ))}
           </div>
           {profile.detailNavigation.length > 0 && (
             <div className="mobile-nav-group">
               <span className="mobile-nav-label">DETAIL</span>
-              {profile.detailNavigation.map(({ id, label }) => (
-                <a key={id} href={`#${id}`} onClick={(event) => scrollToSection(event, id)}>
-                  {label}
-                </a>
-              ))}
+              {profile.detailNavigation.map(({ id, label, href }) =>
+                href?.startsWith("/") ? (
+                  <Link
+                    key={id}
+                    href={href}
+                    onClick={() => {
+                      setDetailOpen(false);
+                      setMobileOpen(false);
+                    }}
+                  >
+                    {label}
+                  </Link>
+                ) : (
+                  <a key={id} href={href ?? `#${id}`} onClick={(event) => scrollToSection(event, id)}>
+                    {label}
+                  </a>
+                )
+              )}
             </div>
           )}
         </div>
