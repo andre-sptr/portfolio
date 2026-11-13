@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { profile } from "@/data/profile";
-import { siteUrl } from "@/lib/metadata";
+import { ogImages, siteUrl } from "@/lib/metadata";
 
 export const metadata: Metadata = {
-  ...(siteUrl ? { alternates: { canonical: "/about" } } : {}),
+  ...(siteUrl ? { alternates: { canonical: "/about/" } } : {}),
   title: `About Me | ${profile.name}`,
   description:
     "Andre Saputra is a Bachelor of Applied Science in Electronics and Telecommunication Engineering graduate from Politeknik Caltex Riau and an Engineer at PT Nexcom Indonesia focusing on radio trunking communication systems, network infrastructure, AI implementation, and workflow automation.",
@@ -12,7 +12,14 @@ export const metadata: Metadata = {
     type: "profile",
     title: `About ${profile.name} | RF & Network Engineer`,
     description: profile.about.introduction,
-    ...(siteUrl ? { url: `${siteUrl.origin}/about` } : {}),
+    images: ogImages,
+    ...(siteUrl ? { url: `${siteUrl.origin}/about/` } : {}),
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `About ${profile.name} | RF & Network Engineer`,
+    description: profile.about.introduction,
+    images: ["/og-cover.png"],
   },
 };
 

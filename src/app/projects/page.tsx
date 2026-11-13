@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { profile } from "@/data/profile";
-import { siteUrl } from "@/lib/metadata";
+import { ogImages, siteUrl } from "@/lib/metadata";
 import { ProjectsCatalogClient } from "@/components/sections/ProjectsCatalogClient";
 
 export const metadata: Metadata = {
-  ...(siteUrl ? { alternates: { canonical: "/projects" } } : {}),
+  ...(siteUrl ? { alternates: { canonical: "/projects/" } } : {}),
   title: `Projects | ${profile.name}`,
   description:
     "Catalog of web applications, AI agent tools, and useful utilities built by Andre Saputra.",
@@ -14,7 +14,15 @@ export const metadata: Metadata = {
     title: `Projects | ${profile.name}`,
     description:
       "Catalog of web applications, AI agent tools, and useful utilities.",
-    ...(siteUrl ? { url: `${siteUrl.origin}/projects` } : {}),
+    images: ogImages,
+    ...(siteUrl ? { url: `${siteUrl.origin}/projects/` } : {}),
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Projects | ${profile.name}`,
+    description:
+      "Catalog of web applications, AI agent tools, and useful utilities.",
+    images: ["/og-cover.png"],
   },
 };
 
