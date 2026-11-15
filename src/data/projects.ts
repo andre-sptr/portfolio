@@ -45,7 +45,7 @@ export const projects: ProjectItem[] = [
     name: "PDF Workbench",
     subtitle: "All-in-One Browser PDF Toolkit & Document Processing Suite",
     description:
-      "Privacy-first digital document workbench offering 18 free PDF utilities—including merge, split, compress, Office conversion, and OCR text extraction—with automatic temporary file cleanup and zero account registration.",
+      "Privacy-first digital document workbench offering 18 free PDF utilities—including merge, split, compress, Office conversion, and OCR text extraction—with automatic temporary file cleanup.",
     category: "Useful Tools",
     metaBadge: "18 PDF Tools • Open Source",
     period: "2026",
