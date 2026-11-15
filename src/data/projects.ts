@@ -5,54 +5,60 @@ export interface ProjectItem {
   subtitle: string;
   description: string;
   category: string;
+  metaBadge: string;
   period: string;
   tags: string[];
   github: string;
   href: string;
+  image: string;
+  images: string[];
   accent: string;
 }
 
 export const projects: ProjectItem[] = [
   {
-    id: "project-placeholder-01",
+    id: "aet-ai-platform",
     index: "01",
-    name: "Project Placeholder 01",
-    subtitle: "Modern Web Application & Interactive Portfolio",
+    name: "AET AI Platform",
+    subtitle: "AI-Powered Academic, Coding & Ideation Workspace for AET PCR",
     description:
-      "Placeholder project untuk pengembangan website modern dengan antarmuka responsif, performa tinggi, dan arsitektur yang bersih.",
-    category: "Website",
+      "Interactive web platform and multi-mode AI workspace (Smart Companion, Academic Writer, and Coding Expert) built to support students of the AET Student Association at Politeknik Caltex Riau.",
+    category: "AI Agent Tools",
+    metaBadge: "AI Workspace • Live Platform",
     period: "2026",
-    tags: ["Website", "Next.js", "UI/UX"],
-    github: "https://github.com/andre-sptr",
-    href: "#projects",
+    tags: ["Website", "AI Agent Tools", "Next.js"],
+    github: "https://github.com/andre-sptr/aet-ai-platform",
+    href: "https://www.aetpcr.site/",
+    image: "/projects/AET-AI.png",
+    images: [
+      "/projects/AET-AI.png",
+      "/projects/AET-AI(2).png",
+      "/projects/AET-AI(3).png",
+      "/projects/AET-AI(4).png",
+      "/projects/AET-AI(5).png",
+    ],
     accent: "#38bdf8",
   },
   {
-    id: "project-placeholder-02",
+    id: "pdf-workbench",
     index: "02",
-    name: "Project Placeholder 02",
-    subtitle: "AI Agent Skills, Rules & Developer Workflow Tools",
+    name: "PDF Workbench",
+    subtitle: "All-in-One Browser PDF Toolkit & Document Processing Suite",
     description:
-      "Placeholder project untuk pengembangan AI agent tools, custom skills, dan workflow automation untuk membantu produktivitas engineering.",
-    category: "AI Agent Tools",
-    period: "2026",
-    tags: ["AI Agent", "Automation", "Skills"],
-    github: "https://github.com/andre-sptr",
-    href: "#projects",
-    accent: "#a855f7",
-  },
-  {
-    id: "project-placeholder-03",
-    index: "03",
-    name: "Project Placeholder 03",
-    subtitle: "All-in-One Document & File Utility Toolkit",
-    description:
-      "Placeholder project untuk useful tools sehari-hari seperti pengolahan dokumen PDF (merge, split, compress) yang cepat dan praktis.",
+      "Privacy-first digital document workbench offering 18 free PDF utilities—including merge, split, compress, Office conversion, and OCR text extraction—with automatic temporary file cleanup and zero account registration.",
     category: "Useful Tools",
+    metaBadge: "18 PDF Tools • Open Source",
     period: "2026",
-    tags: ["Useful Tools", "PDF", "Utilities"],
-    github: "https://github.com/andre-sptr",
-    href: "#projects",
-    accent: "#10b981",
+    tags: ["Website", "Useful Tools", "PDF", "OCR"],
+    github: "https://github.com/andre-sptr/pdf-workbench",
+    href: "https://pdf.andresptr.site/",
+    image: "/projects/PDF-Workbench.png",
+    images: [
+      "/projects/PDF-Workbench.png",
+      "/projects/PDF-Workbench(2).png",
+      "/projects/PDF-Workbench(3).png",
+      "/projects/PDF-Workbench(4).png",
+    ],
+    accent: "#2563eb",
   },
 ];

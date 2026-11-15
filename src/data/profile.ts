@@ -37,9 +37,8 @@ export const profile = {
 } as const;
 
 export const interfaceCopy = {
-  projects: { title: "Selected Projects.", description: "A selection of operational tools, automation workflows, and digital applications developed across professional and academic contexts.", detail: "View Details", illustration: "Conceptual interface", count: "05 PROJECTS / 2025–2026" },
+  projects: { title: "Selected Projects.", description: "A selection of operational tools, automation workflows, and digital applications developed across professional and academic contexts.", detail: "View Details", illustration: "Conceptual interface", count: "02 PROJECTS / 2026" },
   expertise: { title: "Conned systems, from radio to software.", description: "A practical mix of radio communication, network operations, automation, and application development." },
-  experience: { title: "Experience in Practice.", description: "Roles across radio communication, network infrastructure, operational support, and technical education." },
   education: { title: "Education & Credentials." },
   toolkit: { title: "The technical toolkit.", description: "Tools, technologies, and working methods used across my engineering and digital projects." },
 } as const;

@@ -1,45 +1,157 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { projects, type ProjectItem } from "@/data/projects";
 
-function ProjectPlaceholderMedia({
+export function ProjectGalleryMedia({
   project,
+  isActive,
+  onUserInteract,
   compact = false,
+  href,
+  linkClassName,
+  linkAriaLabel,
 }: {
   project: ProjectItem;
+  isActive: boolean;
+  onUserInteract?: () => void;
   compact?: boolean;
+  href?: string;
+  linkClassName?: string;
+  linkAriaLabel?: string;
 }) {
-  return (
-    <div
-      className={`project-placeholder-canvas${compact ? " is-compact" : ""}`}
-      style={{ ["--project-accent" as string]: project.accent }}
-      aria-hidden="true"
-    >
-      <div className="project-placeholder-grid" />
-      <div className="project-placeholder-glow" />
-      <div className="project-placeholder-watermark">{project.index}</div>
+  const [slideIndex, setSlideIndex] = useState(0);
+  const images = project.images.length > 0 ? project.images : [project.image];
+  const safeIndex = slideIndex % images.length;
+  const showControls = isActive && images.length > 1;
 
-      <div className="project-placeholder-center">
-        <div className="project-placeholder-icon-box">
-          <svg
-            width={compact ? 22 : 28}
-            height={compact ? 22 : 28}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={1.6}
-            strokeLinecap="round"
-            strokeLinejoin="round"
+  function goToSlide(nextIndex: number) {
+    onUserInteract?.();
+    setSlideIndex((nextIndex + images.length) % images.length);
+  }
+
+  const imageEl = (
+    <img
+      src={images[safeIndex]}
+      alt={`${project.name} screenshot ${safeIndex + 1} of ${images.length}`}
+      width={1920}
+      height={1080}
+      loading="lazy"
+      decoding="async"
+      draggable={false}
+      className="project-media-img"
+    />
+  );
+
+  return (
+    <div className={`project-media-gallery${compact ? " is-compact" : ""}`}>
+      {href ? (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={linkClassName ?? "project-media-link"}
+          aria-label={linkAriaLabel ?? `Open ${project.name} live site`}
+        >
+          {imageEl}
+        </a>
+      ) : (
+        imageEl
+      )}
+
+      {showControls && (
+        <>
+          <div
+            className="project-gallery-topbar"
+            onClick={(event) => event.stopPropagation()}
+            onKeyDown={(event) => event.stopPropagation()}
           >
-            <rect x="3" y="4" width="18" height="16" rx="2.5" />
-            <circle cx="8.5" cy="9.5" r="1.5" />
-            <path d="M21 15l-4.5-4.5a1.5 1.5 0 0 0-2.12 0L6 19" />
-          </svg>
-        </div>
-        <span className="project-placeholder-badge">IMAGE PLACEHOLDER • 16:9</span>
-        <span className="project-placeholder-category">{project.category}</span>
-      </div>
+            <span className="project-gallery-counter">
+              {safeIndex + 1} / {images.length}
+            </span>
+
+            <div className="project-gallery-arrows">
+              <button
+                type="button"
+                className="project-gallery-arrow-btn"
+                aria-label={`Previous ${project.name} screenshot`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  goToSlide(safeIndex - 1);
+                }}
+              >
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+              <button
+                type="button"
+                className="project-gallery-arrow-btn"
+                aria-label={`Next ${project.name} screenshot`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  goToSlide(safeIndex + 1);
+                }}
+              >
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div
+            className="project-gallery-dots"
+            role="tablist"
+            aria-label={`${project.name} screenshots`}
+            onClick={(event) => event.stopPropagation()}
+            onKeyDown={(event) => event.stopPropagation()}
+          >
+            {images.map((src, idx) => (
+              <button
+                key={src}
+                type="button"
+                role="tab"
+                aria-selected={idx === safeIndex}
+                aria-label={`Show ${project.name} screenshot ${idx + 1}`}
+                className={`project-gallery-dot${idx === safeIndex ? " is-active" : ""}`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  goToSlide(idx);
+                }}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -122,7 +234,11 @@ export function ProjectsSection() {
                 }}
               >
                 <div className="blinds-media">
-                  <ProjectPlaceholderMedia project={project} />
+                  <ProjectGalleryMedia
+                    project={project}
+                    isActive={isActive}
+                    onUserInteract={() => setIsPaused(true)}
+                  />
                 </div>
 
                 <div className="blinds-scrim" aria-hidden="true" />
@@ -154,8 +270,10 @@ export function ProjectsSection() {
                     </a>
                     <a
                       href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="blinds-pill-btn"
-                      aria-label={`View details for ${project.name}`}
+                      aria-label={`Visit ${project.name} live site`}
                     >
                       <span>View Details</span>
                       <svg
@@ -188,13 +306,17 @@ export function ProjectsSection() {
           onMouseLeave={() => setIsPaused(false)}
         >
           <article className="mobile-project-card" key={activeProject.id}>
-            <a
-              href={activeProject.href}
-              className="mobile-card-img-link"
-              aria-label={activeProject.name}
-            >
-              <ProjectPlaceholderMedia project={activeProject} compact />
-            </a>
+            <div className="mobile-card-media-wrap">
+              <ProjectGalleryMedia
+                project={activeProject}
+                isActive
+                compact
+                href={activeProject.href}
+                linkClassName="mobile-card-img-link"
+                linkAriaLabel={activeProject.name}
+                onUserInteract={() => setIsPaused(true)}
+              />
+            </div>
 
             <div className="mobile-card-content">
               <div className="mobile-card-meta-row">
@@ -214,7 +336,12 @@ export function ProjectsSection() {
                   <GitHubIcon />
                   <span>Code</span>
                 </a>
-                <a href={activeProject.href} className="mobile-card-pill-btn">
+                <a
+                  href={activeProject.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mobile-card-pill-btn"
+                >
                   <span>View Details</span>
                   <svg
                     width="11"
@@ -304,8 +431,8 @@ export function ProjectsSection() {
 
         {/* Bottom CTA Button */}
         <div className="projects-ref-cta-wrap">
-          <a
-            href="#projects"
+          <Link
+            href="/projects"
             className="btn-creative btn-creative-white btn-creative-wide group"
             aria-label="View All Projects"
           >
@@ -329,7 +456,7 @@ export function ProjectsSection() {
               </svg>
             </span>
             <span className="btn-creative-bubble" aria-hidden="true" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

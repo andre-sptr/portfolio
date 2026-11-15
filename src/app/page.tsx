@@ -4,9 +4,8 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { CredentialsSection } from "@/components/sections/CredentialsSection";
-import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 
 export default function Home() {
-  return <><Navbar/><main id="main" tabIndex={-1}><HeroSection/><AboutSection/><ProjectsSection/><CredentialsSection/><ExperienceSection/><ContactSection/></main><Footer/></>;
+  return <><Navbar/><main id="main" tabIndex={-1}><HeroSection/><AboutSection/><ProjectsSection/><CredentialsSection/><ContactSection/></main><Footer/></>;
 }

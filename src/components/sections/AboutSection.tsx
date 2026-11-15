@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const currentFocus = [
   {
     title: "Radio Trunking Operations",
@@ -60,8 +62,8 @@ export function AboutSection() {
               </p>
 
               <div className="desktop-about-btn">
-                <a
-                  href="#experience"
+                <Link
+                  href="/about"
                   className="btn-creative btn-creative-white"
                   aria-label="Read All"
                 >
@@ -83,7 +85,7 @@ export function AboutSection() {
                     </svg>
                   </div>
                   <div className="btn-creative-bubble" aria-hidden="true" />
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -105,8 +107,8 @@ export function AboutSection() {
 
             {/* Mobile button at bottom of section */}
             <div className="mobile-about-btn">
-              <a
-                href="#experience"
+              <Link
+                href="/about"
                 className="btn-creative btn-creative-white"
                 aria-label="Read All"
               >
@@ -128,7 +130,7 @@ export function AboutSection() {
                   </svg>
                 </div>
                 <div className="btn-creative-bubble" aria-hidden="true" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

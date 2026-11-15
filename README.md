@@ -17,7 +17,6 @@ Personal portfolio website built with Next.js (App Router), React, TypeScript, a
   - **About**: Profile overview and current focus areas
   - **Selected Projects**: Desktop horizontal accordion showcase (*Feral Blinds*) & mobile card carousel
   - **Credentials**: Toggleable Open Source & Certifications grid with modal preview
-  - **Experience**: Timeline/grid of engineering and technical roles
   - **Contact**: Terminal-inspired CLI info panel and `mailto:` message composer
 - `/about` — Full narrative biography, snapshot, milestones, and core capabilities ([`src/app/about/page.tsx`](src/app/about/page.tsx))
 - `/projects` — Filterable catalog (`All`, `Website`, `AI Agent Tools`, `Useful Tools`) ([`src/app/projects/page.tsx`](src/app/projects/page.tsx))
@@ -29,8 +28,8 @@ src/
   app/                  App Router pages (/ , /about, /projects), layout, metadata & globals.css
   components/
     layout/             Navbar (floating pill & Detail dropdown) and Footer
-    sections/           Hero, About, Projects, ProjectsCatalogClient, Credentials, Experience, Contact
-  data/                 profile.ts, projects.ts, experience.ts, education.ts
+    sections/           Hero, About, Projects, ProjectsCatalogClient, Credentials, Contact
+  data/                 profile.ts, projects.ts, education.ts
   lib/                  metadata.ts
 ```
 

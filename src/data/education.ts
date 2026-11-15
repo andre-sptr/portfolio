@@ -1,10 +1,17 @@
 export const openSourceRepos = [
   {
-    id: "andresptr-v2",
-    name: "andresptr-v2",
+    id: "aet-ai-platform",
+    name: "aet-ai-platform",
     description:
-      "Personal engineering portfolio and interactive web showcase built with Next.js, TypeScript, and custom WebGL shaders.",
-    href: "https://github.com/andre-sptr",
+      "AI-powered web portal and multi-mode assistant workspace (Smart Companion, Academic Writer, Coding Expert) for AET Politeknik Caltex Riau.",
+    href: "https://github.com/andre-sptr/aet-ai-platform",
+  },
+  {
+    id: "pdf-workbench",
+    name: "pdf-workbench",
+    description:
+      "Privacy-first online PDF workbench featuring 18 document tools for merging, compression, format conversion, and OCR extraction.",
+    href: "https://github.com/andre-sptr/pdf-workbench",
   },
 ] as const;
 

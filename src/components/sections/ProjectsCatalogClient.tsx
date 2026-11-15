@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { projects } from "@/data/projects";
+import { projects, type ProjectItem } from "@/data/projects";
+import { ProjectGalleryMedia } from "@/components/sections/ProjectsSection";
 
 const filterCategories = [
   { id: "all", label: "All" },
@@ -9,6 +10,19 @@ const filterCategories = [
   { id: "AI Agent Tools", label: "AI Agent Tools" },
   { id: "Useful Tools", label: "Useful Tools" },
 ] as const;
+
+function CatalogProjectMedia({ project }: { project: ProjectItem }) {
+  return (
+    <ProjectGalleryMedia
+      project={project}
+      isActive
+      compact
+      href={project.href}
+      linkClassName="project-media-link"
+      linkAriaLabel={`${project.name} preview`}
+    />
+  );
+}
 
 export function ProjectsCatalogClient() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
@@ -37,7 +51,9 @@ export function ProjectsCatalogClient() {
   const filteredProjects =
     activeCategory === "all"
       ? projects
-      : projects.filter((p) => p.category === activeCategory);
+      : projects.filter(
+          (p) => p.category === activeCategory || p.tags.includes(activeCategory)
+        );
 
   return (
     <>
@@ -80,18 +96,29 @@ export function ProjectsCatalogClient() {
                   <span>{project.category}</span>
                   <span className="projects-catalog-dot">•</span>
                   <span className="projects-catalog-accent">
-                    {project.period} • Placeholder
+                    {project.period} • {project.metaBadge}
                   </span>
                 </div>
 
                 <h2 className="projects-catalog-title">
-                  <a href={project.href}>{project.name}</a>
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {project.name}
+                  </a>
                 </h2>
 
                 <p className="projects-catalog-desc">{project.description}</p>
 
                 <div className="projects-catalog-actions">
-                  <a href={project.href} className="project-cta-link">
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="project-cta-link"
+                  >
                     <span className="project-cta-text">View Details</span>
                     <span className="project-arrow-circle" aria-hidden="true">
                       <svg
@@ -127,46 +154,9 @@ export function ProjectsCatalogClient() {
                 </div>
               </div>
 
-              <a
-                href={project.href}
-                className="projects-catalog-media"
-                aria-label={`${project.name} preview`}
-              >
-                <div
-                  className="project-placeholder-canvas is-compact"
-                  style={{ ["--project-accent" as string]: project.accent }}
-                >
-                  <div className="project-placeholder-grid" />
-                  <div className="project-placeholder-glow" />
-                  <div className="project-placeholder-watermark">
-                    {project.index}
-                  </div>
-                  <div className="project-placeholder-center">
-                    <div className="project-placeholder-icon-box">
-                      <svg
-                        width="22"
-                        height="22"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={1.6}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <rect x="3" y="4" width="18" height="16" rx="2.5" />
-                        <circle cx="8.5" cy="9.5" r="1.5" />
-                        <path d="M21 15l-4.5-4.5a1.5 1.5 0 0 0-2.12 0L6 19" />
-                      </svg>
-                    </div>
-                    <span className="project-placeholder-badge">
-                      IMAGE PLACEHOLDER • 16:9
-                    </span>
-                    <span className="project-placeholder-category">
-                      {project.category}
-                    </span>
-                  </div>
-                </div>
-              </a>
+              <div className="projects-catalog-media">
+                <CatalogProjectMedia project={project} />
+              </div>
             </div>
           </article>
         ))}

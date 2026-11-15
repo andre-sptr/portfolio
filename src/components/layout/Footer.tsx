@@ -97,7 +97,13 @@ export function Footer() {
               <ul className="site-footer-list">
                 {projects.map((project) => (
                   <li key={project.id}>
-                    <a href="#projects">{project.name}</a>
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {project.name}
+                    </a>
                   </li>
                 ))}
               </ul>
