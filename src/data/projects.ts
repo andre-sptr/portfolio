@@ -83,4 +83,26 @@ export const projects: ProjectItem[] = [
     ],
     accent: "#2563eb",
   },
+  {
+    id: "rekapal",
+    index: "04",
+    name: "REKAPAL",
+    subtitle: "Oil Palm Plantation Lot & Financial Management Platform",
+    description:
+      "Private web workspace for managing oil palm plantation lots—tracking harvests, maintenance schedules, operational expenses, sales, per-kg cost analytics, and automated Telegram bot notifications.",
+    category: "Website",
+    metaBadge: "Plantation Ops • Live Platform",
+    period: "2026",
+    tags: ["Website", "Dashboard", "Operations", "Telegram Bot"],
+    github: "https://github.com/andre-sptr/my-sawit",
+    href: "https://rekapal.site",
+    image: "/projects/Rekapal.png",
+    images: [
+      "/projects/Rekapal.png",
+      "/projects/Rekapal(2).png",
+      "/projects/Rekapal(3).png",
+      "/projects/Rekapal(4).png",
+    ],
+    accent: "#16a34a",
+  },
 ];

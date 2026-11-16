@@ -20,6 +20,13 @@ export const openSourceRepos = [
       "Self-hosted VPS file hub with batch uploads, MIME and signature verification, folder explorer, and per-file private or public share links.",
     href: "https://github.com/andre-sptr/cloud-file-manager",
   },
+  {
+    id: "my-sawit",
+    name: "my-sawit",
+    description:
+      "Oil palm plantation lot management web app (REKAPAL) for tracking harvests, maintenance, operational costs, sales, and automated Telegram bot recaps.",
+    href: "https://github.com/andre-sptr/my-sawit",
+  },
 ] as const;
 
 export const certifications = [
