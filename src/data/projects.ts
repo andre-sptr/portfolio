@@ -61,4 +61,26 @@ export const projects: ProjectItem[] = [
     ],
     accent: "#2563eb",
   },
+  {
+    id: "vps-file-hub",
+    index: "03",
+    name: "VPS File Hub",
+    subtitle: "Self-Hosted VPS File Storage & Controlled Sharing Hub",
+    description:
+      "Self-hosted file storage and workspace hub supporting multi-file batch uploads, server-side MIME and signature verification, folder organization, and per-file private or public share links.",
+    category: "Useful Tools",
+    metaBadge: "Self-Hosted • Live Platform",
+    period: "2026",
+    tags: ["Website", "Useful Tools", "Self-Hosted", "File Storage"],
+    github: "https://github.com/andre-sptr/cloud-file-manager",
+    href: "https://cloud.andresptr.site",
+    image: "/projects/VPS-File-Hub.png",
+    images: [
+      "/projects/VPS-File-Hub.png",
+      "/projects/VPS-File-Hub(2).png",
+      "/projects/VPS-File-Hub(3).png",
+      "/projects/VPS-File-Hub(4).png",
+    ],
+    accent: "#2563eb",
+  },
 ];

@@ -13,6 +13,13 @@ export const openSourceRepos = [
       "Privacy-first online PDF workbench featuring 18 document tools for merging, compression, format conversion, and OCR extraction.",
     href: "https://github.com/andre-sptr/pdf-workbench",
   },
+  {
+    id: "cloud-file-manager",
+    name: "cloud-file-manager",
+    description:
+      "Self-hosted VPS file hub with batch uploads, MIME and signature verification, folder explorer, and per-file private or public share links.",
+    href: "https://github.com/andre-sptr/cloud-file-manager",
+  },
 ] as const;
 
 export const certifications = [
