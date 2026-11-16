@@ -24,7 +24,7 @@ export const openSourceRepos = [
     id: "my-sawit",
     name: "my-sawit",
     description:
-      "Oil palm plantation lot management web app (REKAPAL) for tracking harvests, maintenance, operational costs, sales, and automated Telegram bot recaps.",
+      "Oil palm plantation lot management web app for tracking harvests, maintenance, operational and automated Telegram bot recaps.",
     href: "https://github.com/andre-sptr/my-sawit",
   },
 ] as const;
