@@ -22,7 +22,7 @@ export const projects: ProjectItem[] = [
     name: "LinkSight RF",
     subtitle: "Interactive RF Link Budget, Repeater Relay & Fresnel Zone Planner",
     description:
-      "Web-based RF engineering workbench for planning Point-to-Point and Single-Repeater Relay radio links over real SRTM30m terrain profiles—featuring 1st/60% Fresnel zone visualization, ITU-R P.526 knife-edge diffraction, Okumura-Hata comparison, tower height optimization, and PDF site survey reports.",
+      "Web-based RF engineering workbench for planning Point-to-Point and Single-Repeater Relay radio links over real SRTM30m terrain profiles—featuring 1st/60% Fresnel zone visualization.",
     category: "Useful Tools",
     metaBadge: "RF Engineering • Live Platform",
     period: "2026",
