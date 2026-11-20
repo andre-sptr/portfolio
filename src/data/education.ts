@@ -1,5 +1,12 @@
 export const openSourceRepos = [
   {
+    id: "rf-link-planner",
+    name: "rf-link-planner",
+    description:
+      "Interactive RF link budget, single-repeater relay, and SRTM30m Fresnel zone planner with ITU-R P.526 diffraction, SQLite elevation cache, and PDF site survey reports.",
+    href: "https://github.com/andre-sptr/rf-link-planner",
+  },
+  {
     id: "aet-ai-platform",
     name: "aet-ai-platform",
     description:

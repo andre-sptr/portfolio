@@ -17,8 +17,30 @@ export interface ProjectItem {
 
 export const projects: ProjectItem[] = [
   {
-    id: "aet-ai-platform",
+    id: "linksight-rf",
     index: "01",
+    name: "LinkSight RF",
+    subtitle: "Interactive RF Link Budget, Repeater Relay & Fresnel Zone Planner",
+    description:
+      "Web-based RF engineering workbench for planning Point-to-Point and Single-Repeater Relay radio links over real SRTM30m terrain profiles—featuring 1st/60% Fresnel zone visualization, ITU-R P.526 knife-edge diffraction, Okumura-Hata comparison, tower height optimization, and PDF site survey reports.",
+    category: "Useful Tools",
+    metaBadge: "RF Engineering • Live Platform",
+    period: "2026",
+    tags: ["Website", "Useful Tools", "RF Engineering", "GIS"],
+    github: "https://github.com/andre-sptr/rf-link-planner",
+    href: "https://rf.andresptr.site/",
+    image: "/projects/LinkSight-RF.png",
+    images: [
+      "/projects/LinkSight-RF.png",
+      "/projects/LinkSight-RF(2).png",
+      "/projects/LinkSight-RF(3).png",
+      "/projects/LinkSight-RF(4).png",
+    ],
+    accent: "#026498",
+  },
+  {
+    id: "aet-ai-platform",
+    index: "02",
     name: "AET AI Platform",
     subtitle: "AI-Powered Academic, Coding & Ideation Workspace for AET PCR",
     description:
@@ -41,7 +63,7 @@ export const projects: ProjectItem[] = [
   },
   {
     id: "pdf-workbench",
-    index: "02",
+    index: "03",
     name: "PDF Workbench",
     subtitle: "All-in-One Browser PDF Toolkit & Document Processing Suite",
     description:
@@ -63,7 +85,7 @@ export const projects: ProjectItem[] = [
   },
   {
     id: "vps-file-hub",
-    index: "03",
+    index: "04",
     name: "VPS File Hub",
     subtitle: "Self-Hosted VPS File Storage & Controlled Sharing Hub",
     description:
@@ -85,7 +107,7 @@ export const projects: ProjectItem[] = [
   },
   {
     id: "rekapal",
-    index: "04",
+    index: "05",
     name: "REKAPAL",
     subtitle: "Oil Palm Plantation Lot & Financial Management Platform",
     description:
