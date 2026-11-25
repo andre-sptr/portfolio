@@ -18,7 +18,7 @@ Personal portfolio website for **Andre Saputra** (RF & Network Engineer), live a
   - **Hero**: Name display, role header (`RF & NETWORK ENGINEER`), and WebGL Obsidian Silk backdrop
   - **About**: Profile overview, current focus areas (Radio Trunking Operations, Radio Configuration & Provisioning, Radio Base Station Maintenance), and link to `/about`
   - **Selected Projects**: Desktop horizontal accordion showcase (*Feral Blinds*) & mobile swipeable card carousel with autoplay + Pause/Resume toggle (respecting `prefers-reduced-motion`, hover, and focus), keyboard navigation, per-project multi-screenshot galleries (`ProjectGalleryMedia`), live site links, and GitHub repository links
-  - **Credentials & Code**: Accessible tab switcher toggling between **Open Source** repositories (7 repos) and **Certifications** (4 credentials opening full-resolution images in a new tab)
+  - **Credentials & Code**: Accessible tab switcher toggling between **Open Source** repositories (8 repos) and **Certifications** (4 credentials opening full-resolution images in a new tab)
   - **Contact**: Terminal-inspired CLI info panel (`contact.exe`) and client-validated `mailto:` message composer with a collapsible mobile drawer
 - `/about` — Full narrative biography, profile snapshot, career milestone path, and core capabilities ([`src/app/about/page.tsx`](src/app/about/page.tsx))
 - `/projects` — Filterable catalog (`All`, `Website`, `AI Agent Tools`, `Useful Tools`) with animated sliding indicator and interactive multi-screenshot galleries ([`src/app/projects/page.tsx`](src/app/projects/page.tsx))
@@ -27,15 +27,15 @@ Personal portfolio website for **Andre Saputra** (RF & Network Engineer), live a
 
 | # | Project | Category | Live | Source |
 | --- | --- | --- | --- | --- |
-| 01 | **NeuroStack**: Bilingual light-first landing page for website, software, and automation services | Website | [neurostack.andresptr.site](https://neurostack.andresptr.site/) | Private |
+| 01 | **LinkSight RF**: Interactive RF link budget, single-repeater relay, and SRTM30m Fresnel zone planner | Useful Tools | [rf.andresptr.site](https://rf.andresptr.site/) | [rf-link-planner](https://github.com/andre-sptr/rf-link-planner) |
 | 02 | **AntennaLab 3D**: Interactive 3D far-field antenna pattern and RF propagation lab | Useful Tools | [antenna.andresptr.site](https://antenna.andresptr.site/) | [3d-antenna](https://github.com/andre-sptr/3d-antenna) |
-| 03 | **Over the Air**: Six-chapter 3D scrollytelling guide to two-way radio signal propagation | Website | [radio.andresptr.site](https://radio.andresptr.site/) | Not public |
+| 03 | **Over the Air**: Six-chapter 3D scrollytelling guide to two-way radio signal propagation | Website | [radio.andresptr.site](https://radio.andresptr.site/) | [over-the-air](https://github.com/andre-sptr/over-the-air) |
 | 04 | **Bubu AI**: Multimodal WhatsApp AI assistant and real-time 3D SSE pipeline observatory | AI Agent Tools | [waha.andresptr.site](https://waha.andresptr.site/) | [bubu-ai](https://github.com/andre-sptr/bubu-ai) |
-| 05 | **LinkSight RF**: Interactive RF link budget, single-repeater relay, and SRTM30m Fresnel zone planner | Useful Tools | [rf.andresptr.site](https://rf.andresptr.site/) | [rf-link-planner](https://github.com/andre-sptr/rf-link-planner) |
-| 06 | **AET AI Platform**: Multi-mode AI workspace (Smart Companion, Academic Writer, Coding Expert) for AET PCR | AI Agent Tools | [aetpcr.site](https://www.aetpcr.site/) | [aet-ai-platform](https://github.com/andre-sptr/aet-ai-platform) |
+| 05 | **AET AI Platform**: Multi-mode AI workspace (Smart Companion, Academic Writer, Coding Expert) for AET PCR | AI Agent Tools | [aetpcr.site](https://www.aetpcr.site/) | [aet-ai-platform](https://github.com/andre-sptr/aet-ai-platform) |
+| 06 | **VPS File Hub**: Self-hosted file storage hub with batch uploads, MIME/signature verification, and share links | Useful Tools | [cloud.andresptr.site](https://cloud.andresptr.site) | [cloud-file-manager](https://github.com/andre-sptr/cloud-file-manager) |
 | 07 | **PDF Workbench**: Privacy-first browser PDF toolkit with 18 document utilities and OCR extraction | Useful Tools | [pdf.andresptr.site](https://pdf.andresptr.site/) | [pdf-workbench](https://github.com/andre-sptr/pdf-workbench) |
-| 08 | **VPS File Hub**: Self-hosted file storage hub with batch uploads, MIME/signature verification, and share links | Useful Tools | [cloud.andresptr.site](https://cloud.andresptr.site) | [cloud-file-manager](https://github.com/andre-sptr/cloud-file-manager) |
-| 09 | **REKAPAL**: Oil palm plantation lot & financial operations workspace with Telegram bot notifications | Website | [rekapal.site](https://rekapal.site) | [my-sawit](https://github.com/andre-sptr/my-sawit) |
+| 08 | **REKAPAL**: Oil palm plantation lot & financial operations workspace with Telegram bot notifications | Website | [rekapal.site](https://rekapal.site) | [my-sawit](https://github.com/andre-sptr/my-sawit) |
+| 09 | **NeuroStack**: Bilingual light-first landing page for website, software, and automation services | Website | [neurostack.andresptr.site](https://neurostack.andresptr.site/) | Private |
 
 ## Project Structure
 

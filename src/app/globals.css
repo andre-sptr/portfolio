@@ -2635,8 +2635,15 @@ body { background: var(--portfolio-bg); color: var(--portfolio-text); }
   gap: 32px;
   flex: 0 1 480px;
 }
+.site-footer-links-wrap.has-split-projects {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  flex: 0 1 560px;
+}
 .site-footer-col {
   width: 100%;
+}
+.site-footer-col-projects-split {
+  grid-column: span 2;
 }
 .site-footer-col-title {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
@@ -2653,6 +2660,14 @@ body { background: var(--portfolio-bg); color: var(--portfolio-text); }
   display: flex;
   flex-direction: column;
   gap: 8.32px;
+}
+.site-footer-list.site-footer-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(5, auto);
+  grid-auto-flow: column;
+  column-gap: 32px;
+  row-gap: 8.32px;
 }
 .site-footer-list li {
   margin: 0;

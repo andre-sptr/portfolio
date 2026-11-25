@@ -1,10 +1,24 @@
 export const openSourceRepos = [
   {
+    id: "rf-link-planner",
+    name: "rf-link-planner",
+    description:
+      "Interactive RF link budget, single-repeater relay, and SRTM30m Fresnel zone planner with ITU-R P.526 and SQLite elevation cache.",
+    href: "https://github.com/andre-sptr/rf-link-planner",
+  },
+  {
     id: "3d-antenna",
     name: "3d-antenna",
     description:
       "Interactive 3D far-field antenna pattern and RF propagation lab with six analytical models, E/H-plane polar plots, and ground dBm heatmaps.",
     href: "https://github.com/andre-sptr/3d-antenna",
+  },
+  {
+    id: "over-the-air",
+    name: "over-the-air",
+    description:
+      "Interactive 3D scrollytelling guide tracing two-way radio signals from whip radiation and ITU-R P.526 Fresnel terrain to repeater relay.",
+    href: "https://github.com/andre-sptr/over-the-air",
   },
   {
     id: "bubu-ai",
@@ -14,13 +28,6 @@ export const openSourceRepos = [
     href: "https://github.com/andre-sptr/bubu-ai",
   },
   {
-    id: "rf-link-planner",
-    name: "rf-link-planner",
-    description:
-      "Interactive RF link budget, single-repeater relay, and SRTM30m Fresnel zone planner with ITU-R P.526 and SQLite elevation cache.",
-    href: "https://github.com/andre-sptr/rf-link-planner",
-  },
-  {
     id: "aet-ai-platform",
     name: "aet-ai-platform",
     description:
@@ -28,18 +35,18 @@ export const openSourceRepos = [
     href: "https://github.com/andre-sptr/aet-ai-platform",
   },
   {
-    id: "pdf-workbench",
-    name: "pdf-workbench",
-    description:
-      "Privacy-first online PDF workbench featuring 18 document tools for merging, compression, format conversion, and OCR extraction.",
-    href: "https://github.com/andre-sptr/pdf-workbench",
-  },
-  {
     id: "cloud-file-manager",
     name: "cloud-file-manager",
     description:
       "Self-hosted VPS file hub with batch uploads, MIME and signature verification, folder explorer, and per-file private or public share links.",
     href: "https://github.com/andre-sptr/cloud-file-manager",
+  },
+  {
+    id: "pdf-workbench",
+    name: "pdf-workbench",
+    description:
+      "Privacy-first online PDF workbench featuring 18 document tools for merging, compression, format conversion, and OCR extraction.",
+    href: "https://github.com/andre-sptr/pdf-workbench",
   },
   {
     id: "my-sawit",

@@ -1,7 +1,14 @@
 import { profile } from "@/data/profile";
 import { projects } from "@/data/projects";
 
+const FOOTER_PROJECTS_PER_COLUMN = 5;
+const FOOTER_PROJECTS_MAX = FOOTER_PROJECTS_PER_COLUMN * 2;
+
 export function Footer() {
+  const footerProjects = projects.slice(0, FOOTER_PROJECTS_MAX);
+  const hasSecondProjectColumn =
+    footerProjects.length > FOOTER_PROJECTS_PER_COLUMN;
+
   return (
     <footer className="site-footer" role="contentinfo">
       <div className="site-footer-inner">
@@ -70,7 +77,11 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="site-footer-links-wrap">
+          <div
+            className={`site-footer-links-wrap${
+              hasSecondProjectColumn ? " has-split-projects" : ""
+            }`}
+          >
             <div className="site-footer-col">
               <h3 className="site-footer-col-title">Navigation</h3>
               <ul className="site-footer-list">
@@ -92,10 +103,18 @@ export function Footer() {
               </ul>
             </div>
 
-            <div className="site-footer-col">
+            <div
+              className={`site-footer-col${
+                hasSecondProjectColumn ? " site-footer-col-projects-split" : ""
+              }`}
+            >
               <h3 className="site-footer-col-title">Projects</h3>
-              <ul className="site-footer-list">
-                {projects.map((project) => (
+              <ul
+                className={`site-footer-list${
+                  hasSecondProjectColumn ? " site-footer-projects-grid" : ""
+                }`}
+              >
+                {footerProjects.map((project) => (
                   <li key={project.id}>
                     <a
                       href={project.href}
