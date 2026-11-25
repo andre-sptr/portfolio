@@ -1,5 +1,19 @@
 export const openSourceRepos = [
   {
+    id: "3d-antenna",
+    name: "3d-antenna",
+    description:
+      "Interactive 3D far-field antenna pattern and RF propagation lab with six analytical models, E/H-plane polar plots, and ground dBm heatmaps.",
+    href: "https://github.com/andre-sptr/3d-antenna",
+  },
+  {
+    id: "bubu-ai",
+    name: "bubu-ai",
+    description:
+      "Multimodal WhatsApp AI agent on Fastify, SQLite WAL, and WAHA with local Whisper, Piper TTS, OCR, and a live 3D SSE pipeline visualizer.",
+    href: "https://github.com/andre-sptr/bubu-ai",
+  },
+  {
     id: "rf-link-planner",
     name: "rf-link-planner",
     description:

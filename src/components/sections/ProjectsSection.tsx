@@ -567,17 +567,19 @@ export function ProjectsSection() {
                   </div>
 
                   <div className="blinds-actions">
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      tabIndex={isActive ? undefined : -1}
-                      className="blinds-github-btn"
-                      aria-label={`${project.name} source code on GitHub`}
-                    >
-                      <GitHubIcon />
-                      <span>Code</span>
-                    </a>
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        tabIndex={isActive ? undefined : -1}
+                        className="blinds-github-btn"
+                        aria-label={`${project.name} source code on GitHub`}
+                      >
+                        <GitHubIcon />
+                        <span>Code</span>
+                      </a>
+                    )}
                     <a
                       href={project.href}
                       target="_blank"
@@ -693,16 +695,18 @@ export function ProjectsSection() {
                   <p className="mobile-card-desc">{project.description}</p>
 
                   <div className="mobile-card-action-row">
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mobile-card-github-btn"
-                      aria-label={`${project.name} source code on GitHub`}
-                    >
-                      <GitHubIcon />
-                      <span>Code</span>
-                    </a>
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mobile-card-github-btn"
+                        aria-label={`${project.name} source code on GitHub`}
+                      >
+                        <GitHubIcon />
+                        <span>Code</span>
+                      </a>
+                    )}
                     <a
                       href={project.href}
                       target="_blank"

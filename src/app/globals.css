@@ -1066,12 +1066,19 @@ body { background: var(--portfolio-bg); color: var(--portfolio-text); }
   position: relative;
   display: flex;
   align-items: stretch;
-  gap: 12.8px;
+  gap: 8px;
   width: calc(100% + 102.4px);
   margin-left: -51.2px;
   margin-right: -51.2px;
   height: 464px;
   user-select: none;
+}
+@media (min-width: 1280px) {
+  .projects-ref-showcase-box {
+    width: calc(100% + 224px);
+    margin-left: -112px;
+    margin-right: -112px;
+  }
 }
 .blinds-slat {
   position: relative;
@@ -1090,8 +1097,8 @@ body { background: var(--portfolio-bg); color: var(--portfolio-text); }
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
 }
 .blinds-slat:not(.is-active) {
-  flex: 0 0 52px;
-  width: 52px;
+  flex: 0 0 44px;
+  width: 44px;
 }
 .blinds-slat:not(.is-active):hover,
 .blinds-slat:not(.is-active):focus-within {
@@ -1680,7 +1687,10 @@ body { background: var(--portfolio-bg); color: var(--portfolio-text); }
 }
 .bld-dots {
   display: flex;
-  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+  row-gap: 0;
   align-items: center;
 }
 .bld-dot {

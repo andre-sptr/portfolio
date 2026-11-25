@@ -8,7 +8,7 @@ export interface ProjectItem {
   metaBadge: string;
   period: string;
   tags: string[];
-  github: string;
+  github?: string;
   href: string;
   image: string;
   images: string[];
@@ -17,8 +17,94 @@ export interface ProjectItem {
 
 export const projects: ProjectItem[] = [
   {
-    id: "linksight-rf",
+    id: "neurostack",
     index: "01",
+    name: "NeuroStack",
+    subtitle: "Digital Studio for Production Websites, Custom Software & Automation",
+    description:
+      "Bilingual light-first landing page for NeuroStack studio, presenting four core engineering services, nine live production demos, transparent pricing tabs, interactive logo anatomy, and a structured consultation brief.",
+    category: "Website",
+    metaBadge: "Digital Studio • Live Platform",
+    period: "2026",
+    tags: ["Website", "Digital Studio", "Next.js", "Bilingual"],
+    href: "https://neurostack.andresptr.site/",
+    image: "/projects/NeuroStack.png",
+    images: [
+      "/projects/NeuroStack.png",
+      "/projects/NeuroStack(2).png",
+      "/projects/NeuroStack(3).png",
+      "/projects/NeuroStack(4).png",
+    ],
+    accent: "#1d4ed8",
+  },
+  {
+    id: "antennalab-3d",
+    index: "02",
+    name: "AntennaLab 3D",
+    subtitle: "Interactive 3D Far-Field Antenna Radiation & Propagation Lab",
+    description:
+      "WebGL RF engineering laboratory modeling six analytical antenna topologies with synchronized 2D E/H-plane polar cuts, ground dBm heatmaps, and four propagation environments including urban blockage and ridge diffraction.",
+    category: "Useful Tools",
+    metaBadge: "3D RF Lab • Live Platform",
+    period: "2026",
+    tags: ["Website", "Useful Tools", "RF Engineering", "WebGL"],
+    github: "https://github.com/andre-sptr/3d-antenna",
+    href: "https://antenna.andresptr.site/",
+    image: "/projects/AntennaLab-3D.png",
+    images: [
+      "/projects/AntennaLab-3D.png",
+      "/projects/AntennaLab-3D(2).png",
+      "/projects/AntennaLab-3D(3).png",
+      "/projects/AntennaLab-3D(4).png",
+    ],
+    accent: "#0d9488",
+  },
+  {
+    id: "over-the-air",
+    index: "03",
+    name: "Over the Air",
+    subtitle: "Interactive 3D Scrollytelling Guide to Two-Way Radio Signals",
+    description:
+      "Six-chapter 3D web walkthrough tracing a push-to-talk transmission from modulation and whip radiation to ITU-R P.526 Fresnel terrain propagation, hilltop repeater relay, and receiver demodulation.",
+    category: "Website",
+    metaBadge: "3D RF Story • Live Platform",
+    period: "2026",
+    tags: ["Website", "Useful Tools", "RF Engineering", "3D Scrollytelling"],
+    href: "https://radio.andresptr.site/",
+    image: "/projects/Over-the-Air.png",
+    images: [
+      "/projects/Over-the-Air.png",
+      "/projects/Over-the-Air(2).png",
+      "/projects/Over-the-Air(3).png",
+      "/projects/Over-the-Air(4).png",
+    ],
+    accent: "#1d4ed8",
+  },
+  {
+    id: "bubu-ai",
+    index: "04",
+    name: "Bubu AI",
+    subtitle: "Multimodal WhatsApp AI Agent & 3D Pipeline Observatory",
+    description:
+      "Self-hosted WhatsApp AI assistant built with Fastify, SQLite WAL, and WAHA, pairing local Whisper, Piper TTS, and Tesseract OCR processing with a live 3D SSE pipeline observatory.",
+    category: "AI Agent Tools",
+    metaBadge: "WhatsApp AI • 3D Observatory",
+    period: "2026",
+    tags: ["Website", "AI Agent Tools", "WhatsApp Agent", "Three.js"],
+    github: "https://github.com/andre-sptr/bubu-ai",
+    href: "https://waha.andresptr.site/",
+    image: "/projects/Bubu-AI.png",
+    images: [
+      "/projects/Bubu-AI.png",
+      "/projects/Bubu-AI(2).png",
+      "/projects/Bubu-AI(3).png",
+      "/projects/Bubu-AI(4).png",
+    ],
+    accent: "#15803d",
+  },
+  {
+    id: "linksight-rf",
+    index: "05",
     name: "LinkSight RF",
     subtitle: "Interactive RF Link Budget, Repeater Relay & Fresnel Zone Planner",
     description:
@@ -40,7 +126,7 @@ export const projects: ProjectItem[] = [
   },
   {
     id: "aet-ai-platform",
-    index: "02",
+    index: "06",
     name: "AET AI Platform",
     subtitle: "AI-Powered Academic, Coding & Ideation Workspace for AET PCR",
     description:
@@ -63,7 +149,7 @@ export const projects: ProjectItem[] = [
   },
   {
     id: "pdf-workbench",
-    index: "03",
+    index: "07",
     name: "PDF Workbench",
     subtitle: "All-in-One Browser PDF Toolkit & Document Processing Suite",
     description:
@@ -85,7 +171,7 @@ export const projects: ProjectItem[] = [
   },
   {
     id: "vps-file-hub",
-    index: "04",
+    index: "08",
     name: "VPS File Hub",
     subtitle: "Self-Hosted VPS File Storage & Controlled Sharing Hub",
     description:
@@ -107,7 +193,7 @@ export const projects: ProjectItem[] = [
   },
   {
     id: "rekapal",
-    index: "05",
+    index: "09",
     name: "REKAPAL",
     subtitle: "Oil Palm Plantation Lot & Financial Management Platform",
     description:
